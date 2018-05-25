@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        {% if user.is_benefactor %}
+            Benefactor: <br>
+            {{ user.username }} <br>
+            {{ user.first_name }} <br>
+            {{ user.last_name }} <br>
+            {{ user.benefactor.max_chunk_in_week }} <br>
+            Skills: <br>
+            {% for skill in user.benefactor.skill.all %}
+                {{ skill.name }} <br>
+            {% endfor %}
+        {% else %}
+            Institute: <br>
+            {{ user.username }} <br>
+            {{ user.first_name }} <br>
+            {{ user.last_name }} <br>
+        {% endif %}
+    {% else %}
+        not logged in
+    {% endif %}
+{% endblock %}
