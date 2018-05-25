@@ -27,16 +27,16 @@ class Member(AbstractUser):
 
 
 class Institute(models.Model):
-    member = models.OneToOneField(to='Member', on_delete=models.CASCADE, null=True)
+    member = models.OneToOneField(to='Member', related_name='institute', on_delete=models.CASCADE, null=True)
 
     class Meta:
         verbose_name = 'Institute'
 
 
 class Benefactor(models.Model):
-    member = models.OneToOneField(to='Member', on_delete=models.CASCADE, null=True)
+    member = models.OneToOneField(to='Member', related_name='benefactor', on_delete=models.CASCADE, null=True)
     max_chunk_in_week = models.IntegerField(default=20)
-    skill = models.ManyToManyField(to='Skill', related_name='benefactors', blank=True)
+    skill = models.ManyToManyField(to='Skill', related_name='benefactors', blank=True, default=None)
 
     class Meta:
         verbose_name = 'Benefactor'
@@ -44,3 +44,6 @@ class Benefactor(models.Model):
 
 class Skill(models.Model):
     name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
