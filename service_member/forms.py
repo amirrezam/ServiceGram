@@ -32,8 +32,6 @@ class SignUpBenefactorForm(UserCreationForm):
         member.is_institute = False
         member.save()
         benefactor = Benefactor.objects.create(member=member)
-        print(*self.cleaned_data.get('skills'))
-        print(benefactor.skill)
         benefactor.skill.add(*self.cleaned_data.get('skills'))
         return member
 

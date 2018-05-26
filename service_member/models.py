@@ -36,7 +36,6 @@ class Institute(models.Model):
 class Benefactor(models.Model):
     member = models.OneToOneField(to='Member', related_name='benefactor', on_delete=models.CASCADE, null=True)
     max_chunk_in_week = models.IntegerField(default=20)
-    skill = models.ManyToManyField(to='Skill', related_name='benefactors', blank=True, default=None)
 
     class Meta:
         verbose_name = 'Benefactor'
@@ -47,3 +46,28 @@ class Skill(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class HasSkill(models.Model):
+    skill_type = models.ForeignKey(
+        to='Skill',
+        related_name='benefactors',
+        blank=True,
+        default=None,
+        on_delete=models.CASCADE
+    )
+    benefactor = models.ForeignKey(
+        to='Benefactor',
+        related_name='skill',
+        blank=True,
+        null=True,
+        default=None,
+        on_delete=models.CASCADE
+    )
+    validation_status = models.CharField(
+        max_length=8,
+        choices=[(tag, tag.value) for tag in ActivationStatus]
+    )
+
+    def __str__(self):
+        return str(self.skill_type)

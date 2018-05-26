@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'service_member'
+    'service_member',
+    'service_requirement'
 ]
 
 MIDDLEWARE = [
@@ -123,5 +124,5 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'service_member.Member'
 
-LOGIN_REDIRECT_URL = '/signup/benefactor/'
+LOGIN_REDIRECT_URL = '/profile/'
 LOGOUT_REDIRECT_URL = '/login/'

@@ -12,13 +12,33 @@
             {{ user.benefactor.max_chunk_in_week }} <br>
             Skills: <br>
             {% for skill in user.benefactor.skill.all %}
-                {{ skill.name }} <br>
+                &emsp; {{ skill.skill_type.name }} <br>
             {% endfor %}
         {% else %}
             Institute: <br>
             {{ user.username }} <br>
             {{ user.first_name }} <br>
             {{ user.last_name }} <br>
+            Cash Requirements: <br>
+            {% if user.institute.cash_requirements.count == 0 %}
+                &emsp;
+                Nothing <br>
+            {% else %}
+                {% for cash_requirement in user.institute.cash_requirements.all %}
+                    &emsp; {{ cash_requirement.fund }} <br>
+                    &emsp; {{ cash_requirement.donated_fund }} <br>
+                {% endfor %}
+            {% endif %}
+            Non Cash Requirements: <br>
+            {% if user.institute.non_cash_requirements.count == 0 %}
+                &emsp; Nothing
+            {% else %}
+                {% for non_cash_requirement in user.institute.non_cash_requirements.all %}
+                    &emsp; {{ non_cash_requirement.date }} <br>
+                    &emsp; {{ non_cash_requirement.time }} <br>
+                    &emsp; {{ non_cash_requirement.skill }} <br>
+                {% endfor %}
+            {% endif %}
         {% endif %}
     {% else %}
         not logged in
