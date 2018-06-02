@@ -9,5 +9,8 @@
         &emsp; {{ help_non_cash.sender }} <br>
         &emsp; {{ help_non_cash.status }} <br>
         &emsp; {{ help_non_cash.description }} <br>
+        {% if help_non_cash.status == 'ValidationStatus.Pen' %}
+            &emsp; <a href="/requirements/requests/accept/{{ help_non_cash.pk }}">Accept</a> <br>
+        {% endif %}
     {% endfor %}
 {% endblock %}

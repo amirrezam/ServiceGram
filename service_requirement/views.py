@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, RedirectView, ListView
 from service_requirement.forms import CreateCashRequirementForm, CreateNonCashRequirementForm, RequestHelpBenefactorForm
-from service_requirement.models import CashRequirement, NonCashRequirement, HelpNonCash
+from service_requirement.models import CashRequirement, NonCashRequirement, HelpNonCash, ValidationStatus
 
 
 # Create your views here.
@@ -86,4 +86,26 @@ class ShowRequestsRequirementView(ListView):
     def get(self, request, *args, **kwargs):
         if request.user.is_benefactor or request.user.username != NonCashRequirement.objects.get(pk=self.kwargs['pk']).owner.member.username:
             raise Http404
+        return super().get(request, *args, **kwargs)
+
+
+class AcceptRequestFromBenefactorView(RedirectView):
+    url = '/profile/'
+
+    def get(self, request, *args, **kwargs):
+        help_non_cash = HelpNonCash.objects.get(pk=self.kwargs['pk'])
+        if request.user.is_benefactor:
+            raise Http404
+        if request.user.username != help_non_cash.requirement.owner.member.username:
+            raise Http404
+        if help_non_cash.status != 'ValidationStatus.Pen':
+            raise Http404
+        HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
+                                   benefactor__member__username__exact=help_non_cash.benefactor.member.username,
+                                   status='ValidationStatus.Pen')\
+            .update(status=ValidationStatus.Can)
+        HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(status=ValidationStatus.Act)
+        # if HelpNonCash.objects.filter(benefactor__member__username__exact=help_non_cash.benefactor.member.username,
+        #                               status='ValidationStatus.Act',
+        #                               date)# TODO: how to get the number of requests in the week?
         return super().get(request, *args, **kwargs)
