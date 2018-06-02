@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}NonCash Requirement Information{% endblock %}
+
+{% block content %}
+    {% for help_non_cash in helpnoncash_list %}
+        {{ forloop.counter }}: <br>
+        &emsp; <a href="/profile/{{ help_non_cash.benefactor.member.username }}">{{ help_non_cash.benefactor.member.username }}</a> <br>
+        &emsp; {{ help_non_cash.sender }} <br>
+        &emsp; {{ help_non_cash.status }} <br>
+        &emsp; {{ help_non_cash.description }} <br>
+    {% endfor %}
+{% endblock %}

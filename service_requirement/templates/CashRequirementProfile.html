@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Cash Requirement Information{% endblock %}
+
+{% block content %}
+    Primary Key: {{ cashrequirement.pk }} <br>
+    Fund: {{ cashrequirement.fund }} <br>
+    Donated Fund:{{ cashrequirement.donated_fund }} <br>
+    Description: {{ cashrequirement.description }} <br>
+    Institute: <a href="/profile/{{ cashrequirement.owner.member.username }}">{{ cashrequirement.owner.member.username }}</a> <br>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, DetailView, RedirectView
 from service_member.forms import SignUpInstituteForm, SignUpBenefactorForm
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
@@ -30,6 +30,15 @@ class HomeView(TemplateView):
         return super().get(request, *args, **kwargs)
 
 
-class ProfileView(TemplateView):
-    template_name = 'Profile.html'
+class ProfileView(DetailView):
+    model = Member
+    template_name = 'profile.html'
+
+    def get_object(self, queryset=None):
+        return Member.objects.get(username=self.kwargs['username'])
+
+
+class ProfileRedirectView(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        return '/profile/' + self.request.user.username
 

@@ -57,7 +57,6 @@ class NonCashRequirement(Requirement):
     )
 
 
-
 class Chunk(models.Model):
     beginning_time = models.TimeField()
     ending_time = models.TimeField()

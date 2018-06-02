@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}NonCash Requirement Information{% endblock %}
+
+{% block content %}
+    Primary Key: {{ noncashrequirement.pk }} <br>
+    Date: {{ noncashrequirement.date }} <br>
+    Skill:{{ noncashrequirement.skill }} <br>
+    Time: {{ noncashrequirement.time }} <br>
+    Description: {{ noncashrequirement.description }} <br>
+    Institute: <a href="/profile/{{ noncashrequirement.owner.member.username }}">{{ noncashrequirement.owner.member.username }}</a> <br>
+    {% if user.is_authenticated %}
+        {% if user.is_benefactor %}
+            <a href="/requirements/request/{{ noncashrequirement.pk }}">Request for help</a> <br>
+        {% endif %}
+        {% if user.is_institute %}
+            {% if user.username == noncashrequirement.owner.member.username %}
+                <a href="/requirements/requests/{{ noncashrequirement.pk }}">See requests</a> <br>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endblock %}

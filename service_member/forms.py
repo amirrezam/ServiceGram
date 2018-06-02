@@ -2,7 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db.models import QuerySet
 
-from service_member.models import Member, Institute, Benefactor, Skill
+from service_member.models import Member, Institute, Benefactor, Skill, HasSkill
+from service_requirement.models import ValidationStatus
 
 
 class SignUpInstituteForm(UserCreationForm):
@@ -32,7 +33,12 @@ class SignUpBenefactorForm(UserCreationForm):
         member.is_institute = False
         member.save()
         benefactor = Benefactor.objects.create(member=member)
-        benefactor.skill.add(*self.cleaned_data.get('skills'))
+        for skill in self.cleaned_data.get('skills').all():
+            has_skill = HasSkill.objects.create(benefactor=benefactor, skill_type=skill,
+                                                validation_status=ValidationStatus.Pen)
+            has_skill.save()
+            benefactor.skill.add(has_skill)
+        benefactor.save()
         return member
 
     class Meta:

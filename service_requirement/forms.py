@@ -1,5 +1,6 @@
 from django import forms
-from service_requirement.models import CashRequirement, NonCashRequirement, Chunk
+from service_requirement.models import CashRequirement, NonCashRequirement, Chunk, HelpNonCash, ValidationStatus, \
+    SenderStatus
 from service_member.models import Skill
 
 
@@ -34,8 +35,22 @@ class CreateNonCashRequirementForm(forms.ModelForm):
 
     class Meta:
         model = NonCashRequirement
-        fields = ('date','description')
+        fields = ('date', 'description')
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'})
         }
+
+
+class RequestHelpBenefactorForm(forms.ModelForm):
+    def save(self, commit=True):
+        help_non_cash = super().save(commit=False)
+        help_non_cash.status = ValidationStatus.Pen
+        help_non_cash.sender = SenderStatus.Ben
+        help_non_cash.benefactor_score = -1
+        help_non_cash.institute_score = -1
+        return help_non_cash
+
+    class Meta:
+        model = HelpNonCash
+        fields = ('description',)
 

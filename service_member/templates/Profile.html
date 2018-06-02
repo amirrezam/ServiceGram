@@ -3,44 +3,42 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        {% if user.is_benefactor %}
-            Benefactor: <br>
-            {{ user.username }} <br>
-            {{ user.first_name }} <br>
-            {{ user.last_name }} <br>
-            {{ user.benefactor.max_chunk_in_week }} <br>
-            Skills: <br>
-            {% for skill in user.benefactor.skill.all %}
-                &emsp; {{ skill.skill_type.name }} <br>
-            {% endfor %}
-        {% else %}
-            Institute: <br>
-            {{ user.username }} <br>
-            {{ user.first_name }} <br>
-            {{ user.last_name }} <br>
-            Cash Requirements: <br>
-            {% if user.institute.cash_requirements.count == 0 %}
-                &emsp;
-                Nothing <br>
-            {% else %}
-                {% for cash_requirement in user.institute.cash_requirements.all %}
-                    &emsp; {{ cash_requirement.fund }} <br>
-                    &emsp; {{ cash_requirement.donated_fund }} <br>
-                {% endfor %}
-            {% endif %}
-            Non Cash Requirements: <br>
-            {% if user.institute.non_cash_requirements.count == 0 %}
-                &emsp; Nothing
-            {% else %}
-                {% for non_cash_requirement in user.institute.non_cash_requirements.all %}
-                    &emsp; {{ non_cash_requirement.date }} <br>
-                    &emsp; {{ non_cash_requirement.time }} <br>
-                    &emsp; {{ non_cash_requirement.skill }} <br>
-                {% endfor %}
-            {% endif %}
-        {% endif %}
+    {% if member.is_benefactor %}
+        Benefactor: <br>
+        {{ member.username }} <br>
+        {{ member.first_name }} <br>
+        {{ memeber.last_name }} <br>
+        {{ member.benefactor.max_chunk_in_week }} <br>
+        Skills: <br>
+        {% for skill in member.benefactor.skill.all %}
+            &emsp; {{ skill.skill_type.name }} <br>
+        {% endfor %}
     {% else %}
-        not logged in
+        Institute: <br>
+        {{ member.username }} <br>
+        {{ member.first_name }} <br>
+        {{ member.last_name }} <br>
+        Cash Requirements: <br>
+        {% if member.institute.cash_requirements.count == 0 %}
+            &emsp;
+            Nothing <br>
+        {% else %}
+            {% for cash_requirement in member.institute.cash_requirements.all %}
+                &emsp; {{ cash_requirement.fund }} <br>
+                &emsp; {{ cash_requirement.donated_fund }} <br>
+                &emsp;  <a href="/requirements/info/cash/{{ cash_requirement.pk }}">more info</a> <br>
+            {% endfor %}
+        {% endif %}
+        Non Cash Requirements: <br>
+        {% if member.institute.non_cash_requirements.count == 0 %}
+            &emsp; Nothing
+        {% else %}
+            {% for non_cash_requirement in member.institute.non_cash_requirements.all %}
+                &emsp; {{ non_cash_requirement.date }} <br>
+                &emsp; {{ non_cash_requirement.time }} <br>
+                &emsp; {{ non_cash_requirement.skill }} <br>
+                &emsp;  <a href="/requirements/info/non_cash/{{ non_cash_requirement.pk }}">more info</a> <br>
+            {% endfor %}
+        {% endif %}
     {% endif %}
 {% endblock %}
