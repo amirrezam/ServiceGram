@@ -1,3 +1,7 @@
+from django.template.context_processors import static
+
+from django.conf import settings
+from django.conf.urls.static import static
 """ServiceGram URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -20,4 +24,4 @@ urlpatterns = [
     re_path('admin/', admin.site.urls),
     re_path(r'requirements/', include('service_requirement.urls')),
     re_path(r'^', include('service_member.urls'))
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

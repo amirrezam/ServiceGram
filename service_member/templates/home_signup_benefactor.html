@@ -1,0 +1,27 @@
+{% extends "home_signup.html" %}
+
+{% block addition %}
+    <h4 class="ui dividing header">
+        توانایی‌ها</h4>
+
+    <select name="skills" multiple="" class="ui fluid dropdown">
+    <option value="">توانایی‌ها</option>
+    <option value="ایزی شدن">ایزی شدن</option>
+    <option value="هارد شدن">هارد شدن</option>
+    {% for skill in Skill.objects.all %}
+        <option value="{{ skill.name }}">{{ skill.name }}</option>
+    {% endfor %}
+    </select>
+    <script>$(function() {
+      $('.ui.dropdown').dropdown();
+      $('.overlay.example .overlay')
+          .visibility({
+              type: 'fixed',
+              offset: 15 // give some space from top of screen
+          });
+    });</script>
+    <div class="field">
+        <label>حداکثر کمک رسانی در ماه</label>
+        <input type="text" placeholder="20" style="text-align:left;width:40px">
+    </div>
+{% endblock %}

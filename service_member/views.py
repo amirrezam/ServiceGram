@@ -12,22 +12,17 @@ from service_member.models import Benefactor, Institute, Member
 class SignUpInstituteView(CreateView):
     form_class = SignUpInstituteForm
     success_url = '/login/'
-    template_name = 'SignUp.html'
+    template_name = 'home_signup_institute.html'
 
 
 class SignUpBenefactorView(CreateView):
     form_class = SignUpBenefactorForm
     success_url = '/login/'
-    template_name = 'SignUp.html'
+    template_name = 'home_signup_benefactor.html'
 
 
 class HomeView(TemplateView):
     template_name = 'home.html'
-
-    def get(self, request, *args, **kwargs):
-        if request.user.is_benefactor:
-            raise Http404
-        return super().get(request, *args, **kwargs)
 
 
 class ProfileView(DetailView):
