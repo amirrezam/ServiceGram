@@ -27,7 +27,7 @@ class HomeView(TemplateView):
 
 class ProfileView(DetailView):
     model = Member
-    template_name = 'profile.html'
+    template_name = 'all_profile.html'
 
     def get_object(self, queryset=None):
         return Member.objects.get(username=self.kwargs['username'])

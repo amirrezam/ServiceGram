@@ -30,20 +30,84 @@
             <label>نام کاربری</label>
             <input type="text" placeholder="username" name="username" style="text-align:left" id="id_username">
         </div>
+        {% if "This field is required." in form.username.errors %}
+            <div class="ui negative message">
+                <p>
+                    پر کردن این بخش الزامی است.
+                </p>
+            </div>
+        {% elif "A user with that username already exists." in form.username.errors %}
+            <div class="ui negative message">
+                <p>
+                    این نام کاربری از قبل وجود دارد.
+                </p>
+            </div>
+        {% elif "Enter a valid username. This value may contain only letters, numbers, and @/./+/-/_ characters." in form.username.errors %}
+            <div class="ui negative message">
+                <p>
+                    نام کاربری فقط باید از حروف و اعداد و نشانه‌های @ ، . ، + ، - تشکیل شده باشد.
+                </p>
+            </div>
+        {% elif form.username.errors %}
+            <div class="ui negative message">
+                <p>
+                    نام کاربری مجاز نیست.
+                </p>
+            </div>
+        {% endif %}
         <div class="field">
             <label>رمز عبور</label>
             <input type="password" style="text-align:left" name="password1" id="id_password1">
         </div>
+        {% if "This field is required." in form.password1.errors %}
+            <div class="ui negative message">
+                <p>
+                    پر کردن این بخش الزامی است.
+                </p>
+            </div>
+        {% elif form.password1.errors %}
+            <div class="ui negative message">
+                <p>
+                    رمز عبور مجاز نیست.
+                </p>
+            </div>
+        {% endif %}
         <div class="field">
             <label>تکرار رمز عبور</label>
             <input type="password" style="text-align:left" name="password2" id="id_password2">
         </div>
+        {% if "This field is required." in form.password2.errors %}
+            <div class="ui negative message">
+                <p>
+                    پر کردن این بخش الزامی است.
+                </p>
+            </div>
+        {% elif "The two password fields didn't match." in form.password2.errors %}
+            <div class="ui negative message">
+                <p>
+                    تکرار رمز عبور با رمز عبور یکی نیست.
+                </p>
+            </div>
+        {% elif "This password is too short. It must contain at least 8 characters." in form.password2.errors %}
+            <div class="ui negative message">
+                <p>
+                    رمز عبور بسیار کوتاه است. توصیه می‌شود رمز عبوری شامل حداقل ۸ کاراکتر انتخاب کنید.
+                </p>
+            </div>
+        {% elif form.password2.errors %}
+            <div class="ui negative message">
+                <p>
+                    رمز عبور مجاز نیست.
+                </p>
+            </div>
+        {% endif %}
+
         {% endblock %}
         {% block addition %}{% endblock %}
 
         <div class="field">
             <div class="ui checkbox">
-                <input type="checkbox" tabindex="0" class="hidden" required>
+                <input type="checkbox" tabindex="0" class="hidden" name="is_accepted" required id="id_is_accepted" onchange="document.getElementById('id_submit').disabled = !this.checked;"/>
                 <label>بنده قوانین سایت را مطالعه کرده‌ام و مثل سگ با آن موافقم.</label>
             </div>
         </div>
@@ -53,8 +117,7 @@
                     .checkbox()
                     ;
         });</script>
-        <button class="ui primary button" type="submit">ثبت</button>
-        {{ form.errors }}
+        <button class="ui primary button" type="submit" id="id_submit" disabled>ثبت</button>
     </form>
 </div>
 

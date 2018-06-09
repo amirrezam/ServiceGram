@@ -9,13 +9,13 @@
 
     <title>{% block title %}Title{% endblock %}</title>
 
-    <link rel="stylesheet" type="text/css" href="{% static "semantic/dist/semantic.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "semantic/out/semantic.min.css" %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="{% static "semantic/dist/semantic.min.js" %}"></script>
+    <script src="{% static "semantic/out/semantic.min.js" %}"></script>
 
     <style>
         @font-face {
@@ -35,6 +35,10 @@
 
         ::-webkit-input-placeholder {
             font-family: 'VezFontBold';
+        }
+
+        .ui.form input[type=text]{
+            font-family: VezFont;
         }
 
         .ui.button {
@@ -137,10 +141,10 @@
                                 <i class="ui dropdown icon" style="margin: 5px"></i>
                                 <div class="menu">
                                     <div class="item" data-value="profile" style="align-content:center;">
-                                        <a href="/profile"> مشاهده‌ی پروفایل</a>
+                                        <a href="/profile/"> مشاهده‌ی پروفایل</a>
                                     </div>
                                     <div class="item" data-value="exit">
-                                        <a href="/logout"> خروج</a>
+                                        <a href="/logout/"> خروج</a>
                                     </div>
                                 </div>
                             </div>
@@ -166,6 +170,7 @@
             {{ form.as_p }}
             <button type="submit">Log in</button>
         </form>
+        {{ form.errors }}
     {% endblock %}
 
 

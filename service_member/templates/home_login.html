@@ -18,12 +18,18 @@
         <div class="field">
             <label>رمز عبور</label>
             <div class="ui left icon input">
-                <input type="password" placeholder="رمز عبور" style="text-align: left" nname="password" required id="id_password">
+                <input type="password" placeholder="رمز عبور" style="text-align: left" name="password" required id="id_password">
                 <i class="lock icon"></i>
             </div>
         </div>
+        {% if form.errors %}
+            <div class="ui negative message">
+                <p>
+                    نام کاربری و رمز عبور هم‌خوانی ندارند. لطفا از صحت آن‌ها مطمعن شوید.
+                </p>
+            </div>
+        {% endif %}
         <button class="ui primary button" type="submit" style="width: 100%">ثبت</button>
-        {{ form.errors }}
     </form>
 </div>
 

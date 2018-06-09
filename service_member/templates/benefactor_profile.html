@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}{{ member.username }}'s profile{% endblock %}
+
+{% block content %}
+<section>
+
+    <div class="ui container">
+
+        <div class="ui items">
+            <div class="item">
+                <a class="ui circular medium image" style="margin-left: 100px">
+                    <img src="{% static "img/avatar9.png" %}">
+                    <br>
+                    <center>
+                        <div class="ui center aligned massive star rating" data-rating="4" data-max-rating="5"></div>
+                        <p>آنلاین</p>
+                    </center>
+                </a>
+                <div class="content">
+                    <h1 style="font-family: VezFont">
+                        {{ member.first_name }} {{ member.last_name }}
+                    </h1>
+
+                    <h3> بیوگرافی : </h3>
+
+
+                    <p>
+                        دانشجوی مقطع کارشناسی ترم افزار دانشگاه صنعتی شریف
+                    </p>
+
+                    <p>
+                        دارنده‌ی دو مدال نقره‌ی المپیاد کامپیوتر کشوری
+                    </p>
+
+                    <br>
+
+                    <h4>توانایی ها : </h4>
+
+                    <p>
+                        طراحی صفحات وب، زدن کد c و java ، جاروکشی
+                    </p>
+
+                    <br>
+                    <button class="ui primary huge button">ارسال درخواست همکاری</button>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <br>
+
+        {% if user.is_authenticated %}
+            {% if user.username == member.username %}
+                <div class="ui very relaxed middle aligned stackable grid">
+                    <div class="eight wide column">
+                        <h3>درخواست‌های موسسات : </h3>
+                        <br>
+
+                        <div class="ui items">
+                            <div class="item" style="margin-bottom: 10px">
+                                <a class="ui small circular image" style="margin-left: 10px">
+                                    <img src="{% static "img/apple2.png" %}">
+                                </a>
+                                <div class="content">
+                                    <a class="header" style="font-family: VezFont">شرکت اپل</a>
+                                    <div class="description">
+                                        <p>
+                                            مورد درخواست : درخواست استخدام جاروکش
+                                        </p>
+                                        <p>
+                                            توضیحات : به یک جاروکش مجرب برای جارو کردن اتاق مرحوم جابز نیازمندیم.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item" style="margin-bottom: 10px">
+                                <a class="ui small circular image" style="margin-left: 10px">
+                                    <img src="{% static "img/cafe.png" %}">
+                                </a>
+                                <div class="content">
+                                    <a class="header" style="font-family: VezFont">کافه شریف</a>
+                                    <div class="description">
+                                        <p>
+                                            مورد درخواست : درخواست استخدام جاروکش
+                                        </p>
+                                        <p>
+                                            توضیحات : به یک جاروکش مجرب برای جارو کردن دستشویی کافه نیازمندیم.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="eight wide column">
+                        <h3>درخواست‌های پذیرفته شده : </h3>
+                        <br>
+
+                        <div class="ui items">
+                            <div class="item" style="margin-bottom: 10px">
+                                <a class="ui small circular image" style="margin-left: 10px">
+                                    <img src="{% static "img/school.png" %}">
+                                </a>
+                                <div class="content">
+                                    <a class="header" style="font-family: VezFont">دبیرستان علامه فلانی</a>
+                                    <div class="description">
+                                        <p>
+                                            مورد درخواست : درخواست استخدام برنامه نویس C
+                                        </p>
+                                        <p>
+                                            توضیحات : به یک برنامه نویس مجرب برای جارو کردن سایت مدرسه نیازمندیم.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

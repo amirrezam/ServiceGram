@@ -10,7 +10,7 @@
             <h1 style="padding: 10px">همیار</h1>
             <h2 style="padding: 10px;">سامانه‌ی ارائه‌ی خدمات داوطلبانه</h2>
             <br>
-            <div class="ui huge primary button" style="margin:10px;">همین حالا ثبت نام کن !</div>
+            <a href="/signup/benefactor/"><div class="ui huge primary button" style="margin:10px;">همین حالا ثبت نام کن !</div></a>
         </div>
     {% endif %}
 {% endblock %}
@@ -54,9 +54,11 @@
                         <p class="ui secondary huge">
                             همین حالا ثبت نام کنید و در کمک‌های نقدی و غیرنقدی سهیم باشید!
                         </p>
-                        <div class="ui primary huge button">
-                            ثبت‌‌ نام نیکوکار
-                        </div>
+                        <a href="/signup/benefactor/">
+                            <div class="ui primary huge button">
+                                ثبت‌‌ نام نیکوکار
+                            </div>
+                        </a>
                     </div>
 
                 </div>
@@ -71,9 +73,11 @@
                         <p class="ui secondary huge">
                             همین حالا ثبت نام کنید و با نیکوکاران آشنا شوید!
                         </p>
-                        <div class="ui primary huge button">
-                            ثبت‌‌ نام موسسه
-                        </div>
+                        <a href="/signup/institute/">
+                            <div class="ui primary huge button">
+                                ثبت‌‌ نام موسسه
+                            </div>
+                        </a>
                     </div>
                     <div class="five wide column">
                         <image class="ui circular center aligned medium image" src="{% static "img/school.png" %}"></image>
