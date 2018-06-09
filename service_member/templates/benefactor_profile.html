@@ -24,16 +24,16 @@
                         {{ member.first_name }} {{ member.last_name }}
                     </h1>
 
-                    <h3> بیوگرافی : </h3>
+                    {% if member.bio %}
+
+                        <h3> بیوگرافی : </h3>
 
 
-                    <p>
-                        دانشجوی مقطع کارشناسی ترم افزار دانشگاه صنعتی شریف
-                    </p>
 
-                    <p>
-                        دارنده‌ی دو مدال نقره‌ی المپیاد کامپیوتر کشوری
-                    </p>
+                        <p style="max-width: 300px;overflow: hidden">
+                            {{ member.bio }}
+                        </p>
+                    {% endif %}
 
                     <br>
 
@@ -41,6 +41,9 @@
 
                     <p>
                         طراحی صفحات وب، زدن کد c و java ، جاروکشی
+                        {% for hasskill in member.skill.all %}
+                            {{ hasskill.skilltype }} ،
+                        {% endfor %}
                     </p>
 
                     <br>
