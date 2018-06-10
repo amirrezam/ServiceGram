@@ -9,66 +9,14 @@
     <div id="body_container">
         <div class="ui container">
             <div class="ui segment">
-                <form class="ui large form" method="GET">
+                <form class="ui large form" method="GET" style="text-align: center">
                     <h4 class="ui dividing header" style="font-family: iranSans; color: gray">جستجو</h4>
 
-                    <div class="nine wide field">
-                        <label>توانایی</label>
-                         <select name="skills" multiple="" class="ui fluid dropdown">
-                            <option value="">توانایی‌ها</option>
-                            {% for skill in Skill %}
-                                <option name="skills" value="{{ forloop.counter }}" id="id_skills_{{ forloop.counter0 }}">{{ skill.name }}</option>
-                            {% endfor %}
-                         </select>
-                    </div>
-
-                    <script>$(function() {
-                      $('.ui.dropdown').dropdown();
-                      $('.overlay.example .overlay')
-                          .visibility({
-                              type: 'fixed',
-                              offset: 15 // give some space from top of screen
-                          });
-                    });</script>
-
-                    <div class="nine wide field">
-                        <label>تاریخ</label>
-                        <div class="three fields">
-
-                            <div class="field">
-                                <input type="text" name="day" placeholder="روز" style="font-family: iranSans">
-                            </div>
-
-                            <div class="field">
-                                <div class="ui fluid search selection dropdown">
-                                    <input type="hidden" name="month">
-                                    <i class="small dropdown icon"></i>
-                                    <div class="default text">ماه</div>
-                                    <div class="menu">
-                                        <div class="item" data-value="0">
-                                            فروردین
-                                        </div>
-                                        <div class="item" data-value="1">
-                                            اردیبهشت
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <input type="text" name="year" placeholder="سال" style="font-family: iranSans">
-                            </div>
+                    <div class="nine wide field" style="margin: auto">
+                        <div class="field">
+                            <label>نام</label>
+                            <input type="text" placeholder="نام کاربری" name="name" style="text-align:left" id="id_name">
                         </div>
-                    </div>
-
-                    <div class="nine wide field">
-                        <label>ساعت نیازمندی</label>
-                        <select name="chunks" multiple="" class="ui fluid dropdown">
-                            <option value="">زمان‌ها</option>
-                            {% for chunk in Chunk %}
-                                <option name="chunks" value="{{ forloop.counter }}" id="id_chunks_{{ forloop.counter0 }}">{{ chunk }}</option>
-                            {% endfor %}
-                        </select>
                     </div>
 
                     <button class="ui primary button" type="submit">جستجو</button>
@@ -189,6 +137,45 @@
 
             </div>
 
+
+            {% for institute in institute_list.all %}
+                <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
+                    <div class="blurring dimmable circular image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center">
+                                    <div class="ui inverted button">Add Friend</div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="{% static "img/school.png" %}" class="ui circular image">
+                    </div>
+                    <div class="content" style="margin-top: 10px">
+
+                        <a class="header" style="font-family: VezFont; align-content: center" href="/profile/{{ institute.member.username }}">
+                            {{ institute.member.first_name }}
+                        </a>
+                        <div class="meta">
+                            <span class="date">آخرین بازدید : 2 ساعت پیش</span>
+                        </div>
+                        <div class="discription" style="margin-top: 8px">
+                            {% if institute.member.bio %}
+                                <h4 style="text-align: justify"> {{ institute.member.bio }}</h4>
+                            {% endif %}
+                            <br>
+{#                            <h5> توانایی‌های مورد نیاز : </h5>#}
+{#                            <p>#}
+{#                                دبیر ریاضی، دبیر فیزیک#}
+{#                            </p>#}
+                        </div>
+                    </div>
+                    <div class="extra">
+                        امتیاز دهید :
+                        <div class="ui star rating" data-rating="4"></div>
+                    </div>
+
+                </div>
+            {% endfor %}
         </div>
     </div>
 </section>

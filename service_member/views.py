@@ -44,3 +44,15 @@ class ProfileRedirectView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         return '/profile/' + self.request.user.username
 
+
+class ShowInstitutesView(ListView):
+    template_name = 'institute_search.html'
+    model = Institute
+
+    def get_queryset(self):
+        print(self.request.GET)
+        if 'name' in dict(self.request.GET).keys():
+            return Institute.objects.filter(member__first_name__icontains=self.request.GET.get('name'))
+        else:
+            return Institute.objects
+
