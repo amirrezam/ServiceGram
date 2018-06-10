@@ -167,6 +167,9 @@ venv.bak/
 .static
 static/
 
+.image
+image/
+
 # Spyder project settings
 .spyderproject
 .spyproject

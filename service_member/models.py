@@ -19,6 +19,7 @@ class Member(AbstractUser):
     is_benefactor = models.BooleanField(default=True)
     is_institute = models.BooleanField(default=False)
     bio = models.CharField(max_length=200, null=True, blank=True)
+    avatar = models.ImageField(upload_to='image/', default='image/default-img.png')
 
     # def __str__(self):
     #     return self.first_name + ' ' + self.last_name

@@ -214,11 +214,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <img src="{% static "img/avatar8.png" %}" class="ui circular image">
+                            <img src="/image/{{ benefactor.member.avatar }}" class="ui circular image">
                         </div>
                         <div class="content" style="margin-top: 10px">
 
-                            <a class="header" style="font-family: VezFont; align-content: center">
+                            <a class="header" style="font-family: VezFont; align-content: center" href="/profile/{{ benefactor.member.username }}">
                                 {{ benefactor.member.first_name }} {{ benefactor.member.last_name }}
                             </a>
                             <div class="meta">

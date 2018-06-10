@@ -20,8 +20,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import re_path, include
 
-urlpatterns = [
+urlpatterns = static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
+              static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + [
     re_path('admin/', admin.site.urls),
     re_path(r'requirements/', include('service_requirement.urls')),
     re_path(r'^', include('service_member.urls'))
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]

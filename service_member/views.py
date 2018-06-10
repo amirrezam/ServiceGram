@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import CreateView, TemplateView, DetailView, RedirectView, ListView
-from service_member.forms import SignUpInstituteForm, SignUpBenefactorForm
+from django.views.generic import CreateView, TemplateView, DetailView, RedirectView, ListView, FormView
+from service_member.forms import SignUpInstituteForm, SignUpBenefactorForm, EditProfileForm
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from service_member.models import Benefactor, Institute, Member, Skill
@@ -67,4 +67,15 @@ class ShowBenefactorsView(ListView):
             return Benefactor.objects.filter(member__first_name__icontains=self.request.GET.get('name'))
         else:
             return Benefactor.objects
+
+
+class EditProfileView(FormView):
+    template_name = 'edit_profile.html'
+    form_class = EditProfileForm
+    success_url = '/profile/'
+
+    def form_valid(self, form):
+        self.request.user.avatar = form.cleaned_data['avatar']
+        self.request.user.save()
+        return super().form_valid(form)
 
