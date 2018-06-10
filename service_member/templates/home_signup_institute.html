@@ -1,1 +1,18 @@
 {% extends "home_signup.html" %}
+
+
+{% block name %}
+    <div class="field">
+        <label>عنوان مؤسسه</label>
+        <div class="field">
+            <input type="text" name="first_name" placeholder="عنوان مؤسسه" id="id_first_name">
+        </div>
+    </div>
+{% endblock %}
+
+{% block bio %}
+<div class="field">
+    <label>معرفی مؤسسه</label>
+    <textarea type="text" placeholder="معرفی مؤسسه" name="bio" style="text-align: right" id="id_bio"></textarea>
+</div>
+{% endblock %}
