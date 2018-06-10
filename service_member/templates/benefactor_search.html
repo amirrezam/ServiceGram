@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Search benefactors{% endblock %}
+
+{% block content %}
+    <section>
+        <div id="body_container">
+            <div class="ui container">
+                <div class="ui segment">
+                    <form class="ui large form" method="GET" style="text-align: center">
+                        <h4 class="ui dividing header" style="font-family: iranSans; color: gray">جستجو</h4>
+
+                        <div class="nine wide field" style="margin: auto">
+                            <div class="field">
+                                <label>نام</label>
+                                <input type="text" placeholder="نام کاربری" name="name" style="text-align:left" id="id_name">
+                            </div>
+                        </div>
+
+                        <button class="ui primary button" type="submit">جستجو</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+
+        <div class="ui container w1000 transition visible">
+
+            <h2>نتایج جستجو</h2>
+
+            <br>
+            <br>
+
+            <div class="ui four stackable special cards">
+
+
+                <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
+                    <div class="blurring dimmable circular image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center">
+                                    <div class="ui inverted button">Add Friend</div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="{% static "img/avatar10.png" %}" class="ui circular image">
+                    </div>
+                    <div class="content" style="margin-top: 10px">
+
+                        <a class="header" style="font-family: VezFont; align-content: center">صغری اکبری</a>
+                        <div class="meta">
+                            <span class="date">آخرین بازدید : 2 ساعت پیش</span>
+                        </div>
+                        <div class="discription" style="margin-top: 8px">
+                            <h4> فوق لیسانس حسابداری دانشگاه تهران</h4>
+                            <br>
+                            <h5> توانایی ها : </h5>
+                            <p>
+                                حسابداری
+                            </p>
+                        </div>
+                    </div>
+                    <div class="extra">
+                        امتیاز دهید :
+                        <div class="ui star rating" data-rating="4"></div>
+                    </div>
+
+                </div>
+
+                <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
+                    <div class="blurring dimmable circular image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center">
+                                    <div class="ui inverted button">Add Friend</div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="{% static "img/avatar12.png" %}" class="ui circular image">
+                    </div>
+                    <div class="content" style="margin-top: 10px">
+
+                        <a class="header" style="font-family: VezFont; align-content: center">کبری اصغری</a>
+                        <div class="meta">
+                            <span class="date">آخرین بازدید : 2 ساعت پیش</span>
+                        </div>
+                        <div class="discription" style="margin-top: 8px">
+                            <h4>دیپلم ریاضی</h4>
+                            <br>
+                            <h5> توانایی ها : </h5>
+                            <p>
+                                تدریس ریاضی مقطع متوسطه اول و دوم
+                            </p>
+                        </div>
+                    </div>
+                    <div class="extra">
+                        امتیاز دهید :
+                        <div class="ui star rating" data-rating="4"></div>
+                    </div>
+
+                </div>
+
+                <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
+                    <div class="blurring dimmable circular image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center">
+                                    <div class="ui inverted button">Add Friend</div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="{% static "img/avatar16.png" %}" class="ui circular image">
+                    </div>
+                    <div class="content" style="margin-top: 10px">
+
+                        <a class="header" style="font-family: VezFont; align-content: center">محبوبه محمدی</a>
+                        <div class="meta">
+                            <span class="date">آخرین بازدید : 2 ساعت پیش</span>
+                        </div>
+                        <div class="discription" style="margin-top: 8px">
+                            <h4> پزشک عمومی دانشگاه دارقوزآباد </h4>
+                            <br>
+                            <h5> توانایی ها : </h5>
+                            <p>
+                                پزشکی
+                            </p>
+                        </div>
+                    </div>
+                    <div class="extra">
+                        امتیاز دهید :
+                        <div class="ui star rating" data-rating="4"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
+                    <div class="blurring dimmable circular image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center">
+                                    <div class="ui inverted button">Add Friend</div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="{% static "img/avatar14.png" %}" class="ui circular image">
+                    </div>
+                    <div class="content" style="margin-top: 10px">
+
+                        <a class="header" style="font-family: VezFont; align-content: center">فریده محمدی</a>
+                        <div class="meta">
+                            <span class="date">آخرین بازدید : 2 ساعت پیش</span>
+                        </div>
+                        <div class="discription" style="margin-top: 8px">
+                            <h4>فوق دیپلم فنی حرفه ای</h4>
+                            <br>
+                            <h5> توانایی ها : </h5>
+                            <p>
+                                نجاری ، جوشکاری
+                            </p>
+                        </div>
+                    </div>
+                    <div class="extra">
+                        امتیاز دهید :
+                        <div class="ui star rating" data-rating="4"></div>
+                    </div>
+
+                </div>
+
+                <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
+                    <div class="blurring dimmable circular image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center">
+                                    <div class="ui inverted button">Add Friend</div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="{% static "img/avatar8.png" %}" class="ui circular image">
+                    </div>
+                    <div class="content" style="margin-top: 10px">
+
+                        <a class="header" style="font-family: VezFont; align-content: center">محمود احمدی</a>
+                        <div class="meta">
+                            <span class="date">آخرین بازدید : 5 ساعت پیش</span>
+                        </div>
+                        <div class="discription" style="margin-top: 8px">
+                            <h4>فوق دیپلم فنی حرفه ای</h4>
+                            <br>
+                            <h5> توانایی ها : </h5>
+                            <p>
+                                نجاری ، جوشکاری
+                            </p>
+                        </div>
+                    </div>
+                    <div class="extra">
+                        امتیاز دهید :
+                        <div class="ui star rating" data-rating="4"></div>
+                    </div>
+
+                </div>
+
+                {% for benefactor in benefactor_list.all %}
+                    <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
+                        <div class="blurring dimmable circular image">
+                            <div class="ui dimmer">
+                                <div class="content">
+                                    <div class="center">
+                                        <div class="ui inverted button">Add Friend</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <img src="{% static "img/avatar8.png" %}" class="ui circular image">
+                        </div>
+                        <div class="content" style="margin-top: 10px">
+
+                            <a class="header" style="font-family: VezFont; align-content: center">
+                                {{ benefactor.member.first_name }} {{ benefactor.member.last_name }}
+                            </a>
+                            <div class="meta">
+                                <span class="date">آخرین بازدید : 5 ساعت پیش</span>
+                            </div>
+                            <div class="discription" style="margin-top: 8px">
+                                {% if benefactor.member.bio %}
+                                    <h4 style="overflow: hidden">
+                                        {{ benefactor.member.bio }}
+                                    </h4>
+                                {% endif %}
+                                <br>
+                                {% if benefactor.skill.count > 0 %}
+                                    <h5> توانایی ها : </h5>
+                                    <p>
+                                        {% for has_skill in benefactor.skill.all %}
+                                            {% if forloop.counter0 != 0 %}
+                                                ،
+                                            {% endif %}
+                                            {{ has_skill.skill_type }}
+                                        {% endfor %}
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="extra">
+                            امتیاز دهید :
+                            <div class="ui star rating" data-rating="4"></div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -56,3 +56,15 @@ class ShowInstitutesView(ListView):
         else:
             return Institute.objects
 
+
+class ShowBenefactorsView(ListView):
+    template_name = 'benefactor_search.html'
+    model = Benefactor
+
+    def get_queryset(self):
+        print(self.request.GET)
+        if 'name' in dict(self.request.GET).keys():
+            return Benefactor.objects.filter(member__first_name__icontains=self.request.GET.get('name'))
+        else:
+            return Benefactor.objects
+
