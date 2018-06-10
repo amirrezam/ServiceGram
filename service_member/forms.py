@@ -33,6 +33,7 @@ class SignUpBenefactorForm(UserCreationForm):
         member.is_institute = False
         member.save()
         benefactor = Benefactor.objects.create(member=member)
+        print(self.cleaned_data.get('skills').all())
         for skill in self.cleaned_data.get('skills').all():
             has_skill = HasSkill.objects.create(benefactor=benefactor, skill_type=skill,
                                                 validation_status=ValidationStatus.Pen)

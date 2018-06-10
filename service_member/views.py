@@ -3,7 +3,7 @@ from django.views.generic import CreateView, TemplateView, DetailView, RedirectV
 from service_member.forms import SignUpInstituteForm, SignUpBenefactorForm
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
-from service_member.models import Benefactor, Institute, Member
+from service_member.models import Benefactor, Institute, Member, Skill
 
 
 # Create your views here.
@@ -19,6 +19,11 @@ class SignUpBenefactorView(CreateView):
     form_class = SignUpBenefactorForm
     success_url = '/login/'
     template_name = 'home_signup_benefactor.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['Skill'] = Skill.objects.all()
+        return context
 
 
 class HomeView(TemplateView):

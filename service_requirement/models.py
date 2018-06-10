@@ -89,7 +89,6 @@ class HelpNonCash(models.Model):
         max_length=8,
         choices=[(tag, tag.value) for tag in ValidationStatus]
     )
-
     sender = models.CharField(
         max_length=10,
         choices=[(tag, tag.value) for tag in SenderStatus]

@@ -40,9 +40,11 @@
                     <h4>توانایی ها : </h4>
 
                     <p>
-                        طراحی صفحات وب، زدن کد c و java ، جاروکشی
-                        {% for hasskill in member.skill.all %}
-                            {{ hasskill.skilltype }} ،
+                        {% for hasskill in member.benefactor.skill.all %}
+                            {% if forloop.counter0 > 0 %}
+                                ،
+                            {% endif %}
+                            {{ hasskill.skill_type }}
                         {% endfor %}
                     </p>
 

@@ -6,10 +6,8 @@
 
     <select name="skills" multiple="" class="ui fluid dropdown">
     <option value="">توانایی‌ها</option>
-    <option value="ایزی شدن">ایزی شدن</option>
-    <option value="هارد شدن">هارد شدن</option>
-    {% for skill in Skill.objects.all %}
-        <option value="{{ skill.name }}">{{ skill.name }}</option>
+    {% for skill in Skill %}
+        <option name="skills" value="{{ forloop.counter }}" id="id_skills_{{ forloop.counter0 }}">{{ skill.name }}</option>
     {% endfor %}
     </select>
     <script>$(function() {
