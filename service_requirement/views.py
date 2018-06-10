@@ -1,8 +1,10 @@
 from django.http import Http404
 from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, RedirectView, ListView
+
+from service_member.models import Skill
 from service_requirement.forms import CreateCashRequirementForm, CreateNonCashRequirementForm, RequestHelpBenefactorForm
-from service_requirement.models import CashRequirement, NonCashRequirement, HelpNonCash, ValidationStatus
+from service_requirement.models import CashRequirement, NonCashRequirement, HelpNonCash, ValidationStatus, Chunk
 
 
 # Create your views here.
@@ -109,3 +111,32 @@ class AcceptRequestFromBenefactorView(RedirectView):
         #                               status='ValidationStatus.Act',
         #                               date)# TODO: how to get the number of requests in the week?
         return super().get(request, *args, **kwargs)
+
+
+class ShowNonCashRequirementsView(ListView):
+    template_name = 'non_cash_requirement_search.html'
+    model = NonCashRequirement
+
+    def get_queryset(self):
+        ans = NonCashRequirement.objects
+        if dict(self.request.GET).keys().__len__() == 0:
+            return ans
+        if not self.request.GET.get('day') == '':
+            ans = ans.filter(date__day=self.request.GET.get('day'))
+        if not self.request.GET.get('year') == '':
+            ans = ans.filter(date__year=self.request.GET.get('year'))
+        if not self.request.GET.get('month') == '':
+            ans = ans.filter(date__month=self.request.GET.get('month'))
+        if 'chunks' in dict(self.request.GET).keys():
+            if not self.request.GET.get('chunks') == '':
+                ans = ans.filter(time_id__in=dict(self.request.GET)['chunks'])
+        if 'skills' in dict(self.request.GET).keys():
+            if not self.request.GET.get('skills') == '':
+                ans = ans.filter(skill_id__in=dict(self.request.GET)['skills'])
+        return ans
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['Skill'] = Skill.objects.all()
+        context['Chunk'] = Chunk.objects.all()
+        return context
