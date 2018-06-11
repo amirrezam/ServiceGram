@@ -49,82 +49,174 @@
 
             <div class="ui four stackable special cards">
                 {% for non_cash_requirement in member.institute.non_cash_requirements.all %}
-                    {% include "non_cash_requirement.html" %}
+                    {% include "non_cash_requirement_card.html" %}
                 {% endfor %}
             </div>
 
             <br>
             <br>
 
+            {% if user.username == member.username %}
+                <div class="ui very relaxed middle aligned stackable grid">
+                    <div class="eight wide column">
+                        <h3>درخواست‌های نیکوکاران : </h3>
+                        <br>
 
-            <div class="ui very relaxed middle aligned stackable grid">
-                <div class="eight wide column">
-                    <h3>درخواست‌های موسسات : </h3>
-                    <br>
-
-                    <div class="ui items">
-                        <div class="item" style="margin-bottom: 10px">
-                            <a class="ui small circular image" style="margin-left: 10px">
-                                <img src="{% static "img/avatar3.png" %}">
-                            </a>
-                            <div class="content">
-                                <a class="header" style="font-family: VezFont">امیررضا مزینی</a>
-                                <div class="description">
-                                    <p>
-                                        مورد درخواست : درخواست استخدام به عنوان حمال
-                                    </p>
-                                    <p>
-                                        توضیحات : بنده همیشه آرزو داشتم در شرکت شما حمالی کنم.
-                                    </p>
+                        <div class="ui items">
+                            <div class="item" style="margin-bottom: 10px">
+                                <a class="ui small circular image" style="margin-left: 10px">
+                                    <img src="{% static "img/avatar3.png" %}">
+                                </a>
+                                <div class="content">
+                                    <a class="header" style="font-family: VezFont">امیررضا مزینی</a>
+                                    <div class="description">
+                                        <p>
+                                            مورد درخواست : درخواست استخدام به عنوان حمال
+                                        </p>
+                                        <p>
+                                            توضیحات : بنده همیشه آرزو داشتم در شرکت شما حمالی کنم.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="item" style="margin-bottom: 10px">
-                            <a class="ui small circular image" style="margin-left: 10px">
-                                <img src="{% static "img/avatar14.png" %}">
-                            </a>
-                            <div class="content">
-                                <a class="header" style="font-family: VezFont">محبوبه محمدی</a>
-                                <div class="description">
-                                    <p>
-                                        مورد درخواست : درخواست استخدام به عنوان نجار
-                                    </p>
-                                    <p>
-                                        توضیحات : لطفا مرا به عنوان نجار قبول کنین. رزومم خیلی خوبه !.
-                                    </p>
+                            <div class="item" style="margin-bottom: 10px">
+                                <a class="ui small circular image" style="margin-left: 10px">
+                                    <img src="{% static "img/avatar14.png" %}">
+                                </a>
+                                <div class="content">
+                                    <a class="header" style="font-family: VezFont">محبوبه محمدی</a>
+                                    <div class="description">
+                                        <p>
+                                            مورد درخواست : درخواست استخدام به عنوان نجار
+                                        </p>
+                                        <p>
+                                            توضیحات : لطفا مرا به عنوان نجار قبول کنین. رزومم خیلی خوبه !.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
+
+                            {% for non_cash_requirement in member.institute.non_cash_requirements.all %}
+                                {% for help_non_cash in non_cash_requirement.helps.all %}
+                                    {% if help_non_cash.sender == 'SenderStatus.Ben' %}
+                                        {% if help_non_cash.status == 'ValidationStatus.Pen' %}
+                                            <div class="item" style="margin-bottom: 10px">
+                                                <a class="ui small circular image" style="margin-left: 10px">
+                                                    <img src="/image/{{ help_non_cash.benefactor.member.avatar }}">
+                                                </a>
+                                                <div class="content">
+                                                    <a class="header" style="font-family: VezFont" href="/profile/{{ help_non_cash.benefactor.member.username }}">
+                                                        {{ help_non_cash.benefactor.member.first_name }} {{ help_non_cash.benefactor.member.last_name }}
+                                                    </a>
+                                                    <div class="description">
+                                                        <p>
+                                                            مورد درخواست :
+                                                            {{ non_cash_requirement.description }}
+                                                        </p>
+                                                        <p>
+                                                            توضیحات :
+                                                            {{ help_non_cash.description }}
+                                                        </p>
+                                                    </div>
+                                                    <button class="ui primary huge button" onclick="ui.basic.modal" id="accept_button_{{ help_non_cash.pk }}">
+                                                        قبول درخواست همکاری
+                                                    </button>
+                                                    <script>
+                                                        $('#accept_button_{{ help_non_cash.pk }}').click(function() {
+                                                            $('.ui.basic.modal')
+                                                                .modal('show')
+                                                                ;
+                                                        });
+                                                    </script>
+                                                    <div class="ui basic modal">
+                                                        <div class="ui icon header">
+                                                            <i class="archive icon"></i>
+                                                            آیا مطمعن هستید؟
+                                                        </div>
+                                                        <div class="content" style="text-align: right">
+                                                            <p>
+                                                                در صورت تایید اینکار قابل بازگشت نیست.
+                                                            </p>
+                                                        </div>
+                                                        <div class="actions">
+                                                            <div class="ui red basic cancel inverted button">
+                                                                <i class="remove icon"></i>
+                                                                No
+                                                            </div>
+                                                            <a href="/requirements/requests/accept/{{ help_non_cash.pk }}">
+                                                                <div class="ui green ok inverted button">
+                                                                <i class="checkmark icon"></i>
+                                                                    Yes
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
                         </div>
+
                     </div>
 
-                </div>
+                    <div class="eight wide column">
+                        <h3>درخواست‌های پذیرفته شده : </h3>
+                        <br>
 
-                <div class="eight wide column">
-                    <h3>درخواست‌های پذیرفته شده : </h3>
-                    <br>
-
-                    <div class="ui items">
-                        <div class="item" style="margin-bottom: 10px">
-                            <a class="ui small circular image" style="margin-left: 10px">
-                                <img src="{% static "img/school.png" %}">
-                            </a>
-                            <div class="content">
-                                <a class="header" style="font-family: VezFont">آرین تاجمیرریاحی</a>
-                                <div class="description">
-                                    <p>
-                                        مورد درخواست : درخواست استخدام به عنوان یدک کش C
-                                    </p>
-                                    <p>
-                                        توضیحات : اگر منو استخدام کنین می تونم به تنهایی همه‌ی یدک های شرکت رو بکشم..
-                                    </p>
+                        <div class="ui items">
+                            <div class="item" style="margin-bottom: 10px">
+                                <a class="ui small circular image" style="margin-left: 10px">
+                                    <img src="{% static "img/school.png" %}">
+                                </a>
+                                <div class="content">
+                                    <a class="header" style="font-family: VezFont">آرین تاجمیرریاحی</a>
+                                    <div class="description">
+                                        <p>
+                                            مورد درخواست : درخواست استخدام به عنوان یدک کش C
+                                        </p>
+                                        <p>
+                                            توضیحات : اگر منو استخدام کنین می تونم به تنهایی همه‌ی یدک های شرکت رو بکشم..
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
+                            {% for non_cash_requirement in member.institute.non_cash_requirements.all %}
+                                {% for help_non_cash in non_cash_requirement.helps.all %}
+                                    {% if help_non_cash.sender == 'SenderStatus.Ben' %}
+                                        {% if help_non_cash.status == 'ValidationStatus.Act' %}
+                                            <div class="item" style="margin-bottom: 10px">
+                                                <a class="ui small circular image" style="margin-left: 10px">
+                                                    <img src="/image/{{ help_non_cash.benefactor.member.avatar }}">
+                                                </a>
+                                                <div class="content">
+                                                    <a class="header" style="font-family: VezFont" href="/profile/{{ help_non_cash.benefactor.member.username }}">
+                                                        {{ help_non_cash.benefactor.member.first_name }} {{ help_non_cash.benefactor.member.last_name }}
+                                                    </a>
+                                                    <div class="description">
+                                                        <p>
+                                                            مورد درخواست :
+                                                            {{ non_cash_requirement.description }}
+                                                        </p>
+                                                        <p>
+                                                            توضیحات :
+                                                            {{ help_non_cash.description }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+
                         </div>
 
-                    </div>
 
-                </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </section>
