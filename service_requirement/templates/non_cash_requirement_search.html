@@ -190,48 +190,7 @@
             </div>
 
             {% for non_cash_requirement in noncashrequirement_list.all %}
-            <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
-                <div class="blurring dimmable circular image">
-                    <div class="ui dimmer">
-                        <div class="content">
-                            <div class="center">
-                                <div class="ui inverted button">Add Friend</div>
-                            </div>
-                        </div>
-                    </div>
-                    <img src="/image/{{ non_cash_requirement.owner.member.avatar }}" class="ui circular image">
-                </div>
-                <div class="content" style="margin-top: 10px">
-
-                    <a class="header" style="font-family: VezFont; align-content: center" href="/profile/{{ non_cash_requirement.owner.member.username   }}">{{ non_cash_requirement.owner.member.first_name }}</a>
-                    <div class="meta">
-                        <span class="date">آخرین بازدید : 2 ساعت پیش</span>
-                    </div>
-                    <div class="discription" style="margin-top: 8px">
-                        <h4>
-                            {{ non_cash_requirement.description }}
-                        </h4>
-                        <br>
-                        <h5> توانایی‌ مورد نیاز : </h5>
-                        <p>
-                            {{ non_cash_requirement.skill }}
-                        </p>
-                        <h5> تاریخ : </h5>
-                        <p>
-                            {{ non_cash_requirement.date }}
-                        </p>
-                        <h5> ساعت : </h5>
-                        <p>
-                            {{ non_cash_requirement.time }}
-                        </p>
-                    </div>
-                </div>
-                <div class="extra">
-                    امتیاز دهید :
-                    <div class="ui star rating" data-rating="4"></div>
-                </div>
-
-            </div>
+                {% include "non_cash_requirement.html" %}
             {% endfor %}
 
         </div>
