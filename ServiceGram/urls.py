@@ -24,5 +24,6 @@ urlpatterns = static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + 
               static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + [
     re_path('admin/', admin.site.urls),
     re_path(r'requirements/', include('service_requirement.urls')),
+    re_path(r'admin1/', include('service_admin.urls')),
     re_path(r'^', include('service_member.urls'))
 ]

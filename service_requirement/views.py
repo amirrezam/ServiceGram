@@ -22,6 +22,8 @@ class CreateCashRequirementView(CreateView):
         return super().form_valid(form)
 
     def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise Http404
         if request.user.is_benefactor:
             raise Http404
         return super().get(request, *args, **kwargs)
@@ -39,6 +41,8 @@ class CreateNonCashRequirementView(CreateView):
         return super().form_valid(form)
 
     def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise Http404
         if request.user.is_benefactor:
             raise Http404
         return super().get(request, *args, **kwargs)
@@ -73,6 +77,8 @@ class RequestHelpBenefactorView(CreateView):
         return super().form_valid(form)
 
     def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise Http404
         if request.user.is_institute:
             raise Http404
         return super().get(request, *args, **kwargs)
@@ -86,6 +92,8 @@ class ShowRequestsRequirementView(ListView):
         return HelpNonCash.objects.filter(requirement_id__exact=self.kwargs['pk'])
 
     def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise Http404
         if request.user.is_benefactor or request.user.username != NonCashRequirement.objects.get(pk=self.kwargs['pk']).owner.member.username:
             raise Http404
         return super().get(request, *args, **kwargs)
@@ -96,6 +104,8 @@ class AcceptRequestFromBenefactorView(RedirectView):
 
     def get(self, request, *args, **kwargs):
         help_non_cash = HelpNonCash.objects.get(pk=self.kwargs['pk'])
+        if not request.user.is_authenticated:
+            raise Http404
         if request.user.is_benefactor:
             raise Http404
         if request.user.username != help_non_cash.requirement.owner.member.username:
