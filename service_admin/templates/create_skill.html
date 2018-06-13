@@ -1,1 +1,90 @@
-{% extends "base.html" %}
+{% extends "base_admin.html" %}
+
+{% block title %}Skills{% endblock %}
+
+{% block active_change_skill %}active{% endblock %}
+
+{% block add_content %}
+    <div class="ui bottom attached segment">
+        <p>
+            <table class="ui very basic collapsing celled table" style="text-align:right">
+                <col width="200">
+                <col width="80">
+                <thead>
+                    <tr>
+                        <th>توانایی‌ها</th>
+                        <th>گزینه‌ها</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <h4 class="ui image header">
+                                <div class="content">
+                                    ایزی شدن
+                                    <div class="sub header">بیش از ۱۰ میلیارد نفر
+                                    </div>
+                                </div>
+                            </h4>
+                        </td>
+                            <td>
+                            </button><button class="ui icon button">
+                                <i class="ban icon"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="ui image header">
+                                <div class="content">
+                                    هارد شدن
+                                    <div class="sub header">کمتر از ۰ نفر
+                                    </div>
+                                </div>
+                            </h4>
+                        </td>
+                            <td>
+                            </button><button class="ui icon button">
+                                <i class="ban icon"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% for skill in Skills.all %}
+                        <tr>
+                            <td>
+                                <h4 class="ui image header">
+                                    <div class="content">
+                                        {{ skill.name }}
+                                        <div class="sub header">کمتر از ۰ نفر
+                                        </div>
+                                    </div>
+                                </h4>
+                            </td>
+                                <td>
+                                </button><button class="ui icon button">
+                                    <i class="ban icon"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <form method="post">
+                            {% csrf_token %}
+                            <td>
+                                <h4 class="ui image header">
+                                    <div class="ui input">
+                                        <input type="text" placeholder="توانایی جدید" style="text-align:right" name="name" id="id_name">
+                                    </div>
+                                </h4>
+                            </td>
+                            <td>
+                                <button class="ui icon button" type="submit">
+                                    <i class="plus icon"></i>
+                            </td>
+                        </form>
+                    <tr>
+                </tbody>
+            </table>
+        </p>
+    </div>
+{% endblock %}
