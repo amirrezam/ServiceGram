@@ -4,7 +4,7 @@
 
 {% block title %}Skills{% endblock %}
 
-{% block avtice_validate_skill %}active{% endblock %}
+{% block active_validate_skill %}active{% endblock %}
 
 {% block add_content %}
     <div class="ui bottom attached segment">
@@ -19,101 +19,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <h4 class="ui image header">
-                                <img src="{% static "/img/avatar4.png" %}" class="ui mini rounded image">
-                                <div class="content">
-                                    علیرضا وزوایی
-                                    <div class="sub header">طراحی سایت
-                                    </div>
-                                </div>
-                            </h4>
-                        </td>
-                            <td><button class="ui icon button">
-                                <i class="check icon"></i>
-                            </button><button class="ui icon button">
-                                <i class="ban icon"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h4 class="ui image header">
-                                <img src="{% static "/img/avatar6.png" %}" class="ui mini rounded image">
-                                <div class="content">
-                                    امیررضا مزینی
-                                    <div class="sub header">ایز کردن نقشه
-                                    </div>
-                                </div>
-                            </h4>
-                        </td>
-                            <td><button class="ui icon button">
-                                <i class="check icon"></i>
-                            </button><button class="ui icon button">
-                                <i class="ban icon"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h4 class="ui image header">
-                                <img src="{% static "/img/avatar2.png" %}" class="ui mini rounded image">
-                                <div class="content">
-                                    الیاس حیدری
-                                    <div class="sub header">دو رشته‌ای کردن
-                                    </div>
-                                </div>
-                            </h4>
-                        </td>
-                        <td>
-                            <button class="ui icon button">
-                                <i class="check icon"></i>
-                            </button><button class="ui icon button">
-                                <i class="ban icon"></i>
-                            </button>
-                        </td>
-                    <tr>
-                        <td>
-                            <h4 class="ui image header">
-                                <img src="{% static "/img/avatar3.png" %}" class="ui mini rounded image">
-                                <div class="content">
-                                    آرین تاجمیرریاحی
-                                    <div class="sub header">دبه کردن
-                                    </div>
-                                </div>
-                            </h4>
-                        </td>
-                        <td>
-                            <button class="ui icon button">
-                                <i class="check icon"></i>
-                            </button><button class="ui icon button">
-                                <i class="ban icon"></i>
-                            </button>
-                        </td>
-                    </tr>
                     {% for has_skill in hasskill_list %}
                         <tr>
                             <td>
-                                <h4 class="ui image header">
-                                    <img src="/image/{{ has_skill.benefactor.member.avatar }}" class="ui mini rounded image">
-                                    <div class="content">
-                                        {{ has_skill.benefactor.member.first_name }} {{ has_skill.benefactor.member.last_name }}
-                                        <div class="sub header">
-                                            {{ has_skill.skill_type }}
+                                <a href="{% url 'profile' username=has_skill.benefactor.member.username %}">
+                                    <h4 class="ui image header">
+                                        <img src="/image/{{ has_skill.benefactor.member.avatar }}" class="ui mini rounded image">
+                                        <div class="content">
+                                            {{ has_skill.benefactor.member.first_name }} {{ has_skill.benefactor.member.last_name }}
+                                            <div class="sub header">
+                                                {{ has_skill.skill_type }}
+                                            </div>
                                         </div>
-                                    </div>
-                                </h4>
+                                    </h4>
+                                </a>
                             </td>
                             <td>
                                 <a href="{% url 'accept_skill' pk=has_skill.pk %}">
                                     <button class="ui icon button">
                                         <i class="check icon"></i>
+                                    </button></a><a href="{% url 'reject_skill' pk=has_skill.pk %}"><button class="ui icon button">
+                                        <i class="ban icon"></i>
                                     </button>
                                 </a>
-                                </button><button class="ui icon button">
-                                    <i class="ban icon"></i>
-                                </button>
                             </td>
                         </tr>
                     {% endfor %}

@@ -1,5 +1,7 @@
 {% extends "base_admin.html" %}
 
+{% load filter_skill %}
+
 {% block title %}Skills{% endblock %}
 
 {% block active_change_skill %}active{% endblock %}
@@ -17,45 +19,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <h4 class="ui image header">
-                                <div class="content">
-                                    ایزی شدن
-                                    <div class="sub header">بیش از ۱۰ میلیارد نفر
-                                    </div>
-                                </div>
-                            </h4>
-                        </td>
-                            <td>
-                            </button><button class="ui icon button">
-                                <i class="ban icon"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h4 class="ui image header">
-                                <div class="content">
-                                    هارد شدن
-                                    <div class="sub header">کمتر از ۰ نفر
-                                    </div>
-                                </div>
-                            </h4>
-                        </td>
-                            <td>
-                            </button><button class="ui icon button">
-                                <i class="ban icon"></i>
-                            </button>
-                        </td>
-                    </tr>
                     {% for skill in Skills.all %}
                         <tr>
                             <td>
                                 <h4 class="ui image header">
                                     <div class="content">
                                         {{ skill.name }}
-                                        <div class="sub header">کمتر از ۰ نفر
+                                        <div class="sub header">
+                                        {{ HasSkills|filter_accepted|filter_by_name:skill.name|length }} نفر
                                         </div>
                                     </div>
                                 </h4>

@@ -1,3 +1,5 @@
+{% load filter_skill %}
+
 <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
     <div class="blurring dimmable circular image">
         <div class="ui dimmer">
@@ -37,7 +39,13 @@
 
     {% if user.is_authenticated %}
         {% if user.is_benefactor %}
-            <button class="ui primary huge button" onclick="ui.modal" id="request_button_{{ non_cash_requirement.pk }}">
+            <button class="ui primary huge button" onclick="ui.modal" id="request_button_{{ non_cash_requirement.pk }}"
+                {% if not user.benefactor.skill %}
+                    disabled
+                {% elif non_cash_requirement.skill.name not in user.benefactor.skill|filter_accepted|get_names %}
+                    disabled
+                {% endif %}
+            >
                 ارسال درخواست همکاری
             </button>
             <script>

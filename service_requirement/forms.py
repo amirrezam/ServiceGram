@@ -1,4 +1,6 @@
 from django import forms
+from django.core.exceptions import ValidationError
+
 from service_requirement.models import CashRequirement, NonCashRequirement, Chunk, HelpNonCash, ValidationStatus, \
     SenderStatus
 from service_member.models import Skill
@@ -42,6 +44,7 @@ class CreateNonCashRequirementForm(forms.ModelForm):
 
 
 class RequestHelpBenefactorForm(forms.ModelForm):
+
     def save(self, commit=True):
         help_non_cash = super().save(commit=False)
         help_non_cash.status = ValidationStatus.Pen

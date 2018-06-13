@@ -39,16 +39,18 @@
 
                     <br>
 
-                    <h4>توانایی ها : </h4>
+                    {% if member.benefactor.skill %}
+                        <h4>توانایی ها : </h4>
 
-                    <p>
-                        {% for hasskill in member.benefactor.skill|filter_accepted %}
-                            {% if forloop.counter0 > 0 %}
-                                ،
-                            {% endif %}
-                            {{ hasskill.skill_type }}
-                        {% endfor %}
-                    </p>
+                        <p>
+                            {% for hasskill in member.benefactor.skill|filter_accepted %}
+                                {% if forloop.counter0 > 0 %}
+                                    ،
+                                {% endif %}
+                                {{ hasskill.skill_type }}
+                            {% endfor %}
+                        </p>
+                    {% endif %}
 
                     <br>
                     <button class="ui primary huge button">ارسال درخواست همکاری</button>

@@ -67,7 +67,7 @@ class NonCashRequirementProfileView(DetailView):
 class RequestHelpBenefactorView(CreateView):
     form_class = RequestHelpBenefactorForm
     template_name = 'SubmitRequest.html'
-    success_url = '/login/'
+    success_url = '/profile/'
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -80,6 +80,9 @@ class RequestHelpBenefactorView(CreateView):
         if not request.user.is_authenticated:
             raise Http404
         if request.user.is_institute:
+            raise Http404
+        skills = [has_skill.skill_type.name for has_skill in request.user.benefactor.skill.filter(validation_status='ValidationStatus.Act')]
+        if NonCashRequirement.objects.get(pk=self.kwargs['pk']).skill.name not in skills:
             raise Http404
         return super().get(request, *args, **kwargs)
 

@@ -16,6 +16,7 @@ class CreateSkillView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['Skills'] = Skill.objects
+        context['HasSkills'] = HasSkill.objects
         return context
 
     def get(self, request, *args, **kwargs):
@@ -50,5 +51,17 @@ class AcceptSkillView(RedirectView):
         if not request.user.is_superuser:
             raise Http404
         HasSkill.objects.filter(pk=self.kwargs['pk']).update(validation_status='ValidationStatus.Act')
+        return super().get(request, *args, **kwargs)
+
+
+class RejectSkillView(RedirectView):
+    url = reverse_lazy('validate_skill')
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise Http404
+        if not request.user.is_superuser:
+            raise Http404
+        HasSkill.objects.filter(pk=self.kwargs['pk']).update(validation_status='ValidationStatus.Rej')
         return super().get(request, *args, **kwargs)
 
