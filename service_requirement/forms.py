@@ -14,7 +14,7 @@ class CreateCashRequirementForm(forms.ModelForm):
 
     class Meta:
         model = CashRequirement
-        fields = ('fund','description')
+        fields = ('fund', 'description')
 
 
 class CreateNonCashRequirementForm(forms.ModelForm):

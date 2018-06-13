@@ -1,0 +1,25 @@
+{% extends "edit_profile.html" %}
+
+{% block addition %}
+    <h4 class="ui dividing header">
+        توانایی‌ها</h4>
+
+    <select name="skills" multiple="" class="ui fluid dropdown">
+    <option value="">توانایی‌ها</option>
+    {% for skill in Skill %}
+        <option name="skills" value="{{ forloop.counter }}" id="id_skills_{{ forloop.counter0 }}">{{ skill.name }}</option>
+    {% endfor %}
+    </select>
+    <script>$(function() {
+      $('.ui.dropdown').dropdown();
+      $('.overlay.example .overlay')
+          .visibility({
+              type: 'fixed',
+              offset: 15 // give some space from top of screen
+          });
+    });</script>
+    <div class="field">
+        <label>حداکثر کمک رسانی در ماه</label>
+        <input type="text" value="{{ user.max_chunk_in_month }}" placeholder="20" style="text-align:left;width:40px">
+    </div>
+{% endblock %}

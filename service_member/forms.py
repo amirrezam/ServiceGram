@@ -33,7 +33,6 @@ class SignUpBenefactorForm(UserCreationForm):
         member.is_institute = False
         member.save()
         benefactor = Benefactor.objects.create(member=member)
-        print(self.cleaned_data.get('skills').all())
         for skill in self.cleaned_data.get('skills').all():
             has_skill = HasSkill.objects.create(benefactor=benefactor, skill_type=skill,
                                                 validation_status=ValidationStatus.Pen)
@@ -47,8 +46,26 @@ class SignUpBenefactorForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'bio', 'password1', 'password2')
 
 
-class EditProfileForm(forms.ModelForm):
+class EditProfileBenefactorForm(forms.ModelForm):
+    skills = forms.ModelMultipleChoiceField(
+        queryset=Skill.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        self.fields['bio'].initial = self.user.bio
+        self.fields['email'].initial = self.user.email
 
     class Meta:
         model = Member
-        fields = ('avatar',)
+        fields = ('avatar', 'email', 'bio', 'first_name', 'last_name')
+
+
+class EditProfileInstituteForm(forms.ModelForm):
+
+    class Meta:
+        model = Member
+        fields = ('avatar', 'email', 'bio', 'first_name')

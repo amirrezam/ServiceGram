@@ -37,7 +37,7 @@ class Institute(models.Model):
 
 class Benefactor(models.Model):
     member = models.OneToOneField(to='Member', related_name='benefactor', on_delete=models.CASCADE, null=True)
-    max_chunk_in_week = models.IntegerField(default=20)
+    max_chunk_in_month = models.IntegerField(default=20)
 
     class Meta:
         verbose_name = 'Benefactor'

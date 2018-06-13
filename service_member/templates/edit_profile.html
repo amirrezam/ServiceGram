@@ -1,11 +1,45 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block titlte %}Edit profile{% endblock %}
+{% block title %}Edit profile{% endblock %}
 
-{% block content %}
-    <form method="post" enctype="multipart/form-data">
+
+{%  block content %}
+
+<div style="text-align:right;width:500px;margin:auto;margin-top:50px">
+    <form class="ui form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit" />
+        {{ form.avatar }}
+        {% block personal %}
+            <h4 class="ui dividing header">
+                مشخصات
+            </h4>
+            {% block name %}
+                <div class="field">
+                    <label>نام</label>
+                    <div class="two fields">
+                        <div class="field">
+                            <input type="text" name="first_name" value="{{ user.first_name }}" placeholder="نام" id="id_first_name">
+                        </div>
+                        <div class="field">
+                            <input type="text" name="last_name" value="{{ user.last_name }}" placeholder="نام خانوادگی" id="id_last_name">
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+            <div class="field">
+                <label>پست الکترونیک</label>
+                <input type="email" value="{{ user.email }}" placeholder="joe@schmoe.com" name="email" style="text-align:left" id="id_email">
+            </div>
+            {% block bio %}
+            <div class="field">
+                <label>بیوگرافی</label>
+                <textarea type="text" placeholder="بیوگرافی" name="bio" style="text-align: right" id="id_bio">{{ user.bio }}</textarea>
+            </div>
+            {% endblock %}
+        {% endblock %}
+        {% block addition %}{% endblock %}
+        <button class="ui primary button" type="submit" id="id_submit">ثبت</button>
     </form>
+</div>
+
 {% endblock %}
