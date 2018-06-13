@@ -84,6 +84,11 @@ class RequestHelpBenefactorView(CreateView):
         skills = [has_skill.skill_type.name for has_skill in request.user.benefactor.skill.filter(validation_status='ValidationStatus.Act')]
         if NonCashRequirement.objects.get(pk=self.kwargs['pk']).skill.name not in skills:
             raise Http404
+        if HelpNonCash.objects.filter(requirement__date__exact=NonCashRequirement.objects.get(pk=self.kwargs['pk']).date,
+                                      requirement__time__exact=NonCashRequirement.objects.get(pk=self.kwargs['pk']).time,
+                                      benefactor__member__username__exact=request.user.username,
+                                      status='ValidationStatus.Act').count() > 0:
+            raise Http404
         return super().get(request, *args, **kwargs)
 
 
