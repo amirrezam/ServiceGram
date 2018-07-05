@@ -158,3 +158,20 @@ class ShowNonCashRequirementsView(ListView):
         context['Skill'] = Skill.objects.all()
         context['Chunk'] = Chunk.objects.all()
         return context
+
+
+class RejectRequestFromBenefactorView(RedirectView):
+    url = '/profile/'
+
+    def get(self, request, *args, **kwargs):
+        help_non_cash = HelpNonCash.objects.get(pk=self.kwargs['pk'])
+        if not request.user.is_authenticated:
+            raise Http404
+        if request.user.is_benefactor:
+            raise Http404
+        if request.user.username != help_non_cash.requirement.owner.member.username:
+            raise Http404
+        if help_non_cash.status != 'ValidationStatus.Pen':
+            raise Http404
+        HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(status=ValidationStatus.Rej)
+        return super().get(request, *args, **kwargs)
