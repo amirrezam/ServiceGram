@@ -9,13 +9,13 @@
 {% block add_content %}
     <div class="ui bottom attached segment">
         <p>
-            <table class="ui very basic collapsing celled table" style="text-align:right">
+            <table class="ui very basic collapsing celled table" style="text-align:right;margin: auto">
                 <col width="200">
                 <col width="80">
                 <thead>
                     <tr>
                         <th>توانایی‌ها</th>
-                        <th>گزینه‌ها</th>
+{#                        <th>گزینه‌ها</th>#}
                     </tr>
                 </thead>
                 <tbody>
@@ -30,12 +30,12 @@
                                         </div>
                                     </div>
                                 </h4>
-                            </td>
-                                <td>
-                                </button><button class="ui icon button">
-                                    <i class="ban icon"></i>
-                                </button>
-                            </td>
+{#                            </td>#}
+{#                                <td>#}
+{#                                </button><button class="ui icon button">#}
+{#                                    <i class="ban icon"></i>#}
+{#                                </button>#}
+{#                            </td>#}
                         </tr>
                     {% endfor %}
                     <tr>
@@ -47,11 +47,14 @@
                                         <input type="text" placeholder="توانایی جدید" style="text-align:right" name="name" id="id_name">
                                     </div>
                                 </h4>
-                            </td>
-                            <td>
+
                                 <button class="ui icon button" type="submit">
                                     <i class="plus icon"></i>
                             </td>
+{#                            <td>#}
+{#                                <button class="ui icon button" type="submit">#}
+{#                                    <i class="plus icon"></i>#}
+{#                            </td>#}
                         </form>
                     <tr>
                 </tbody>

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db.models import QuerySet
 
-from service_member.models import Member, Institute, Benefactor, Skill, HasSkill
+from service_member.models import Member, Institute, Benefactor, Skill, HasSkill, ActivationStatus
 from service_requirement.models import ValidationStatus
 
 
@@ -11,13 +11,14 @@ class SignUpInstituteForm(UserCreationForm):
         member = super().save(commit=False)
         member.is_benefactor = False
         member.is_institute = True
+        member.activation_status = ActivationStatus.Pen
         member.save()
         institute = Institute.objects.create(member=member)
         return member
 
     class Meta:
         model = Member
-        fields = ('username', 'first_name', 'email', 'password1', 'password2', 'bio')
+        fields = ('username', 'first_name', 'email', 'password1', 'password2', 'bio', 'avatar')
 
 
 class SignUpBenefactorForm(UserCreationForm):
@@ -31,6 +32,7 @@ class SignUpBenefactorForm(UserCreationForm):
         member = super().save(commit=False)
         member.is_benefactor = True
         member.is_institute = False
+        member.activation_status = ActivationStatus.Pen
         member.save()
         benefactor = Benefactor.objects.create(member=member)
         for skill in self.cleaned_data.get('skills').all():
@@ -43,7 +45,7 @@ class SignUpBenefactorForm(UserCreationForm):
 
     class Meta:
         model = Member
-        fields = ('username', 'first_name', 'last_name', 'email', 'bio', 'password1', 'password2')
+        fields = ('username', 'first_name', 'last_name', 'email', 'bio', 'password1', 'password2', 'avatar')
 
 
 class EditProfileBenefactorForm(forms.ModelForm):

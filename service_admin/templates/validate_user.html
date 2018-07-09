@@ -4,7 +4,7 @@
 
 {% block title %}Skills{% endblock %}
 
-{% block active_validate_skill %}active{% endblock %}
+{% block active_validate_user %}active{% endblock %}
 
 {% block add_content %}
     <div class="ui bottom attached segment">
@@ -19,26 +19,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for has_skill in hasskill_list %}
+                    {% for member in member_list %}
                         <tr>
                             <td>
-                                <a href="{% url 'profile' username=has_skill.benefactor.member.username %}">
+                                <a href="{% url 'profile' username=member.username %}">
                                     <h4 class="ui image header">
-                                        <img src="/image/{{ has_skill.benefactor.member.avatar }}" class="ui mini rounded image">
+                                        <img src="/image/{{ member.avatar }}" class="ui mini rounded image">
                                         <div class="content">
-                                            {{ has_skill.benefactor.member.first_name }} {{ has_skill.benefactor.member.last_name }}
+                                            {{ member.first_name }} {{ member.last_name }}
                                             <div class="sub header">
-                                                {{ has_skill.skill_type }}
+                                                {% if member.is_benefactor %}
+                                                    نیکوکار
+                                                {% else %}
+                                                    موسسه
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </h4>
                                 </a>
                             </td>
                             <td>
-                                <a href="{% url 'accept_skill' pk=has_skill.pk %}">
+                                <a href="{% url 'accept_user' pk=member.pk %}">
                                     <button class="ui icon button">
                                         <i class="check icon"></i>
-                                    </button></a><a href="{% url 'reject_skill' pk=has_skill.pk %}"><button class="ui icon button">
+                                    </button>
+                                </a>
+                                <a href="{% url 'reject_user' pk=member.pk %}">
+                                    <button class="ui icon button">
                                         <i class="ban icon"></i>
                                     </button>
                                 </a>

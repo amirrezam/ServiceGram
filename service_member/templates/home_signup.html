@@ -6,7 +6,7 @@
 {%  block content %}
 
 <div style="text-align:right;width:500px;margin:auto;margin-top:50px">
-    <form class="ui form" method="post">
+    <form class="ui form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% block personal %}
         <h4 class="ui dividing header">
@@ -35,6 +35,7 @@
             <textarea type="text" placeholder="بیوگرافی" name="bio" style="text-align: right" id="id_bio"></textarea>
         </div>
         {% endblock %}
+            {{ form.avatar }}
         <div class="field">
             <label>نام کاربری</label>
             <input type="text" placeholder="نام کاربری" name="username" style="text-align:left" id="id_username">

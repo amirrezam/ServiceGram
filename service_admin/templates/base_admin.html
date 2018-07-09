@@ -3,13 +3,16 @@
 {% block title %}Admin{% endblock %}
 
 {% block content %}
-    <div style="width:300px;text-align:center;margin:auto;margin-top:20">
+    <div style="width:350px;text-align:center;margin:auto;margin-top:20">
         <div class="ui top attached tabular menu">
             <a class="{% block active_validate_skill %}{% endblock %} item" href="{% url "validate_skill" %}">
                 تایید توانایی‌ها
             </a>
             <a class="{% block active_change_skill %}{% endblock %} item" href="{% url "add_skill" %}">
                 تغییر توانایی‌های موجود در سایت
+            </a>
+            <a class="{% block active_validate_user %}{% endblock %} item" href="{% url "validate_user" %}">
+                تایید کاربران
             </a>
         </div>
         {% block add_content %}{% endblock %}

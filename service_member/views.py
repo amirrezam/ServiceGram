@@ -51,11 +51,11 @@ class ShowInstitutesView(ListView):
     model = Institute
 
     def get_queryset(self):
-        print(self.request.GET)
+        institutes = Institute.objects.filter(member__activation_status='ActivationStatus.Act')
         if 'name' in dict(self.request.GET).keys():
-            return Institute.objects.filter(member__first_name__icontains=self.request.GET.get('name'))
+            return institutes.filter(member__first_name__icontains=self.request.GET.get('name'))
         else:
-            return Institute.objects
+            return institutes
 
 
 class ShowBenefactorsView(ListView):
@@ -63,11 +63,11 @@ class ShowBenefactorsView(ListView):
     model = Benefactor
 
     def get_queryset(self):
-        print(self.request.GET)
+        benefactors = Benefactor.objects.filter(member__activation_status='ActivationStatus.Act')
         if 'name' in dict(self.request.GET).keys():
-            return Benefactor.objects.filter(member__first_name__icontains=self.request.GET.get('name'))
+            return benefactors.filter(member__first_name__icontains=self.request.GET.get('name'))
         else:
-            return Benefactor.objects
+            return benefactors
 
 
 class EditProfileBenefactorView(FormView):

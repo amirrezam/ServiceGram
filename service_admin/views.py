@@ -3,7 +3,8 @@ from django.http import Http404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, RedirectView
 from service_admin.forms import CreateSkillForm
-from service_member.models import Skill, HasSkill
+from service_member.models import Skill, HasSkill, Member
+
 
 # Create your views here.
 
@@ -65,3 +66,41 @@ class RejectSkillView(RedirectView):
         HasSkill.objects.filter(pk=self.kwargs['pk']).update(validation_status='ValidationStatus.Rej')
         return super().get(request, *args, **kwargs)
 
+
+class ValidateUserView(ListView):
+    model = Member
+    template_name = 'validate_user.html'
+
+    def get_queryset(self):
+        return Member.objects.filter(activation_status="ActivationStatus.Pen")
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise Http404
+        if not request.user.is_superuser:
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+
+class AcceptUserView(RedirectView):
+    url = reverse_lazy('validate_user')
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise Http404
+        if not request.user.is_superuser:
+            raise Http404
+        Member.objects.filter(pk=self.kwargs['pk']).update(activation_status="ActivationStatus.Act")
+        return super().get(request, *args, **kwargs)
+
+
+class RejectUserView(RedirectView):
+    url = reverse_lazy('validate_user')
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise Http404
+        if not request.user.is_superuser:
+            raise Http404
+        Member.objects.filter(pk=self.kwargs['pk']).update(activation_status="ActivationStatus.Rej")
+        return super().get(request, *args, **kwargs)
