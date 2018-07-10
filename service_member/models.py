@@ -21,8 +21,8 @@ class Member(AbstractUser):
     bio = models.CharField(max_length=200, null=True, blank=True)
     avatar = models.ImageField(upload_to='image/', default='image/default-img.png')
 
-    # def __str__(self):
-    #     return self.first_name + ' ' + self.last_name
+    def __str__(self):
+        return self.username
 
     class Meta:
         verbose_name = 'Member'
@@ -34,6 +34,9 @@ class Institute(models.Model):
     class Meta:
         verbose_name = 'Institute'
 
+    def __str__(self):
+        return self.member.username
+
 
 class Benefactor(models.Model):
     member = models.OneToOneField(to='Member', related_name='benefactor', on_delete=models.CASCADE, null=True)
@@ -41,6 +44,9 @@ class Benefactor(models.Model):
 
     class Meta:
         verbose_name = 'Benefactor'
+
+    def __str__(self):
+        return self.member.username
 
 
 class Skill(models.Model):
