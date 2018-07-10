@@ -43,6 +43,8 @@ class ProfileView(DetailView):
 
 class ProfileRedirectView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
+        if self.request.user.is_superuser:
+            return '/admin1/skills/validate/'
         return '/profile/' + self.request.user.username
 
 
@@ -83,11 +85,26 @@ class EditProfileBenefactorView(FormView):
         self.request.user.email = form.cleaned_data['email']
         self.request.user.save()
         benefactor = self.request.user.benefactor
+        benefactor.max_chunk_in_month = form.cleaned_data.get('max_chunk_in_month')
         for skill in form.cleaned_data.get('skills').all():
+            flag = False
+            for has_skill in benefactor.skill.all():
+                if has_skill.skill_type.name == skill.name:
+                    flag = True
+            if flag:
+                continue
             has_skill = HasSkill.objects.create(benefactor=benefactor, skill_type=skill,
                                                 validation_status=ValidationStatus.Pen)
             has_skill.save()
             benefactor.skill.add(has_skill)
+        for has_skill in benefactor.skill.all():
+            flag = False
+            for skill in form.cleaned_data.get('skills').all():
+                if has_skill.skill_type.name == skill.name:
+                    flag = True
+            if flag:
+                continue
+            has_skill.delete()
         benefactor.save()
         return super().form_valid(form)
 
@@ -140,6 +157,8 @@ class EditProfileView(RedirectView):
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
+            raise Http404
+        if request.user.is_superuser:
             raise Http404
         return super().get(request, *args, **kwargs)
 

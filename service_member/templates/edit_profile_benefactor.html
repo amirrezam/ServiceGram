@@ -18,8 +18,15 @@
               offset: 15 // give some space from top of screen
           });
     });</script>
+    <script>
+    $('.ui.dropdown').dropdown('set selected', [
+        {% for has_skill in user.benefactor.skill.all %}
+        "{{ has_skill.skill_type.pk }}",
+        {% endfor %}
+    ]);
+    </script>
     <div class="field">
         <label>حداکثر کمک رسانی در ماه</label>
-        <input type="text" value="{{ user.max_chunk_in_month }}" placeholder="20" style="text-align:left;width:40px">
+        <input type="text" name="max_chunk_in_month" value="{{ user.benefactor.max_chunk_in_month }}" placeholder="20" style="text-align:left;width:40px">
     </div>
 {% endblock %}
