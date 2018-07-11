@@ -125,22 +125,98 @@
                                 </div>
                             </div>
 
-                            <div class="item" style="margin-bottom: 10px">
-                                <a class="ui small circular image" style="margin-left: 10px">
-                                    <img src="{% static "img/cafe.png" %}">
-                                </a>
-                                <div class="content">
-                                    <a class="header" style="font-family: VezFont">کافه شریف</a>
-                                    <div class="description">
-                                        <p>
-                                            مورد درخواست : درخواست استخدام جاروکش
-                                        </p>
-                                        <p>
-                                            توضیحات : به یک جاروکش مجرب برای جارو کردن دستشویی کافه نیازمندیم.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            {% for help_non_cash in user.benefactor.non_cash_helps.all %}
+                                {% if help_non_cash.sender == 'SenderStatus.Ins' %}
+                                    {% if help_non_cash.status == 'ValidationStatus.Pen' %}
+                                        <div class="item" style="margin-bottom: 10px">
+                                            <a class="ui small circular image" style="margin-left: 10px">
+                                                <img src="/image/{{ help_non_cash.requirement.owner.member.avatar }}">
+                                            </a>
+                                            <div class="content">
+                                                <a class="header" href="/profile/{{ help_non_cash.requirement.owner.member.username }}" style="font-family: VezFont">
+                                                    {{ help_non_cash.requirement.owner.member.first_name }}
+                                                </a>
+                                                <div class="description">
+                                                    <p>
+                                                        مورد درخواست :
+                                                        {{ help_non_cash.requirement.title }}
+                                                    </p>
+                                                    <p>
+                                                        توضیحات :
+                                                        {{ help_non_cash.description }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <button class="ui primary huge button" onclick="ui.basic.modal" id="accept_button_{{ help_non_cash.pk }}">
+                                                        قبول درخواست همکاری
+                                                    </button>
+                                                    <script>
+                                                        $('#accept_button_{{ help_non_cash.pk }}').click(function() {
+                                                            $('#modal_accept_{{ help_non_cash.pk }}')
+                                                                .modal('show')
+                                                                ;
+                                                        });
+                                                    </script>
+                                                    <div class="ui basic modal" id="modal_accept_{{ help_non_cash.pk }}">
+                                                        <div class="ui icon header">
+                                                            <i class="archive icon"></i>
+                                                            آیا مطمعن هستید؟
+                                                        </div>
+                                                        <div class="content" style="text-align: right">
+                                                            <p>
+                                                                در صورت تایید اینکار قابل بازگشت نیست.
+                                                            </p>
+                                                        </div>
+                                                        <div class="actions">
+                                                            <div class="ui red basic cancel inverted button">
+                                                                <i class="remove icon"></i>
+                                                                No
+                                                            </div>
+                                                            <a href="/requirements/requests/accept/institute/{{ help_non_cash.pk }}/">
+                                                                <div class="ui green ok inverted button">
+                                                                <i class="checkmark icon"></i>
+                                                                    Yes
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <button class="ui primary huge button" onclick="ui.basic.modal" id="reject_button_{{ help_non_cash.pk }}">
+                                                        رد درخواست همکاری
+                                                    </button>
+                                                    <script>
+                                                        $('#reject_button_{{ help_non_cash.pk }}').click(function() {
+                                                            $('#modal_reject_{{ help_non_cash.pk }}')
+                                                                .modal('show')
+                                                                ;
+                                                        });
+                                                    </script>
+                                                    <div class="ui basic modal" id="modal_reject_{{ help_non_cash.pk }}">
+                                                        <div class="ui icon header">
+                                                            <i class="archive icon"></i>
+                                                            آیا مطمعن هستید؟
+                                                        </div>
+                                                        <div class="content" style="text-align: right">
+                                                            <p>
+                                                                در صورت تایید اینکار قابل بازگشت نیست.
+                                                            </p>
+                                                        </div>
+                                                        <div class="actions">
+                                                            <div class="ui red basic cancel inverted button">
+                                                                <i class="remove icon"></i>
+                                                                No
+                                                            </div>
+                                                            <a href="/requirements/requests/reject/institute/{{ help_non_cash.pk }}/">
+                                                                <div class="ui green ok inverted button">
+                                                                <i class="checkmark icon"></i>
+                                                                    Yes
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
                         </div>
 
                     </div>
@@ -150,22 +226,30 @@
                         <br>
 
                         <div class="ui items">
-                            <div class="item" style="margin-bottom: 10px">
-                                <a class="ui small circular image" style="margin-left: 10px">
-                                    <img src="{% static "img/school.png" %}">
-                                </a>
-                                <div class="content">
-                                    <a class="header" style="font-family: VezFont">دبیرستان علامه فلانی</a>
-                                    <div class="description">
-                                        <p>
-                                            مورد درخواست : درخواست استخدام برنامه نویس C
-                                        </p>
-                                        <p>
-                                            توضیحات : به یک برنامه نویس مجرب برای جارو کردن سایت مدرسه نیازمندیم.
-                                        </p>
+                            {% for help_non_cash in user.benefactor.non_cash_helps.all %}
+                                {% if help_non_cash.status == 'ValidationStatus.Act' %}
+                                    <div class="item" style="margin-bottom: 10px">
+                                        <a class="ui small circular image" style="margin-left: 10px">
+                                            <img src="/image/{{ help_non_cash.requirement.owner.member.avatar }}">
+                                        </a>
+                                        <div class="content">
+                                            <a class="header" href="/profile/{{ help_non_cash.requirement.owner.member.username }}" style="font-family: VezFont">
+                                                {{ help_non_cash.requirement.owner.member.first_name }}
+                                            </a>
+                                            <div class="description">
+                                                <p>
+                                                    مورد درخواست :
+                                                    {{ help_non_cash.requirement.title }}
+                                                </p>
+                                                <p>
+                                                    توضیحات :
+                                                    {{ help_non_cash.description }}
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                {% endif %}
+                            {% endfor %}
 
                         </div>
 

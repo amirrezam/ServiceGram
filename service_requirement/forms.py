@@ -14,7 +14,7 @@ class CreateCashRequirementForm(forms.ModelForm):
 
     class Meta:
         model = CashRequirement
-        fields = ('fund', 'description')
+        fields = ('fund', 'description', 'title')
 
 
 class CreateNonCashRequirementForm(forms.ModelForm):
@@ -37,7 +37,7 @@ class CreateNonCashRequirementForm(forms.ModelForm):
 
     class Meta:
         model = NonCashRequirement
-        fields = ('date', 'description')
+        fields = ('date', 'description', 'title')
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'})
         }
@@ -51,6 +51,29 @@ class RequestHelpBenefactorForm(forms.ModelForm):
         help_non_cash.sender = SenderStatus.Ben
         help_non_cash.benefactor_score = -1
         help_non_cash.institute_score = -1
+        return help_non_cash
+
+    class Meta:
+        model = HelpNonCash
+        fields = ('description',)
+
+
+class RequestHelpInstituteForm(forms.ModelForm):
+    requirement = forms.ChoiceField(
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        self.fields['requirement'].choices = [(requirement.pk, requirement.title) for requirement in self.user.institute.non_cash_requirements.all()]
+
+    def save(self, commit=True):
+        help_non_cash = super().save(commit=False)
+        help_non_cash.status = ValidationStatus.Pen
+        help_non_cash.sender = SenderStatus.Ins
+        help_non_cash.benefactor_score = -1
+        help_non_cash.institute_score = -1
+        help_non_cash.requirement = NonCashRequirement.objects.get(pk=self.cleaned_data.get('requirement'))
         return help_non_cash
 
     class Meta:

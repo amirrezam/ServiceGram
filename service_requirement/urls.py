@@ -1,13 +1,19 @@
 from service_requirement.views import CreateCashRequirementView, CreateNonCashRequirementView, \
     CashRequirementProfileView, NonCashRequirementProfileView, RequestHelpBenefactorView, ShowRequestsRequirementView, \
-    AcceptRequestFromBenefactorView, ShowNonCashRequirementsView, RejectRequestFromBenefactorView
+    AcceptRequestFromBenefactorView, ShowNonCashRequirementsView, RejectRequestFromBenefactorView, \
+    RequestHelpInstituteView, RejectRequestFromInstituteView, AcceptRequestFromInstituteView
 from django.contrib.auth import views as auth_views
 from django.urls import re_path
 
 urlpatterns = [
     re_path(r'info/cash/(?P<pk>[a-zA-Z0-9]+)$', CashRequirementProfileView.as_view(), name='cash_requirement_profile'),
     re_path(r'info/non_cash/(?P<pk>[a-zA-Z0-9]+)$', NonCashRequirementProfileView.as_view(), name='non_cash_requirement_profile'),
+    re_path(r'request/institute/(?P<username>[a-zA-Z0-9]+)/$', RequestHelpInstituteView.as_view(), name='request_help_institute'),
     re_path(r'request/(?P<pk>[a-zA-Z0-9]+)/$', RequestHelpBenefactorView.as_view(), name='request_help_benefactor'),
+    re_path(r'requests/reject/institute/(?P<pk>[a-zA-Z0-9]+)/$', RejectRequestFromInstituteView.as_view(),
+            name='reject_request_help_institute'),
+    re_path(r'requests/accept/institute/(?P<pk>[a-zA-Z0-9]+)/$', AcceptRequestFromInstituteView.as_view(),
+            name='accept_request_help_institute'),
     re_path(r'requests/reject/(?P<pk>[a-zA-Z0-9]+)/$', RejectRequestFromBenefactorView.as_view(),
             name='reject_request_help_benefactor'),
     re_path(r'requests/accept/(?P<pk>[a-zA-Z0-9]+)/$', AcceptRequestFromBenefactorView.as_view(),
