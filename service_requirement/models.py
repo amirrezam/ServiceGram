@@ -18,6 +18,7 @@ class SenderStatus(Enum):
 
 
 class Requirement(models.Model):
+    title = models.CharField(max_length=30, default='بی‌عنوان')
     description = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
 

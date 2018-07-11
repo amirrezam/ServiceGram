@@ -2,9 +2,9 @@
 
 {% load filter_skill %}
 
-{% block title %}Skills{% endblock %}
+{% block title %}Chunks{% endblock %}
 
-{% block active_change_skill %}active{% endblock %}
+{% block active_create_chunk %}active{% endblock %}
 
 {% block add_content %}
     <div class="ui bottom attached segment">
@@ -14,22 +14,28 @@
                 <col width="80">
                 <thead>
                     <tr>
-                        <th>توانایی‌ها</th>
+                        <th>زمان شروع</th>
+                        <th>زمان پایان</th>
 {#                        <th>گزینه‌ها</th>#}
                     </tr>
                 </thead>
                 <tbody>
-                    {% for skill in Skills.all %}
+                    {% for chunk in Chunks.all %}
                         <tr>
                             <td>
                                 <h4 class="ui image header">
                                     <div class="content">
-                                        {{ skill.name }}
-                                        <div class="sub header">
-                                        {{ HasSkills|filter_accepted|filter_by_name:skill.name|length }} نفر
-                                        </div>
+                                        {{ chunk.beginning_time }}
                                     </div>
                                 </h4>
+                            </td>
+                            <td>
+                                <h4 class="ui image header">
+                                    <div class="content">
+                                        {{ chunk.ending_time }}
+                                    </div>
+                                </h4>
+                            </td>
 {#                            </td>#}
 {#                                <td>#}
 {#                                </button><button class="ui icon button">#}
@@ -44,7 +50,14 @@
                             <td>
                                 <h4 class="ui image header">
                                     <div class="ui input">
-                                        <input type="text" placeholder="توانایی جدید" style="text-align:right" name="name" id="id_name">
+                                        <input type="text" placeholder="توانایی جدید" style="text-align:right" name="beginning_time">
+                                    </div>
+                                </h4>
+                            </td>
+                            <td>
+                                <h4 class="ui image header">
+                                    <div class="ui input">
+                                        <input type="text" placeholder="توانایی جدید" style="text-align:right" name="ending_time">
                                     </div>
                                 </h4>
 

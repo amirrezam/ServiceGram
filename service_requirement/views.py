@@ -2,8 +2,9 @@ from django.http import Http404
 from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, RedirectView, ListView
 
-from service_member.models import Skill
-from service_requirement.forms import CreateCashRequirementForm, CreateNonCashRequirementForm, RequestHelpBenefactorForm
+from service_member.models import Skill, Member
+from service_requirement.forms import CreateCashRequirementForm, CreateNonCashRequirementForm, \
+    RequestHelpBenefactorForm, RequestHelpInstituteForm
 from service_requirement.models import CashRequirement, NonCashRequirement, HelpNonCash, ValidationStatus, Chunk
 
 
@@ -92,6 +93,40 @@ class RequestHelpBenefactorView(CreateView):
         return super().get(request, *args, **kwargs)
 
 
+class RequestHelpInstituteView(CreateView):
+    form_class = RequestHelpInstituteForm
+    template_name = 'SubmitRequest.html'
+    success_url = '/profile/'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.benefactor = Member.objects.get(username=self.kwargs['username']).benefactor
+        obj.save()
+        return super().form_valid(form)
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise Http404
+        if request.user.is_benefactor:
+            raise Http404
+        # skills = [has_skill.skill_type.name for has_skill in
+        #           request.user.benefactor.skill.filter(validation_status='ValidationStatus.Act')]
+    #     if NonCashRequirement.objects.get(pk=self.kwargs['pk']).skill.name not in skills:
+    #         raise Http404
+    #     if HelpNonCash.objects.filter(
+    #             requirement__date__exact=NonCashRequirement.objects.get(pk=self.kwargs['pk']).date,
+    #             requirement__time__exact=NonCashRequirement.objects.get(pk=self.kwargs['pk']).time,
+    #             benefactor__member__username__exact=request.user.username,
+    #             status='ValidationStatus.Act').count() > 0:
+    #         raise Http404
+        return super().get(request, *args, **kwargs)
+
+
 class ShowRequestsRequirementView(ListView):
     model = HelpNonCash
     template_name = 'ShowRequestsRequirement.html'
@@ -117,6 +152,30 @@ class AcceptRequestFromBenefactorView(RedirectView):
         if request.user.is_benefactor:
             raise Http404
         if request.user.username != help_non_cash.requirement.owner.member.username:
+            raise Http404
+        if help_non_cash.status != 'ValidationStatus.Pen':
+            raise Http404
+        HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
+                                   benefactor__member__username__exact=help_non_cash.benefactor.member.username,
+                                   status='ValidationStatus.Pen')\
+            .update(status=ValidationStatus.Can)
+        HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(status=ValidationStatus.Act)
+        # if HelpNonCash.objects.filter(benefactor__member__username__exact=help_non_cash.benefactor.member.username,
+        #                               status='ValidationStatus.Act',
+        #                               date)# TODO: how to get the number of requests in the week?
+        return super().get(request, *args, **kwargs)
+
+
+class AcceptRequestFromInstituteView(RedirectView):
+    url = '/profile/'
+
+    def get(self, request, *args, **kwargs):
+        help_non_cash = HelpNonCash.objects.get(pk=self.kwargs['pk'])
+        if not request.user.is_authenticated:
+            raise Http404
+        if request.user.is_institute:
+            raise Http404
+        if request.user.username != help_non_cash.benefactor.member.username:
             raise Http404
         if help_non_cash.status != 'ValidationStatus.Pen':
             raise Http404
@@ -170,6 +229,23 @@ class RejectRequestFromBenefactorView(RedirectView):
         if request.user.is_benefactor:
             raise Http404
         if request.user.username != help_non_cash.requirement.owner.member.username:
+            raise Http404
+        if help_non_cash.status != 'ValidationStatus.Pen':
+            raise Http404
+        HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(status=ValidationStatus.Rej)
+        return super().get(request, *args, **kwargs)
+
+
+class RejectRequestFromInstituteView(RedirectView):
+    url = '/profile/'
+
+    def get(self, request, *args, **kwargs):
+        help_non_cash = HelpNonCash.objects.get(pk=self.kwargs['pk'])
+        if not request.user.is_authenticated:
+            raise Http404
+        if request.user.is_institute:
+            raise Http404
+        if request.user.username != help_non_cash.benefactor.member.username:
             raise Http404
         if help_non_cash.status != 'ValidationStatus.Pen':
             raise Http404
