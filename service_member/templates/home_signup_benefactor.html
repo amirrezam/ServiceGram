@@ -1,8 +1,10 @@
 {% extends "home_signup.html" %}
 
 {% block addition %}
-    <h4 class="ui dividing header">
-        توانایی‌ها</h4>
+    <h2 class="ui dividing header">
+        توانایی‌ها</h2>
+
+    <br>
 
     <select name="skills" multiple="" class="ui fluid dropdown">
     <option value="">توانایی‌ها</option>
@@ -18,8 +20,11 @@
               offset: 15 // give some space from top of screen
           });
     });</script>
+
+    <br>
+
     <div class="field">
         <label>حداکثر کمک رسانی در ماه</label>
-        <input type="text" name="max_chunk_in_month" placeholder="20" style="text-align:left;width:40px">
+        <input type="text" name="max_chunk_in_month" placeholder="20" style="text-align:left;width:40px; margin-top: 5px">
     </div>
 {% endblock %}
