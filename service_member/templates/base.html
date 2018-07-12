@@ -118,9 +118,9 @@
 </head>
 
 
-<body dir="rtl" class="pushable" style="font-weight: 400; font-size: 14px !important; line-height: normal;">
+<body dir="rtl" style="font-weight: 400; font-size: 14px !important; line-height: normal;">
 
-    <div class="pusher">
+    <div>
         <div class="ui secondary vertical masthead center aligned segment">
 
             <div class="ui secondary container">
@@ -157,13 +157,13 @@
                                         <a class="ui button" href="/signup/benefactor/">ثبت نام</a>
                                     </div>
                                     <div class="item" style="margin: 2px;">
-                                        <a class="ui primary button" href="/login/">ورود</a>
+                                        <a class="ui teal button" href="/login/">ورود</a>
                                     </div>
                                 </div>
 
                             {% endif %}
                             <div class="item">
-                                <div class="ui primary icon input">
+                                <div class="ui teal icon input">
                                     <input placeholder="جستجوی نیکوکاران و موسسات" type="text" style="font-family: VezFont">
                                     <i class="inverted circular search link icon"></i>
                                 </div>
@@ -187,7 +187,68 @@
     {% endblock %}
 
 
+        <section style="background-color: #004444; color: white; padding: 30px">
 
+            <div class="ui very relaxed  stackable grid">
+
+                <div class="seven wide column">
+
+                    <h1>ارتباط با ما</h1>
+
+                    <br> <br>
+
+                    <div class="ui items" style="margin-right: 20px">
+
+                        <div class="ui item">
+                            <i class="ui address book big icon" style="margin-left: 7px"></i>
+                            <p>
+                                آدرس : تهران ، خیابان آزادی ، دانشگاه صنعتی شریف ، دانشکده ی مهندسی کامپیوتر
+                            </p>
+                        </div>
+
+                        <div class="ui item">
+                            <i class="ui phone big icon" style="margin-left: 7px"></i>
+                            <p>
+                               تلفن روابط عمومی : 09301337244
+                            </p>
+                        </div>
+
+                        <div class="ui item">
+                            <i class="ui envelope big icon" style="margin-left: 7px"></i>
+                            <p>
+                               پست الکترونیکی : vezvaeia@gmail.com
+                            </p>
+                        </div>
+
+                        <br> <br>
+                        <br> <br>
+
+                        <div class="item">
+                            <button class="ui circular huge facebook icon button">
+                                <i class="facebook icon"></i>
+                            </button>
+                            <button class="ui circular huge twitter icon button">
+                                <i class="twitter icon"></i>
+                            </button>
+                            <button class="ui circular huge linkedin icon button">
+                                <i class="linkedin icon"></i>
+                            </button>
+                            <button class="ui circular huge google plus icon button">
+                                <i class="google plus icon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="nine wide column">
+
+                    <image class="ui rounded image" src="{% static 'img/map.png' %}" style="margin: 0px"></image>
+                </div>
+
+
+            </div>
+        </section>
 
     </div>
 

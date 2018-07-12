@@ -6,31 +6,49 @@
 {%  block content %}
 
 <div style="text-align:right;width:500px;margin:auto;margin-top:50px">
-    <form class="ui form" method="post">
-        {% csrf_token %}
-        <div class="field">
-            <label>نام کاربری</label>
-            <div class="ui left icon input">
-                <input type="text" placeholder="نام کاربری" style="text-align: center" name="username" required id="id_username">
-                <i class="user icon"></i>
+
+    <br><br><br><br>
+
+    <div class="ui teal segment"
+         style="margin-bottom: 100px; background-color: rgba(220, 222, 228, 0.479); padding: 50px">
+        <form class="ui huge form" method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label>نام کاربری</label>
+                <div class="ui left icon input">
+                    <input type="text" placeholder="نام کاربری" style="text-align: center" name="username" required
+                           id="id_username">
+                    <i class="user icon"></i>
+                </div>
             </div>
-        </div>
-        <div class="field">
-            <label>رمز عبور</label>
-            <div class="ui left icon input">
-                <input type="password" placeholder="رمز عبور" style="text-align: center" name="password" required id="id_password">
-                <i class="lock icon"></i>
+
+
+            <div class="field">
+                <label>رمز عبور</label>
+                <div class="ui left icon input">
+                    <input type="password" placeholder="رمز عبور" style="text-align: center" name="password" required
+                           id="id_password">
+                    <i class="lock icon"></i>
+                </div>
             </div>
-        </div>
-        {% if form.errors %}
+
+
+            {% if form.errors %}
             <div class="ui negative message">
                 <p>
                     نام کاربری و رمز عبور هم‌خوانی ندارند. لطفا از صحت آن‌ها مطمئن شوید.
                 </p>
             </div>
-        {% endif %}
-        <button class="ui primary button" type="submit" style="width: 100%">ورود</button>
-    </form>
+            {% endif %}
+
+
+            <button class="ui teal huge button" type="submit" style="width: 100%; margin-top: 10px">ورود</button>
+
+        </form>
+    </div>
+
+    <br><br><br><br><br><br>
+
 </div>
 
 {% endblock %}

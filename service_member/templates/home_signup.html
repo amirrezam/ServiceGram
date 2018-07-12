@@ -5,16 +5,20 @@
 
 {%  block content %}
 
-<div style="text-align:right;width:500px;margin:auto;margin-top:50px">
-    <form class="ui form" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% block personal %}
-        <h4 class="ui dividing header">
-            مشخصات
-        </h4>
-        {% block name %}
+<div style="text-align:right;width:900px;margin:auto;margin-top:50px">
+    <div class="ui teal segment" style="margin-bottom: 100px; background-color: rgba(220, 222, 228, 0.479); padding: 50px">
+        <form class="ui huge form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% block personal %}
+            <h2 class="ui dividing header">
+                مشخصات
+            </h2>
+            {% block name %}
+
+            <br><br>
+
             <div class="field">
-                <label>نام</label>
+                <label>نام و نام خانوادگی</label>
                 <div class="two fields">
                     <div class="field">
                         <input type="text" name="first_name" placeholder="نام" id="id_first_name">
@@ -24,111 +28,128 @@
                     </div>
                 </div>
             </div>
-        {% endblock %}
-        <div class="field">
-            <label>پست الکترونیک</label>
-            <input type="email" placeholder="joe@schmoe.com" name="email" style="text-align:left" id="id_email">
-        </div>
-        {% block bio %}
-        <div class="field">
-            <label>بیوگرافی</label>
-            <textarea type="text" placeholder="بیوگرافی" name="bio" style="text-align: right" id="id_bio"></textarea>
-        </div>
-        {% endblock %}
+
+            {% endblock %}
+
+            <br>
+
+            <div class="field">
+                <label>پست الکترونیک</label>
+                <input type="email" placeholder="joe@schmoe.com" name="email" style="text-align:left" id="id_email">
+            </div>
+
+            <br>
+
+            {% block bio %}
+            <div class="field">
+                <label>بیوگرافی</label>
+                <textarea type="text" placeholder="بیوگرافی" name="bio" style="text-align: right"
+                          id="id_bio"></textarea>
+            </div>
+            {% endblock %}
+
+
             {{ form.avatar }}
-        <div class="field">
-            <label>نام کاربری</label>
-            <input type="text" placeholder="نام کاربری" name="username" style="text-align:left" id="id_username">
-        </div>
-        {% if "This field is required." in form.username.errors %}
+            <div class="field">
+                <label>نام کاربری</label>
+                <input type="text" placeholder="نام کاربری" name="username" style="text-align:left" id="id_username">
+            </div>
+            {% if "This field is required." in form.username.errors %}
             <div class="ui negative message">
                 <p>
                     پر کردن این بخش الزامی است.
                 </p>
             </div>
-        {% elif "A user with that username already exists." in form.username.errors %}
+            {% elif "A user with that username already exists." in form.username.errors %}
             <div class="ui negative message">
                 <p>
                     این نام کاربری از قبل وجود دارد.
                 </p>
             </div>
-        {% elif "Enter a valid username. This value may contain only letters, numbers, and @/./+/-/_ characters." in form.username.errors %}
+            {% elif "Enter a valid username. This value may contain only letters, numbers, and @/./+/-/_ characters." in
+            form.username.errors %}
             <div class="ui negative message">
                 <p>
                     نام کاربری فقط باید از حروف و اعداد و نشانه‌های @ ، . ، + ، - تشکیل شده باشد.
                 </p>
             </div>
-        {% elif form.username.errors %}
+            {% elif form.username.errors %}
             <div class="ui negative message">
                 <p>
                     نام کاربری مجاز نیست.
                 </p>
             </div>
-        {% endif %}
-        <div class="field">
-            <label>رمز عبور</label>
-            <input type="password" style="text-align:left" name="password1" id="id_password1">
-        </div>
-        {% if "This field is required." in form.password1.errors %}
+            {% endif %}
+
+
+
+            <div class="field">
+                <label>رمز عبور</label>
+                <input type="password" style="text-align:left" name="password1" id="id_password1">
+            </div>
+            {% if "This field is required." in form.password1.errors %}
             <div class="ui negative message">
                 <p>
                     پر کردن این بخش الزامی است.
                 </p>
             </div>
-        {% elif form.password1.errors %}
+            {% elif form.password1.errors %}
             <div class="ui negative message">
                 <p>
                     رمز عبور مجاز نیست.
                 </p>
             </div>
-        {% endif %}
-        <div class="field">
-            <label>تکرار رمز عبور</label>
-            <input type="password" style="text-align:left" name="password2" id="id_password2">
-        </div>
-        {% if "This field is required." in form.password2.errors %}
+            {% endif %}
+            <div class="field">
+                <label>تکرار رمز عبور</label>
+                <input type="password" style="text-align:left" name="password2" id="id_password2">
+            </div>
+            {% if "This field is required." in form.password2.errors %}
             <div class="ui negative message">
                 <p>
                     پر کردن این بخش الزامی است.
                 </p>
             </div>
-        {% elif "The two password fields didn't match." in form.password2.errors %}
+            {% elif "The two password fields didn't match." in form.password2.errors %}
             <div class="ui negative message">
                 <p>
                     تکرار رمز عبور با رمز عبور یکی نیست.
                 </p>
             </div>
-        {% elif "This password is too short. It must contain at least 8 characters." in form.password2.errors %}
+            {% elif "This password is too short. It must contain at least 8 characters." in form.password2.errors %}
             <div class="ui negative message">
                 <p>
                     رمز عبور بسیار کوتاه است. توصیه می‌شود رمز عبوری شامل حداقل ۸ کاراکتر انتخاب کنید.
                 </p>
             </div>
-        {% elif form.password2.errors %}
+            {% elif form.password2.errors %}
             <div class="ui negative message">
                 <p>
                     رمز عبور مجاز نیست.
                 </p>
             </div>
-        {% endif %}
+            {% endif %}
 
-        {% endblock %}
-        {% block addition %}{% endblock %}
 
-        <div class="field">
-            <div class="ui checkbox">
-                <input type="checkbox" tabindex="0" class="hidden" name="is_accepted" required id="id_is_accepted" onchange="document.getElementById('id_submit').disabled = !this.checked;"/>
-                <label>بنده قوانین سایت را مطالعه کرده‌ام و مثل سگ با آن موافقم.</label>
+            {% endblock %}
+            {% block addition %}{% endblock %}
+
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" tabindex="0" class="hidden" name="is_accepted" required id="id_is_accepted"
+                           onchange="document.getElementById('id_submit').disabled = !this.checked;"/>
+                    <label>بنده قوانین سایت را مطالعه کرده‌ام و مثل سگ با آن موافقم.</label>
+                </div>
             </div>
-        </div>
-        <script> $(document).ready(
-        function () {
-            $('.ui.checkbox')
-                    .checkbox()
+            <script> $(document).ready(
+                function () {
+                    $('.ui.checkbox')
+                        .checkbox()
                     ;
-        });</script>
-        <button class="ui primary button" type="submit" id="id_submit" disabled>ثبت</button>
-    </form>
+                });</script>
+            <button class="ui teal big button" type="submit" id="id_submit" disabled>ثبت</button>
+        </form>
+    </div>
 </div>
 
 {% endblock %}
