@@ -15,7 +15,7 @@
 
                         <div class="ui teal huge icon input">
                             <input placeholder="نام موسسه" type="text"
-                                   style="font-family: VezFont">
+                                   style="font-family: VezFont" name="name">
                             <i class="inverted circular search link icon"></i>
                         </div>
 
@@ -44,108 +44,9 @@
             <br>
 
             <div class="ui four stackable special cards">
-
-
-            <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
-                <div class="blurring dimmable circular image">
-                    <div class="ui dimmer">
-                        <div class="content">
-                            <div class="center">
-                                <div class="ui inverted button">Add Friend</div>
-                            </div>
-                        </div>
-                    </div>
-                    <img src="{% static "img/apple.png" %}" class="ui circular image">
-                </div>
-                <div class="content" style="margin-top: 10px">
-
-                    <a class="header" style="font-family: VezFont; align-content: center">شرکت اپل</a>
-                    <div class="meta">
-                        <span class="date">آخرین بازدید : 2 ساعت پیش</span>
-                    </div>
-                    <div class="discription" style="margin-top: 8px">
-                        <h4> سازنده ی مک بوک و آیفون !</h4>
-                        <br>
-                        <h5> توانایی‌های مورد نیاز : </h5>
-                        <p>
-                            برنامه نویس وب، طراح گرافیک
-                        </p>
-                    </div>
-                </div>
-                <div class="extra">
-                    امتیاز دهید :
-                    <div class="ui star rating" data-rating="4"></div>
-                </div>
-
-            </div>
-
-            <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
-                <div class="blurring dimmable circular image">
-                    <div class="ui dimmer">
-                        <div class="content">
-                            <div class="center">
-                                <div class="ui inverted button">Add Friend</div>
-                            </div>
-                        </div>
-                    </div>
-                    <img src="{% static "img/cafe.png" %}" class="ui circular image">
-                </div>
-                <div class="content" style="margin-top: 10px">
-
-                    <a class="header" style="font-family: VezFont; align-content: center">کافه شریف</a>
-                    <div class="meta">
-                        <span class="date">آخرین بازدید : 2 ساعت پیش</span>
-                    </div>
-                    <div class="discription" style="margin-top: 8px">
-                        <h4>ارائه ی انواع کیک و قهوه ، دارای سه شعبه در سراسر تهران</h4>
-                        <br>
-                        <h5> توانایی‌های مورد نیاز : </h5>
-                        <p>
-                            پیش خدمت، کیک پز
-                        </p>
-                    </div>
-                </div>
-                <div class="extra">
-                    امتیاز دهید :
-                    <div class="ui star rating" data-rating="4"></div>
-                </div>
-
-            </div>
-
-            <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
-                <div class="blurring dimmable circular image">
-                    <div class="ui dimmer">
-                        <div class="content">
-                            <div class="center">
-                                <div class="ui inverted button">Add Friend</div>
-                            </div>
-                        </div>
-                    </div>
-                    <img src="{% static "img/school.png" %}" class="ui circular image">
-                </div>
-                <div class="content" style="margin-top: 10px">
-
-                    <a class="header" style="font-family: VezFont; align-content: center">دبیرستان علامه‌ فلانی</a>
-                    <div class="meta">
-                        <span class="date">آخرین بازدید : 2 ساعت پیش</span>
-                    </div>
-                    <div class="discription" style="margin-top: 8px">
-                        <h4> مدرسه‌ی تیزهوشان متوسطه دوره روم</h4>
-                        <br>
-                        <h5> توانایی‌های مورد نیاز : </h5>
-                        <p>
-                            دبیر ریاضی، دبیر فیزیک
-                        </p>
-                    </div>
-                </div>
-                <div class="extra">
-                    امتیاز دهید :
-                    <div class="ui star rating" data-rating="4"></div>
-                </div>
-
-            </div>
-
-
+            {% if not institute_list.all %}
+                نتیجه ای یافت نشد.
+            {% endif %}
             {% for institute in institute_list.all %}
                 <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
                     <div class="blurring dimmable circular image">

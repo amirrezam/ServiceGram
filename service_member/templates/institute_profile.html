@@ -33,10 +33,25 @@
 
                         <br>
 
-                        <h4>توانایی های مورد نیاز: </h4>
+                        <h4>شهر: </h4>
 
                         <p>
-                            حمال، برنامه‌نویس ، نجار ، منشی ، گرافیک کار ، جاروکش
+                           {% if member.institute.city %}
+                            {{ member.institute.city }}
+                            {% else %}
+                            شهر این شرکت ثبت نشده است.
+                            {% endif %}
+                        </p>
+
+                        <h4> آدرس: </h4>
+
+                        <p>
+                            {% if member.institute.address %}
+                            {{ member.institute.address }}
+                            {% else %}
+                            شهر این شرکت ثبت نشده است.
+                            {% endif %}
+
                         </p>
 
                         <br>
@@ -63,39 +78,6 @@
                         <br>
 
                         <div class="ui items">
-                            <div class="item" style="margin-bottom: 10px">
-                                <a class="ui small circular image" style="margin-left: 10px">
-                                    <img src="{% static "img/avatar3.png" %}">
-                                </a>
-                                <div class="content">
-                                    <a class="header" style="font-family: VezFont">امیررضا مزینی</a>
-                                    <div class="description">
-                                        <p>
-                                            مورد درخواست : درخواست استخدام به عنوان حمال
-                                        </p>
-                                        <p>
-                                            توضیحات : بنده همیشه آرزو داشتم در شرکت شما حمالی کنم.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="item" style="margin-bottom: 10px">
-                                <a class="ui small circular image" style="margin-left: 10px">
-                                    <img src="{% static "img/avatar14.png" %}">
-                                </a>
-                                <div class="content">
-                                    <a class="header" style="font-family: VezFont">محبوبه محمدی</a>
-                                    <div class="description">
-                                        <p>
-                                            مورد درخواست : درخواست استخدام به عنوان نجار
-                                        </p>
-                                        <p>
-                                            توضیحات : لطفا مرا به عنوان نجار قبول کنین. رزومم خیلی خوبه !.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
 
                             {% for non_cash_requirement in member.institute.non_cash_requirements.all %}
                                 {% for help_non_cash in non_cash_requirement.helps.all %}

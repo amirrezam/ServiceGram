@@ -67,7 +67,7 @@ class ShowBenefactorsView(ListView):
     def get_queryset(self):
         benefactors = Benefactor.objects.filter(member__activation_status='ActivationStatus.Act')
         if 'name' in dict(self.request.GET).keys():
-            return benefactors.filter(member__first_name__icontains=self.request.GET.get('name'))
+            return benefactors.filter(member__last_name__icontains=self.request.GET.get('name'))
         else:
             return benefactors
 
@@ -85,7 +85,6 @@ class EditProfileBenefactorView(FormView):
         self.request.user.email = form.cleaned_data['email']
         self.request.user.save()
         benefactor = self.request.user.benefactor
-        benefactor.max_chunk_in_month = form.cleaned_data.get('max_chunk_in_month')
         for skill in form.cleaned_data.get('skills').all():
             flag = False
             for has_skill in benefactor.skill.all():
@@ -136,6 +135,11 @@ class EditProfileInstituteView(FormView):
         self.request.user.first_name = form.cleaned_data['first_name']
         self.request.user.bio = form.cleaned_data['bio']
         self.request.user.email = form.cleaned_data['email']
+        if 'city' in list(form.cleaned_data.keys()):
+            self.request.user.institute.city = form.cleaned_data['city']
+        if 'address' in list(form.cleaned_data.keys()):
+            self.request.user.institute.address = form.cleaned_data['address']
+        self.request.user.institute.save()
         self.request.user.save()
         return super().form_valid(form)
 

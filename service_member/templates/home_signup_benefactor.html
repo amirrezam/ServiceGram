@@ -20,12 +20,5 @@
               offset: 15 // give some space from top of screen
           });
     });</script>
-
-    <br><br>
-
-    <div class="field">
-        <label>حداکثر کمک رسانی در ماه</label>
-        <input type="text" name="max_chunk_in_month" placeholder="20" style="text-align:left;width:40px; margin-top: 5px">
-        <br>
-    </div>
+    {{ form.errors }}
 {% endblock %}

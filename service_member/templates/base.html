@@ -139,8 +139,8 @@
                     <div class="left menu">
                         {% if user.is_authenticated %}
                         <div class="ui simple dropdown item" style="margin: 2px;">
-                            <img class="ui mini circular image" src="/image/{{ user.avatar }}" style="margin: 5px"> {{
-                            user.username }}
+                            <img class="ui mini circular image" src="/image/{{ user.avatar }}" style="margin: 5px">
+                            {{ user.username }}
                             <i class="ui dropdown icon" style="margin: 5px"></i>
                             <div class="menu">
                                 <div class="item" data-value="profile" style="align-content:center;">

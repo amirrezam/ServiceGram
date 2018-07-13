@@ -1,5 +1,7 @@
 {% load filter_skill %}
 
+{% load convert_date %}
+
 <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
     <div class="blurring dimmable circular image">
         <div class="ui dimmer">
@@ -31,7 +33,12 @@
             </p>
             <h5> تاریخ : </h5>
             <p>
-                {{ non_cash_requirement.date }}
+                از
+                {{ non_cash_requirement.beginning_date | convert_date }}
+                تا
+                {{ non_cash_requirement.ending_date | convert_date }}
+                {{ non_cash_requirement.week_day|convert_week_day }}
+                ها
             </p>
             <h5> ساعت : </h5>
             <p>
@@ -47,7 +54,8 @@
                     disabled
                 {% elif non_cash_requirement.skill.name not in user.benefactor.skill|filter_accepted|get_names %}
                     disabled
-                {% elif user.benefactor.non_cash_helps|filter_has_skill_accepted|filter_by_time:non_cash_requirement.time|filter_by_date:non_cash_requirement.date|length > 0%}
+{#                {% elif user.benefactor.non_cash_helps|filter_has_skill_accepted|filter_by_time:non_cash_requirement.time|filter_by_date:non_cash_requirement.date|length > 0%}#}
+                {% elif user.benefactor.non_cash_helps|get_conflicts_non_cash_requirement:non_cash_requirement %}
                     disabled
                 {% endif %}
             >
