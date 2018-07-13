@@ -118,63 +118,61 @@
 </head>
 
 
-<body dir="rtl" style="font-weight: 400; font-size: 14px !important; line-height: normal;">
+<body dir="rtl" style="font-weight: 400; font-size: 14px !important; line-height: normal; background-image: url('../../static/img/background4.jpeg');">
 
     <div>
         <div class="ui secondary vertical masthead center aligned segment">
 
-            <div class="ui secondary container">
-                <div class="overlay">
-                    <div class="ui huge secondary menu">
 
-                        <a class="active big item" href="/">
-                            <i class="home large icon" style="margin: 5px;"></i> صفحه‌ی اصلی </a>
-                        <a class="item" href="/benefactors/">
-                            <i class="user large icon"></i> مشاهده‌ی نیکوکاران </a>
-                        <a class="item" href="/institutes/">
-                            <i class="building large icon"></i> مشاهده‌ی موسسات </a>
+            <div class="overlay">
+                <div class="ui huge secondary menu"  style="margin-right: 150px; margin-left: 250px">
 
-                        <div class="left menu">
-                            {% if user.is_authenticated %}
-                            <div class="ui simple dropdown item" style="margin: 2px;">
-                                <img class="ui mini circular image" src="/image/{{ user.avatar }}" style="margin: 5px"> {{ user.username }}
-                                <i class="ui dropdown icon" style="margin: 5px"></i>
-                                <div class="menu">
-                                    <div class="item" data-value="profile" style="align-content:center;">
-                                        <a href="/profile/"> مشاهده‌ی پروفایل</a>
-                                    </div>
-                                    <div class="item" data-value="profile" style="align-content:center;">
-                                        <a href="/edit/profile/"> ویرایش پروفایل</a>
-                                    </div>
-                                    <div class="item" data-value="exit">
-                                        <a href="/logout/"> خروج</a>
-                                    </div>
+                    <a class="big item" href="/">
+                        <i class="home large icon" style="margin: 5px;"></i> صفحه‌ی اصلی </a>
+                    <a class="item" href="/benefactors/">
+                        <i class="user large icon"></i> مشاهده‌ی نیکوکاران </a>
+                    <a class="item" href="/institutes/">
+                        <i class="building large icon"></i> مشاهده‌ی موسسات </a>
+                    <a class="item" href="/institutes/">
+                        <i class="plus square large icon"></i> مشاهده ی نیاز ها </a>
+
+                    <div class="left menu">
+                        {% if user.is_authenticated %}
+                        <div class="ui simple dropdown item" style="margin: 2px;">
+                            <img class="ui mini circular image" src="/image/{{ user.avatar }}" style="margin: 5px"> {{
+                            user.username }}
+                            <i class="ui dropdown icon" style="margin: 5px"></i>
+                            <div class="menu">
+                                <div class="item" data-value="profile" style="align-content:center;">
+                                    <a href="/profile/"> مشاهده‌ی پروفایل</a>
                                 </div>
-                            </div>
-                            {% else %}
-                                <div class="left menu">
-                                    <div class="item" style="margin: 2px;">
-                                        <a class="ui button" href="/signup/benefactor/">ثبت نام</a>
-                                    </div>
-                                    <div class="item" style="margin: 2px;">
-                                        <a class="ui teal button" href="/login/">ورود</a>
-                                    </div>
+                                <div class="item" data-value="profile" style="align-content:center;">
+                                    <a href="/edit/profile/"> ویرایش پروفایل</a>
                                 </div>
-
-                            {% endif %}
-                            <div class="item">
-                                <div class="ui teal icon input">
-                                    <input placeholder="جستجوی نیکوکاران و موسسات" type="text" style="font-family: VezFont">
-                                    <i class="inverted circular search link icon"></i>
+                                <div class="item" data-value="exit">
+                                    <a href="/logout/"> خروج</a>
                                 </div>
                             </div>
                         </div>
+                        {% else %}
+                        <div class="left menu">
+                            <div class="item" style="margin: 2px;">
+                                <a class="ui button" href="/signup/benefactor/">ثبت نام</a>
+                            </div>
+                            <div class="item" style="margin: 2px;">
+                                <a class="ui teal button" href="/login/">ورود</a>
+                            </div>
+                        </div>
+
+                        {% endif %}
 
                     </div>
-                </div>
-                {% block suggest %}{% endblock %}
 
+                </div>
             </div>
+            {% block suggest %}{% endblock %}
+
+
 
         </div>
     {% block content %}

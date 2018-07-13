@@ -49,7 +49,16 @@
             {% endblock %}
 
 
-            {{ form.avatar }}
+            <br>
+
+            <div class="field">
+                <label>تصویر پروفایل</label>
+                {{ form.avatar }}
+            </div>
+
+
+            <br>
+
             <div class="field">
                 <label>نام کاربری</label>
                 <input type="text" placeholder="نام کاربری" name="username" style="text-align:left" id="id_username">
@@ -81,7 +90,7 @@
             </div>
             {% endif %}
 
-
+            <br>
 
             <div class="field">
                 <label>رمز عبور</label>
@@ -100,6 +109,10 @@
                 </p>
             </div>
             {% endif %}
+
+            <br>
+
+
             <div class="field">
                 <label>تکرار رمز عبور</label>
                 <input type="password" style="text-align:left" name="password2" id="id_password2">
@@ -130,9 +143,11 @@
             </div>
             {% endif %}
 
+            <br>
 
             {% endblock %}
             {% block addition %}{% endblock %}
+
 
             <div class="field">
                 <div class="ui checkbox">
