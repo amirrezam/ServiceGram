@@ -2,8 +2,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from service_requirement.models import CashRequirement, NonCashRequirement, Chunk, HelpNonCash, ValidationStatus, \
-    SenderStatus
-from service_member.models import Skill
+    SenderStatus, WeekDay
+from service_member.models import Skill, Member
 
 
 class CreateCashRequirementForm(forms.ModelForm):
@@ -28,18 +28,26 @@ class CreateNonCashRequirementForm(forms.ModelForm):
         widget=forms.RadioSelect,
         required=True
     )
+    week_day = forms.ChoiceField(
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['week_day'].choices = [(tag, tag.value) for tag in WeekDay]
 
     def save(self, commit=True):
         non_cash_requirement = super().save(commit=False)
         non_cash_requirement.time = self.cleaned_data.get('time')
         non_cash_requirement.skill = self.cleaned_data.get('skill')
+        non_cash_requirement.week_day = self.cleaned_data.get('week_day')
         return non_cash_requirement
 
     class Meta:
         model = NonCashRequirement
-        fields = ('date', 'description', 'title')
+        fields = ('beginning_date', 'ending_date', 'description', 'title')
         widgets = {
-            'date': forms.DateInput(attrs={'type': 'date'})
+            'beginning_date': forms.DateInput(attrs={'type': 'date'}),
+            'ending_date': forms.DateInput(attrs={'type': 'date'})
         }
 
 

@@ -85,7 +85,6 @@ class EditProfileBenefactorView(FormView):
         self.request.user.email = form.cleaned_data['email']
         self.request.user.save()
         benefactor = self.request.user.benefactor
-        benefactor.max_chunk_in_month = form.cleaned_data.get('max_chunk_in_month')
         for skill in form.cleaned_data.get('skills').all():
             flag = False
             for has_skill in benefactor.skill.all():

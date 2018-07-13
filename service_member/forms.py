@@ -27,7 +27,6 @@ class SignUpBenefactorForm(UserCreationForm):
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
-    max_chunk_in_month = forms.IntegerField()
 
     def save(self, commit=True):
         member = super().save(commit=False)
@@ -36,7 +35,6 @@ class SignUpBenefactorForm(UserCreationForm):
         member.activation_status = ActivationStatus.Pen
         member.save()
         benefactor = Benefactor.objects.create(member=member)
-        benefactor.max_chunk_in_month = self.cleaned_data.get('max_chunk_in_month')
         for skill in self.cleaned_data.get('skills').all():
             has_skill = HasSkill.objects.create(benefactor=benefactor, skill_type=skill,
                                                 validation_status=ValidationStatus.Pen)
@@ -56,7 +54,6 @@ class EditProfileBenefactorForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
-    max_chunk_in_month = forms.IntegerField()
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)

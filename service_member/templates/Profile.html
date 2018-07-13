@@ -8,7 +8,6 @@
         {{ member.username }} <br>
         {{ member.first_name }} <br>
         {{ memeber.last_name }} <br>
-        {{ member.benefactor.max_chunk_in_week }} <br>
         Skills: <br>
         {% for skill in member.benefactor.skill.all %}
             &emsp; {{ skill.skill_type.name }} <br>

@@ -17,6 +17,16 @@ class SenderStatus(Enum):
     Ben = 'Benefactor'
 
 
+class WeekDay(Enum):
+    Sat = 'Saturday'
+    Sun = 'Sunday'
+    Mon = 'Monday'
+    Tue = 'Tuesday'
+    Wed = 'Wednesday'
+    Thu = 'Thursday'
+    Fri = 'Friday'
+
+
 class Requirement(models.Model):
     title = models.CharField(max_length=30, default='بی‌عنوان')
     description = models.CharField(max_length=100)
@@ -37,7 +47,8 @@ class CashRequirement(Requirement):
 
 
 class NonCashRequirement(Requirement):
-    date = models.DateField()
+    beginning_date = models.DateField()
+    ending_date = models.DateField()
     time = models.ForeignKey(
         to='Chunk',
         related_name='requirements',
@@ -55,6 +66,10 @@ class NonCashRequirement(Requirement):
         on_delete=models.CASCADE,
         null=True,
         blank=True
+    )
+    week_day = models.CharField(
+        max_length=17,
+        choices=[(tag, tag.value) for tag in WeekDay]
     )
 
 

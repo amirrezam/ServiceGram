@@ -1,5 +1,7 @@
 {% load filter_skill %}
 
+{% load convert_date %}
+
 <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
     <div class="blurring dimmable circular image">
         <div class="ui dimmer">
@@ -31,7 +33,12 @@
             </p>
             <h5> تاریخ : </h5>
             <p>
-                {{ non_cash_requirement.date }}
+                از
+                {{ non_cash_requirement.beginning_date }}
+                تا
+                {{ non_cash_requirement.ending_date }}
+                {{ non_cash_requirement.week_day|convert_week_day }}
+                ها
             </p>
             <h5> ساعت : </h5>
             <p>

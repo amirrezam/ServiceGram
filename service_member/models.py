@@ -30,6 +30,8 @@ class Member(AbstractUser):
 
 class Institute(models.Model):
     member = models.OneToOneField(to='Member', related_name='institute', on_delete=models.CASCADE, null=True)
+    city = models.CharField(max_length=15)
+    address = models.CharField(max_length=100)
 
     class Meta:
         verbose_name = 'Institute'
@@ -40,7 +42,6 @@ class Institute(models.Model):
 
 class Benefactor(models.Model):
     member = models.OneToOneField(to='Member', related_name='benefactor', on_delete=models.CASCADE, null=True)
-    max_chunk_in_month = models.IntegerField(default=20)
 
     class Meta:
         verbose_name = 'Benefactor'
