@@ -1,8 +1,10 @@
 {% extends "edit_profile.html" %}
 
 {% block addition %}
-    <h4 class="ui dividing header">
-        توانایی‌ها</h4>
+    <h2 class="ui dividing header">
+        توانایی‌ها</h2>
+
+    <br>
 
     <select name="skills" multiple="" class="ui fluid dropdown">
     <option value="">توانایی‌ها</option>
@@ -26,7 +28,9 @@
     ]);
     </script>
     <div class="field">
+        <br>
         <label>حداکثر کمک رسانی در ماه</label>
         <input type="text" name="max_chunk_in_month" value="{{ user.benefactor.max_chunk_in_month }}" placeholder="20" style="text-align:left;width:40px">
+        <br>
     </div>
 {% endblock %}
