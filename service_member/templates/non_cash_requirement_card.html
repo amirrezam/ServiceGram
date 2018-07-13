@@ -34,9 +34,9 @@
             <h5> تاریخ : </h5>
             <p>
                 از
-                {{ non_cash_requirement.beginning_date }}
+                {{ non_cash_requirement.beginning_date | convert_date }}
                 تا
-                {{ non_cash_requirement.ending_date }}
+                {{ non_cash_requirement.ending_date | convert_date }}
                 {{ non_cash_requirement.week_day|convert_week_day }}
                 ها
             </p>

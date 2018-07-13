@@ -108,22 +108,6 @@
                         <br>
 
                         <div class="ui items">
-                            <div class="item" style="margin-bottom: 10px">
-                                <a class="ui small circular image" style="margin-left: 10px">
-                                    <img src="{% static "img/apple2.png" %}">
-                                </a>
-                                <div class="content">
-                                    <a class="header" style="font-family: VezFont">شرکت اپل</a>
-                                    <div class="description">
-                                        <p>
-                                            مورد درخواست : درخواست استخدام جاروکش
-                                        </p>
-                                        <p>
-                                            توضیحات : به یک جاروکش مجرب برای جارو کردن اتاق مرحوم جابز نیازمندیم.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
 
                             {% for help_non_cash in user.benefactor.non_cash_helps.all %}
                                 {% if help_non_cash.sender == 'SenderStatus.Ins' %}
