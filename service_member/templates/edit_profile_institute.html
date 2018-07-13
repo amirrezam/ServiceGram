@@ -15,4 +15,17 @@
     <label>معرفی مؤسسه</label>
     <textarea type="text" placeholder="معرفی مؤسسه" name="bio" style="text-align: right" id="id_bio">{{ user.bio }}</textarea>
 </div>
+    <div class="field">
+        <label> شهر</label>
+        <div class="field">
+            <input type="text" name="city" value="{{ user.institute.city }}" placeholder="شهر" id="id_city">
+        </div>
+    </div>
+    <div class="field">
+        <label> آدرس</label>
+        <div class="field">
+            <input type="text" name="address" value="{{ user.institute.address }}" placeholder="آدرس" id="id_address">
+        </div>
+    </div>
+    {{ form.errors }}
 {% endblock %}

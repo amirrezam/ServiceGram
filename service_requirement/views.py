@@ -27,6 +27,8 @@ class CreateCashRequirementView(CreateView):
             raise Http404
         if request.user.is_benefactor:
             raise Http404
+        if not request.user.activation_status == 'ActivationStatus.Act':
+            raise Http404
         return super().get(request, *args, **kwargs)
 
 
@@ -45,6 +47,8 @@ class CreateNonCashRequirementView(CreateView):
         if not request.user.is_authenticated:
             raise Http404
         if request.user.is_benefactor:
+            raise Http404
+        if not request.user.activation_status == 'ActivationStatus.Act':
             raise Http404
         return super().get(request, *args, **kwargs)
 
@@ -82,6 +86,8 @@ class RequestHelpBenefactorView(CreateView):
             raise Http404
         if request.user.is_institute:
             raise Http404
+        if not request.user.activation_status == 'ActivationStatus.Act':
+            raise Http404
         skills = [has_skill.skill_type.name for has_skill in request.user.benefactor.skill.filter(validation_status='ValidationStatus.Act')]
         if NonCashRequirement.objects.get(pk=self.kwargs['pk']).skill.name not in skills:
             raise Http404
@@ -114,6 +120,8 @@ class RequestHelpInstituteView(CreateView):
             raise Http404
         if request.user.is_benefactor:
             raise Http404
+        if not request.user.activation_status == 'ActivationStatus.Act':
+            raise Http404
         # skills = [has_skill.skill_type.name for has_skill in
         #           request.user.benefactor.skill.filter(validation_status='ValidationStatus.Act')]
     #     if NonCashRequirement.objects.get(pk=self.kwargs['pk']).skill.name not in skills:
@@ -139,6 +147,8 @@ class ShowRequestsRequirementView(ListView):
             raise Http404
         if request.user.is_benefactor or request.user.username != NonCashRequirement.objects.get(pk=self.kwargs['pk']).owner.member.username:
             raise Http404
+        if not request.user.activation_status == 'ActivationStatus.Act':
+            raise Http404
         return super().get(request, *args, **kwargs)
 
 
@@ -154,6 +164,8 @@ class AcceptRequestFromBenefactorView(RedirectView):
         if request.user.username != help_non_cash.requirement.owner.member.username:
             raise Http404
         if help_non_cash.status != 'ValidationStatus.Pen':
+            raise Http404
+        if not request.user.activation_status == 'ActivationStatus.Act':
             raise Http404
         HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
                                    benefactor__member__username__exact=help_non_cash.benefactor.member.username,
@@ -178,6 +190,8 @@ class AcceptRequestFromInstituteView(RedirectView):
         if request.user.username != help_non_cash.benefactor.member.username:
             raise Http404
         if help_non_cash.status != 'ValidationStatus.Pen':
+            raise Http404
+        if not request.user.activation_status == 'ActivationStatus.Act':
             raise Http404
         HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
                                    benefactor__member__username__exact=help_non_cash.benefactor.member.username,
@@ -246,6 +260,8 @@ class RejectRequestFromBenefactorView(RedirectView):
             raise Http404
         if help_non_cash.status != 'ValidationStatus.Pen':
             raise Http404
+        if not request.user.activation_status == 'ActivationStatus.Act':
+            raise Http404
         HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(status=ValidationStatus.Rej)
         return super().get(request, *args, **kwargs)
 
@@ -262,6 +278,8 @@ class RejectRequestFromInstituteView(RedirectView):
         if request.user.username != help_non_cash.benefactor.member.username:
             raise Http404
         if help_non_cash.status != 'ValidationStatus.Pen':
+            raise Http404
+        if not request.user.activation_status == 'ActivationStatus.Act':
             raise Http404
         HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(status=ValidationStatus.Rej)
         return super().get(request, *args, **kwargs)

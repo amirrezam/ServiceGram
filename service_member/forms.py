@@ -7,6 +7,9 @@ from service_requirement.models import ValidationStatus
 
 
 class SignUpInstituteForm(UserCreationForm):
+    city = forms.CharField()
+    address = forms.Textarea()
+
     def save(self, commit=True):
         member = super().save(commit=False)
         member.is_benefactor = False
@@ -14,6 +17,11 @@ class SignUpInstituteForm(UserCreationForm):
         member.activation_status = ActivationStatus.Pen
         member.save()
         institute = Institute.objects.create(member=member)
+        if 'city' in list(self.cleaned_data.keys()):
+            institute.city = self.cleaned_data['city']
+        if 'address' in list(self.cleaned_data.keys()):
+            institute.address = self.cleaned_data['address']
+        institute.save()
         return member
 
     class Meta:
@@ -68,6 +76,8 @@ class EditProfileBenefactorForm(forms.ModelForm):
 
 
 class EditProfileInstituteForm(forms.ModelForm):
+    city = forms.CharField()
+    address = forms.Textarea()
 
     class Meta:
         model = Member

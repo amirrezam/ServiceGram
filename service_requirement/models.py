@@ -80,6 +80,9 @@ class Chunk(models.Model):
     def __str__(self):
         return str(self.beginning_time) + ' - ' + str(self.ending_time)
 
+    def has_conflict(self, other_chunk):
+        return True
+
 
 class HelpCash(models.Model):
     amount = models.IntegerField()

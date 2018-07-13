@@ -54,7 +54,8 @@
                     disabled
                 {% elif non_cash_requirement.skill.name not in user.benefactor.skill|filter_accepted|get_names %}
                     disabled
-                {% elif user.benefactor.non_cash_helps|filter_has_skill_accepted|filter_by_time:non_cash_requirement.time|filter_by_date:non_cash_requirement.date|length > 0%}
+{#                {% elif user.benefactor.non_cash_helps|filter_has_skill_accepted|filter_by_time:non_cash_requirement.time|filter_by_date:non_cash_requirement.date|length > 0%}#}
+                {% elif user.benefactor.non_cash_helps|get_conflicts_non_cash_requirement:non_cash_requirement %}
                     disabled
                 {% endif %}
             >
