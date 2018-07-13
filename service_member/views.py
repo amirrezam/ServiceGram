@@ -67,7 +67,7 @@ class ShowBenefactorsView(ListView):
     def get_queryset(self):
         benefactors = Benefactor.objects.filter(member__activation_status='ActivationStatus.Act')
         if 'name' in dict(self.request.GET).keys():
-            return benefactors.filter(member__first_name__icontains=self.request.GET.get('name'))
+            return benefactors.filter(member__last_name__icontains=self.request.GET.get('name'))
         else:
             return benefactors
 

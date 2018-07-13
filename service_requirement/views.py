@@ -82,12 +82,35 @@ class RequestHelpBenefactorView(CreateView):
             raise Http404
         if request.user.is_institute:
             raise Http404
-        skills = [has_skill.skill_type.name for has_skill in request.user.benefactor.skill.filter(validation_status='ValidationStatus.Act')]
-        if NonCashRequirement.objects.get(pk=self.kwargs['pk']).skill.name not in skills:
+        skills = [has_skill.skill_type.name for has_skill in
+                  request.user.benefactor.skill.filter(validation_status='ValidationStatus.Act')]
+
+        help_non_cash = NonCashRequirement.objects.get(pk=self.kwargs['pk'])
+
+        if help_non_cash.skill.name not in skills:
             raise Http404
-        if HelpNonCash.objects.filter(requirement__date__exact=NonCashRequirement.objects.get(pk=self.kwargs['pk']).date,
-                                      requirement__time__exact=NonCashRequirement.objects.get(pk=self.kwargs['pk']).time,
-                                      benefactor__member__username__exact=request.user.username,
+
+        if HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
+                                      benefactor__member__username__exact=help_non_cash.benefactor.member.username,
+                                      requirement__week_day=help_non_cash.requirement.week_day,
+                                      requirement__beginning_date__gte=help_non_cash.requirement.beginning_date,
+                                      requirement__beginning_date__lte=help_non_cash.requirement.ending_date,
+                                      status='ValidationStatus.Act').count() > 0:
+            raise Http404
+
+        if HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
+                                      benefactor__member__username__exact=help_non_cash.benefactor.member.username,
+                                      requirement__week_day=help_non_cash.requirement.week_day,
+                                      requirement__ending_date__gte=help_non_cash.requirement.beginning_date,
+                                      requirement__ending_date__lte=help_non_cash.requirement.ending_date,
+                                      status='ValidationStatus.Act').count() > 0:
+            raise Http404
+
+        if HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
+                                      benefactor__member__username__exact=help_non_cash.benefactor.member.username,
+                                      requirement__week_day=help_non_cash.requirement.week_day,
+                                      requirement__beginning_date__lte=help_non_cash.requirement.beginning_date,
+                                      requirement__ending_date__gte=help_non_cash.requirement.ending_date,
                                       status='ValidationStatus.Act').count() > 0:
             raise Http404
         return super().get(request, *args, **kwargs)
@@ -116,14 +139,14 @@ class RequestHelpInstituteView(CreateView):
             raise Http404
         # skills = [has_skill.skill_type.name for has_skill in
         #           request.user.benefactor.skill.filter(validation_status='ValidationStatus.Act')]
-    #     if NonCashRequirement.objects.get(pk=self.kwargs['pk']).skill.name not in skills:
-    #         raise Http404
-    #     if HelpNonCash.objects.filter(
-    #             requirement__date__exact=NonCashRequirement.objects.get(pk=self.kwargs['pk']).date,
-    #             requirement__time__exact=NonCashRequirement.objects.get(pk=self.kwargs['pk']).time,
-    #             benefactor__member__username__exact=request.user.username,
-    #             status='ValidationStatus.Act').count() > 0:
-    #         raise Http404
+        #     if NonCashRequirement.objects.get(pk=self.kwargs['pk']).skill.name not in skills:
+        #         raise Http404
+        #     if HelpNonCash.objects.filter(
+        #             requirement__date__exact=NonCashRequirement.objects.get(pk=self.kwargs['pk']).date,
+        #             requirement__time__exact=NonCashRequirement.objects.get(pk=self.kwargs['pk']).time,
+        #             benefactor__member__username__exact=request.user.username,
+        #             status='ValidationStatus.Act').count() > 0:
+        #         raise Http404
         return super().get(request, *args, **kwargs)
 
 
@@ -137,7 +160,8 @@ class ShowRequestsRequirementView(ListView):
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             raise Http404
-        if request.user.is_benefactor or request.user.username != NonCashRequirement.objects.get(pk=self.kwargs['pk']).owner.member.username:
+        if request.user.is_benefactor or request.user.username != NonCashRequirement.objects.get(
+                pk=self.kwargs['pk']).owner.member.username:
             raise Http404
         return super().get(request, *args, **kwargs)
 
@@ -157,12 +181,26 @@ class AcceptRequestFromBenefactorView(RedirectView):
             raise Http404
         HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
                                    benefactor__member__username__exact=help_non_cash.benefactor.member.username,
-                                   status='ValidationStatus.Pen')\
-            .update(status=ValidationStatus.Can)
+                                   requirement__week_day=help_non_cash.requirement.week_day,
+                                   requirement__beginning_date__gte=help_non_cash.requirement.beginning_date,
+                                   requirement__beginning_date__lte=help_non_cash.requirement.ending_date,
+                                   status='ValidationStatus.Pen'). \
+            update(status=ValidationStatus.Can)
+        HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
+                                   benefactor__member__username__exact=help_non_cash.benefactor.member.username,
+                                   requirement__week_day=help_non_cash.requirement.week_day,
+                                   requirement__ending_date__gte=help_non_cash.requirement.beginning_date,
+                                   requirement__ending_date__lte=help_non_cash.requirement.ending_date,
+                                   status='ValidationStatus.Pen'). \
+            update(status=ValidationStatus.Can)
+        HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
+                                   benefactor__member__username__exact=help_non_cash.benefactor.member.username,
+                                   requirement__week_day=help_non_cash.requirement.week_day,
+                                   requirement__beginning_date__lte=help_non_cash.requirement.beginning_date,
+                                   requirement__ending_date__gte=help_non_cash.requirement.ending_date,
+                                   status='ValidationStatus.Pen'). \
+            update(status=ValidationStatus.Can)
         HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(status=ValidationStatus.Act)
-        # if HelpNonCash.objects.filter(benefactor__member__username__exact=help_non_cash.benefactor.member.username,
-        #                               status='ValidationStatus.Act',
-        #                               date)# TODO: how to get the number of requests in the week?
         return super().get(request, *args, **kwargs)
 
 
@@ -184,21 +222,21 @@ class AcceptRequestFromInstituteView(RedirectView):
                                    requirement__week_day=help_non_cash.requirement.week_day,
                                    requirement__beginning_date__gte=help_non_cash.requirement.beginning_date,
                                    requirement__beginning_date__lte=help_non_cash.requirement.ending_date,
-                                   status='ValidationStatus.Pen').\
+                                   status='ValidationStatus.Pen'). \
             update(status=ValidationStatus.Can)
         HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
                                    benefactor__member__username__exact=help_non_cash.benefactor.member.username,
                                    requirement__week_day=help_non_cash.requirement.week_day,
-                                   requirement__beginning_date__gte=help_non_cash.requirement.beginning_date,
-                                   requirement__beginning_date__lte=help_non_cash.requirement.ending_date,
-                                   status='ValidationStatus.Pen').\
+                                   requirement__ending_date__gte=help_non_cash.requirement.beginning_date,
+                                   requirement__ending_date__lte=help_non_cash.requirement.ending_date,
+                                   status='ValidationStatus.Pen'). \
             update(status=ValidationStatus.Can)
         HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
                                    benefactor__member__username__exact=help_non_cash.benefactor.member.username,
                                    requirement__week_day=help_non_cash.requirement.week_day,
-                                   requirement__beginning_date__gte=help_non_cash.requirement.beginning_date,
-                                   requirement__beginning_date__lte=help_non_cash.requirement.ending_date,
-                                   status='ValidationStatus.Pen').\
+                                   requirement__beginning_date__lte=help_non_cash.requirement.beginning_date,
+                                   requirement__ending_date__gte=help_non_cash.requirement.ending_date,
+                                   status='ValidationStatus.Pen'). \
             update(status=ValidationStatus.Can)
         HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(status=ValidationStatus.Act)
         return super().get(request, *args, **kwargs)
