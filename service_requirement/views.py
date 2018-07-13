@@ -5,8 +5,9 @@ from django.views.generic import CreateView, DetailView, RedirectView, ListView
 from service_member.models import Skill, Member
 from service_requirement.forms import CreateCashRequirementForm, CreateNonCashRequirementForm, \
     RequestHelpBenefactorForm, RequestHelpInstituteForm
-from service_requirement.models import CashRequirement, NonCashRequirement, HelpNonCash, ValidationStatus, Chunk
-
+from service_requirement.models import CashRequirement, NonCashRequirement, HelpNonCash, ValidationStatus, Chunk, WeekDay
+import datetime
+import jalali
 
 # Create your views here.
 
@@ -262,24 +263,40 @@ class ShowNonCashRequirementsView(ListView):
         ans = NonCashRequirement.objects
         if dict(self.request.GET).keys().__len__() == 0:
             return ans
-        if not self.request.GET.get('day') == '':
-            ans = ans.filter(date__day=self.request.GET.get('day'))
-        if not self.request.GET.get('year') == '':
-            ans = ans.filter(date__year=self.request.GET.get('year'))
-        if not self.request.GET.get('month') == '':
-            ans = ans.filter(date__month=self.request.GET.get('month'))
+
+        if not (self.request.GET.get('begin_day') == '' or
+                self.request.GET.get('begin_year') == '' or
+                self.request.GET.get('begin_month') == ''):
+            (begin_year, begin_month, begin_day) = jalali.\
+                Persian((self.request.GET.get('begin_year'), self.request.GET.get('begin_month'), self.request.GET.get('begin_day'))).gregorian_tuple()
+            ans = ans.filter(beginning_date__gte=
+                             datetime.date(begin_year, begin_month, begin_day))
+
+        if not (self.request.GET.get('end_day') == '' or
+                self.request.GET.get('end_year') == '' or
+                self.request.GET.get('end_month') == ''):
+            (end_year, end_month, end_day) = jalali.\
+                Persian((self.request.GET.get('end_year'), self.request.GET.get('end_month'), self.request.GET.get('end_day'))).gregorian_tuple()
+            ans = ans.filter(beginning_date__gte=
+                             datetime.date(end_year, end_month, end_day))
+
+
         if 'chunks' in dict(self.request.GET).keys():
             if not self.request.GET.get('chunks') == '':
                 ans = ans.filter(time_id__in=dict(self.request.GET)['chunks'])
         if 'skills' in dict(self.request.GET).keys():
             if not self.request.GET.get('skills') == '':
                 ans = ans.filter(skill_id__in=dict(self.request.GET)['skills'])
+        if 'week_days' in dict(self.request.GET).keys():
+            if not self.request.GET.get('week_days') == '':
+                ans = ans.filter(week_day__in=dict(self.request.GET)['week_days'])
         return ans
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['Skill'] = Skill.objects.all()
         context['Chunk'] = Chunk.objects.all()
+        context['WeekDay'] = WeekDay.__members__
         return context
 
 
