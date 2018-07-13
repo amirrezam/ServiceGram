@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load filter_skill %}
+
+{% block title %}{{ member.username }}'s profile{% endblock %}
+
+{% block content %}
+<section>
+
+    <div class="ui container" style="width: 1300px;">
+
+        <div class="ui top attached tabular menu">
+
+            <a class="item">اطلاعات پروفایل</a>
+            <a class="item active">فعالیت ها</a>
+            <a class="item">درخواست های شما</a>
+            <a class="item">درخواست های موسسات</a>
+            <a class="item">آرشیو عملیات ها</a>
+
+        </div>
+
+        <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245)">
+
+            <div class="ui very relaxed middle aligned stackable grid"; style="margin: 20px">
+
+                <div class="eight wide column">
+
+                        <h3> </h3>
+                        <br>
+
+                        <div class="ui items">
+                            <div class="item" style="margin-bottom: 10px">
+                                <a class="ui small circular image" style="margin-left: 10px">
+                                    <img src="apple2.png">
+                                </a>
+                                <div class="content">
+                                    <a class="header" style="font-family: VezFont">شرکت اپل</a>
+                                    <div class="description">
+                                        <p>
+                                            مورد درخواست : درخواست استخدام جاروکش
+                                        </p>
+                                        <p>
+                                            توضیحات : به یک جاروکش مجرب برای جارو کردن اتاق مرحوم جابز نیازمندیم.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item" style="margin-bottom: 10px">
+                                <a class="ui small circular image" style="margin-left: 10px">
+                                    <img src="cafe.png">
+                                </a>
+                                <div class="content">
+                                    <a class="header" style="font-family: VezFont">کافه شریف</a>
+                                    <div class="description">
+                                        <p>
+                                            مورد درخواست : درخواست استخدام جاروکش
+                                        </p>
+                                        <p>
+                                            توضیحات : به یک جاروکش مجرب برای جارو کردن دستشویی کافه نیازمندیم.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                <div class="eight wide column">
+
+                        <h3>درخواست‌های پذیرفته شده : </h3>
+                        <br>
+
+                        <div class="ui items">
+                            <div class="item" style="margin-bottom: 10px">
+                                <a class="ui small circular image" style="margin-left: 10px">
+                                    <img src="school.png">
+                                </a>
+                                <div class="content">
+                                    <a class="header" style="font-family: VezFont">دبیرستان علامه فلانی</a>
+                                    <div class="description">
+                                        <p>
+                                            مورد درخواست : درخواست استخدام برنامه نویس C
+                                        </p>
+                                        <p>
+                                            توضیحات : به یک برنامه نویس مجرب برای جارو کردن سایت مدرسه نیازمندیم.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+</section>
+{% endblock %}

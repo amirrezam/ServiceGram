@@ -9,12 +9,14 @@
 {% block add_content %}
     <div class="ui bottom attached segment">
         <p>
-            <table class="ui very basic collapsing celled table" style="text-align:right;margin: auto">
+            <table class="ui very basic large collapsing celled table" style="text-align:right; padding: 40px; margin: auto; padding-left: 10px; margin-top: 60px; margin-bottom: 160px; background-color: rgba(243, 244, 245)"  >
                 <col width="200">
                 <col width="80">
                 <thead>
                     <tr>
-                        <th>توانایی‌ها</th>
+                        <th><h3>
+                            توانایی‌ها
+                        </h3></th>
 {#                        <th>گزینه‌ها</th>#}
                     </tr>
                 </thead>
@@ -22,14 +24,14 @@
                     {% for skill in Skills.all %}
                         <tr>
                             <td>
-                                <h4 class="ui image header">
+                                <h3 class="ui image header">
                                     <div class="content">
                                         {{ skill.name }}
                                         <div class="sub header">
                                         {{ HasSkills|filter_accepted|filter_by_name:skill.name|length }} نفر
                                         </div>
                                     </div>
-                                </h4>
+                                </h3>
 {#                            </td>#}
 {#                                <td>#}
 {#                                </button><button class="ui icon button">#}
@@ -48,7 +50,7 @@
                                     </div>
                                 </h4>
 
-                                <button class="ui icon button" type="submit">
+                                <button class="ui teal large icon button" type="submit">
                                     <i class="plus icon"></i>
                                 </button>
                             </td>
