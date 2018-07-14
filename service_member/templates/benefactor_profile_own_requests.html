@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load filter_skill %}
+
+{% block title %}{{ member.username }}'s profile{% endblock %}
+
+{% block content %}
+<section>
+
+    <div class="ui container" style="width: 1300px;">
+
+        <div class="ui top attached massive tabular menu">
+
+            <a class="item">اطلاعات پروفایل</a>
+            <a class="item">فعالیت ها</a>
+            <a class="item active">درخواست های شما</a>
+            <a class="item">درخواست های موسسات</a>
+            <a class="item">آرشیو عملیات ها</a>
+
+        </div>
+
+        <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245)">
+
+            <div class="ui container" style="margin-top: 30px; margin-bottom: 100px">
+
+                <br><br>
+
+                <h4>
+                    در این قسمت درخواست های همکاری تایید نشده ی شما قابل مشاهده است :
+                </h4>
+
+                <br><br><br><br>
+
+                <div class="ui cards">
+
+                    <div class="yellow card" style="width: 500px; height: auto; padding: 20px; margin: 20px;">
+
+                        <div class="content">
+
+                            <img class="left floated small ui image" src="{% static 'img/avatar2.png' %}">
+
+                            <div class="header" style="font-family: 'VezFont'">
+
+                                <h3><a>
+                                    شرکت تشتک سازی ورامین
+                                </a></h3>
+
+                            </div>
+
+                            <br>
+
+                            <div class="meta">
+
+                                <h4><a>
+                                    مورد درخواست : برنامه نویس C
+                                </a></h4>
+
+                                <br>
+
+                                <h5>
+                                    از تاریخ 1397/4/22 تا تاریخ 1397/4/2
+                                </h5>
+
+                                <h5>
+                                    یکشنبه ها از ساعت 14:00 تا ساعت 16:00
+                                </h5>
+
+                            </div>
+
+                            <div class="description"><p style="font-size: 14px">
+                                شرح درخواست : جون مادرتون منو راه بدین تو شرکتتون !.
+                            <p></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="yellow card" style="width: 500px; height: auto; padding: 20px; margin: 20px;">
+
+                        <div class="content">
+
+                            <img class="left floated small ui image" src="{% static 'img/avatar2.png' %}">
+
+                            <div class="header" style="font-family: 'VezFont'">
+
+                                <h3><a>
+                                    شرکت تشتک سازی ورامین
+                                </a></h3>
+
+                            </div>
+
+                            <br>
+
+                            <div class="meta">
+
+                                <h4><a>
+                                    مورد درخواست : برنامه نویس C
+                                </a></h4>
+
+                                <br>
+
+                                <h5>
+                                    از تاریخ 1397/4/22 تا تاریخ 1397/4/2
+                                </h5>
+
+                                <h5>
+                                    یکشنبه ها از ساعت 14:00 تا ساعت 16:00
+                                </h5>
+
+                            </div>
+
+                            <div class="description"><p style="font-size: 14px">
+                                ما در این شرکت تشتک می سازیم و نیاز به یک برنامه نویس مجرب C داریم.
+                            <p></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="yellow card" style="width: 500px; height: auto; padding: 20px; margin: 20px;">
+
+                        <div class="content">
+
+                            <img class="left floated small ui image" src="{% static 'img/avatar2.png' %}">
+
+                            <div class="header" style="font-family: 'VezFont'">
+
+                                <h3><a>
+                                    شرکت تشتک سازی ورامین
+                                </a></h3>
+
+                            </div>
+
+                            <br>
+
+                            <div class="meta">
+
+                                <h4><a>
+                                    مورد درخواست : برنامه نویس C
+                                </a></h4>
+
+                                <br>
+
+                                <h5>
+                                    از تاریخ 1397/4/22 تا تاریخ 1397/4/2
+                                </h5>
+
+                                <h5>
+                                    یکشنبه ها از ساعت 14:00 تا ساعت 16:00
+                                </h5>
+
+                            </div>
+
+                            <div class="description"><p style="font-size: 14px">
+                                شرح درخواست : جون مادرتون منو راه بدین تو شرکتتون !
+                            <p></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="yellow card" style="width: 500px; height: auto; padding: 20px; margin: 20px;">
+
+                        <div class="content">
+
+                            <img class="left floated small ui image" src="{% static 'img/avatar2.png' %}">
+
+                            <div class="header" style="font-family: 'VezFont'">
+
+                                <h3><a>
+                                    شرکت تشتک سازی ورامین
+                                </a></h3>
+
+                            </div>
+
+                            <br>
+
+                            <div class="meta">
+
+                                <h4><a>
+                                    مورد درخواست : برنامه نویس C
+                                </a></h4>
+
+                                <br>
+
+                                <h5>
+                                    از تاریخ 1397/4/22 تا تاریخ 1397/4/2
+                                </h5>
+
+                                <h5>
+                                    یکشنبه ها از ساعت 14:00 تا ساعت 16:00
+                                </h5>
+
+                            </div>
+
+                            <div class="description"><p style="font-size: 14px">
+                                ما در این شرکت تشتک می سازیم و نیاز به یک برنامه نویس مجرب C داریم.
+                            <p></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
+</section>
+{% endblock %}

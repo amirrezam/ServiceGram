@@ -171,12 +171,12 @@ class VezTestView(TemplateView):
     template_name = 'benefactor_profile_activities.html'
 
 class VezTestView2(TemplateView):
-    template_name = 'benefactor_profile_activities.html'
+    template_name = 'benefactor_profile_own_requests.html'
 
 class VezTestView3(TemplateView):
-    template_name = 'benefactor_profile_activities.html'
+    template_name = 'benefactor_profile_institute_requests.html'
 
 class VezTestView4(TemplateView):
-    template_name = 'benefactor_profile_activities.html'
+    template_name = 'benefactor_profile_archive.html'
 
 

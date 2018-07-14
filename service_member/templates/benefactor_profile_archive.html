@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load filter_skill %}
+
+{% block title %}{{ member.username }}'s profile{% endblock %}
+
+{% block content %}
+<section>
+
+    <div class="ui container" style="width: 1300px;">
+
+        <div class="ui top attached massive tabular menu">
+
+            <a class="item">اطلاعات پروفایل</a>
+            <a class="item">فعالیت ها</a>
+            <a class="item">درخواست های شما</a>
+            <a class="item">درخواست های موسسات</a>
+            <a class="item active">آرشیو عملیات ها</a>
+
+        </div>
+
+        <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245)">
+
+            <div class="ui container" style="margin-top: 30px; margin-bottom: 100px">
+
+                <br><br>
+
+                <h4>
+                    در این قسمت آرشیو درخواست های همکاری که منقضی شده اند یا توسط شما یا موسسات رد شده اند نمایش داده می شود
+                </h4>
+
+                <br><br><br><br>
+
+                <div class="ui success message">
+
+                    <div class="ui very relaxed middle aligned stackable grid">
+
+                        <div class="eight wide column">
+
+                            <h4>
+                                درخواست موسسه :
+                            </h4>
+
+
+                            <p>
+                                این درخواست در تاریخ یکشنبه 1397/4/22 توسط شما تایید شد.
+                            </p>
+
+                        </div>
+
+                        <div class="two wide column">
+                            <img class="left floated small ui image" src="{% static 'img/school.png' %}">
+                        </div>
+
+                        <div class="six wide column">
+
+                            <h5><a>
+                                شرکت تشتک سازی ورامین
+                            </a></h5>
+
+                            <h5><a>
+                                مورد درخواست : برنامه نویس C
+                            </a></h5>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="ui error message">
+
+                    <div class="ui very relaxed middle aligned stackable grid">
+
+                        <div class="eight wide column">
+
+                            <h4>
+                                درخواست موسسه :
+                            </h4>
+
+
+                            <p>
+                                این درخواست در تاریخ یکشنبه 1397/4/21 توسط شما رد شد.
+                            </p>
+
+                        </div>
+
+                        <div class="two wide column">
+                            <img class="left floated small ui image" src="{% static 'img/school.png' %}">
+                        </div>
+
+                        <div class="six wide column">
+
+                            <h5><a>
+                                شرکت تشتک سازی ورامین
+                            </a></h5>
+
+                            <h5><a>
+                                مورد درخواست : برنامه نویس C
+                            </a></h5>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="ui success message">
+
+                    <div class="ui very relaxed middle aligned stackable grid">
+
+                        <div class="eight wide column">
+
+                            <h4>
+                                درخواست نیکوکار :
+                            </h4>
+
+
+                            <p>
+                                این درخواست در تاریخ یکشنبه 1397/4/20 توسط موسسه تایید شد.
+                            </p>
+
+                        </div>
+
+                        <div class="two wide column">
+                            <img class="left floated small ui image" src="{% static 'img/school.png' %}">
+                        </div>
+
+                        <div class="six wide column">
+
+                            <h5><a>
+                                شرکت تشتک سازی ورامین
+                            </a></h5>
+
+                            <h5><a>
+                                مورد درخواست : برنامه نویس C
+                            </a></h5>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+</section>
+{% endblock %}
