@@ -17,9 +17,14 @@
                     <img src="/image/{{ member.avatar }}">
                     <br>
                     <center>
-                        <div class="ui center aligned massive star rating" data-rating="4" data-max-rating="5"></div>
+                        <div class="ui center aligned massive star rating" data-rating="{{ member.benefactor|get_benefactor_mean_score }}" data-max-rating="5"></div>
                         <p>آنلاین</p>
                     </center>
+                                                <script>        $(function () {
+            $('.ui.rating').rating();
+
+        });
+    </script>
                 </a>
                 <div class="content">
                     <h1 style="font-family: VezFont">
@@ -224,14 +229,41 @@
                                                 <p>
                                                     مورد درخواست :
                                                     {{ help_non_cash.requirement.title }}
-                                                </p>
+                                                    </p>
                                                 <p>
                                                     توضیحات :
                                                     {{ help_non_cash.description }}
                                                 </p>
                                             </div>
                                         </div>
+                                    <form method="post" action="/requirements/rate/benefactor/{{ help_non_cash.requirement.pk }}/">
+                                        {% csrf_token %}
+                                    <input type="text" name="rate" value="1" hidden>
+                                    <button class="circular ui icon button" type="submit">1</button>
+                                    </form>
+                                    <form method="post" action="/requirements/rate/benefactor/{{ help_non_cash.requirement.pk }}/">
+                                        {% csrf_token %}
+                                    <input type="text" name="rate" value="2" hidden>
+                                    <button class="circular ui icon button" type="submit">2</button>
+                                    </form>
+                                    <form method="post" action="/requirements/rate/benefactor/{{ help_non_cash.requirement.pk }}/">
+                                        {% csrf_token %}
+                                    <input type="text" name="rate" value="3" hidden>
+                                    <button class="circular ui icon button" type="submit">3</button>
+                                    </form>
+                                    <form method="post" action="/requirements/rate/benefactor/{{ help_non_cash.requirement.pk }}/">
+                                        {% csrf_token %}
+                                    <input type="text" name="rate" value="4" hidden>
+                                    <button class="circular ui icon button" type="submit">4</button>
+                                    </form>
+                                    <form method="post" action="/requirements/rate/benefactor/{{ help_non_cash.requirement.pk }}/">
+                                        {% csrf_token %}
+                                    <input type="text" name="rate" value="5" hidden>
+                                    <button class="circular ui icon button" type="submit">5</button>
+                                    </form>
                                     </div>
+
+
                                 {% endif %}
                             {% endfor %}
 

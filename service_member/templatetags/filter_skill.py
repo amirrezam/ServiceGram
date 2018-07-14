@@ -37,29 +37,51 @@ def get_names(value):
 
 
 def get_conflicts_non_cash_requirement(value, arg):
-    if value.objects.filter(requirement__time__exact=arg.requirement.time,
-                            benefactor__member__username__exact=arg.benefactor.member.username,
-                            requirement__week_day=arg.requirement.week_day,
-                            requirement__beginning_date__gte=arg.requirement.beginning_date,
-                            requirement__beginning_date__lte=arg.requirement.ending_date,
-                            status='ValidationStatus.Act').count() > 0:
+    if value.filter(requirement__time__exact=arg.time,
+                    requirement__week_day=arg.week_day,
+                    requirement__beginning_date__gte=arg.beginning_date,
+                    requirement__beginning_date__lte=arg.ending_date,
+                    status='ValidationStatus.Act').count() > 0:
         return True
 
-    if value.objects.filter(requirement__time__exact=arg.requirement.time,
-                            benefactor__member__username__exact=arg.benefactor.member.username,
-                            requirement__week_day=arg.requirement.week_day,
-                            requirement__ending_date__gte=arg.requirement.beginning_date,
-                            requirement__ending_date__lte=arg.requirement.ending_date,
-                            status='ValidationStatus.Act').count() > 0:
+    if value.filter(requirement__time__exact=arg.time,
+                    requirement__week_day=arg.week_day,
+                    requirement__ending_date__gte=arg.beginning_date,
+                    requirement__ending_date__lte=arg.ending_date,
+                    status='ValidationStatus.Act').count() > 0:
         return True
 
-    if value.objects.filter(requirement__time__exact=arg.requirement.time,
-                            benefactor__member__username__exact=arg.benefactor.member.username,
-                            requirement__week_day=arg.requirement.week_day,
-                            requirement__beginning_date__lte=arg.requirement.beginning_date,
-                            requirement__ending_date__gte=arg.requirement.ending_date,
-                            status='ValidationStatus.Act').count() > 0:
+    if value.filter(requirement__time__exact=arg.time,
+                    requirement__week_day=arg.week_day,
+                    requirement__beginning_date__lte=arg.beginning_date,
+                    requirement__ending_date__gte=arg.ending_date,
+                    status='ValidationStatus.Act').count() > 0:
         return True
+
+
+def get_institute_mean_score(value):
+    sum = 0
+    cnt = 0
+    for non_cash_requirement in value.non_cash_requirements.all():
+        for help_non_cash in non_cash_requirement.helps.all():
+            sum += help_non_cash.institute_score
+            cnt += 1
+    if cnt == 0:
+        return 2.5
+    else:
+        return sum / cnt
+
+
+def get_benefactor_mean_score(value):
+    sum = 0
+    cnt = 0
+    for help_non_cash in value.non_cash_helps.all():
+        sum += help_non_cash.benefactor_score
+        cnt += 1
+    if cnt == 0:
+        return 2.5
+    else:
+        return sum / cnt
 
 
 register.filter('filter_accepted', filter_accepted)
@@ -70,3 +92,5 @@ register.filter('filter_by_time', filter_by_time)
 register.filter('filter_by_username', filter_by_username)
 register.filter('get_names', get_names)
 register.filter('get_conflicts_non_cash_requirement', get_conflicts_non_cash_requirement)
+register.filter('get_institute_mean_score', get_institute_mean_score)
+register.filter('get_benefactor_mean_score', get_benefactor_mean_score)
