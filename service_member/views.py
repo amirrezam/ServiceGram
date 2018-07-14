@@ -167,3 +167,16 @@ class EditProfileView(RedirectView):
         return super().get(request, *args, **kwargs)
 
 
+class VezTestView(TemplateView):
+    template_name = 'benefactor_profile_activities.html'
+
+class VezTestView2(TemplateView):
+    template_name = 'benefactor_profile_activities.html'
+
+class VezTestView3(TemplateView):
+    template_name = 'benefactor_profile_activities.html'
+
+class VezTestView4(TemplateView):
+    template_name = 'benefactor_profile_activities.html'
+
+

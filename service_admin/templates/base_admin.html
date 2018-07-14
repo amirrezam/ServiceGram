@@ -3,8 +3,9 @@
 {% block title %}Admin{% endblock %}
 
 {% block content %}
-    <div style="width:450px;text-align:center;margin:auto;margin-top:20px">
-        <div class="ui top attached tabular menu">
+
+    <div style="width:700px;text-align:center;margin:auto;margin-top:50px">
+        <div class="ui massive top attached tabular menu">
             <a class="{% block active_validate_skill %}{% endblock %} item" href="{% url "validate_skill" %}">
                 تایید توانایی‌ها
             </a>
@@ -19,5 +20,9 @@
             </a>
         </div>
         {% block add_content %}{% endblock %}
+
+        <br><br><br><br><br>
     </div>
+
+    <br><br><br><br><br><br><br>
 {% endblock %}

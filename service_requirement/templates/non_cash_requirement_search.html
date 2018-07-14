@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+
+{% load convert_date %}
 {% load static %}
 
 {%  block title %}Search non cash requirements{% endblock %}
@@ -32,31 +34,121 @@
                     });</script>
 
                     <div class="nine wide field" style="margin: auto">
-                        <label>تاریخ</label>
+                        <label>تاریخ شروع</label>
                         <div class="three fields">
 
                             <div class="field">
-                                <input type="text" name="day" placeholder="روز" style="font-family: iranSans">
+                                <input type="text" name="begin_day" placeholder="روز" style="font-family: iranSans">
                             </div>
 
                             <div class="field">
                                 <div class="ui fluid search selection dropdown">
-                                    <input type="hidden" name="month">
+                                    <input type="hidden" name="begin_month">
                                     <i class="small dropdown icon"></i>
                                     <div class="default text">ماه</div>
                                     <div class="menu">
-                                        <div class="item" data-value="0">
+                                        <div class="item" data-value="1">
                                             فروردین
                                         </div>
-                                        <div class="item" data-value="1">
+                                        <div class="item" data-value="2">
                                             اردیبهشت
+                                        </div>
+                                        <div class="item" data-value="3">
+                                            خرداد
+                                        </div>
+                                        <div class="item" data-value="4">
+                                            تیر
+                                        </div>
+                                        <div class="item" data-value="5">
+                                            مرداد
+                                        </div>
+                                        <div class="item" data-value="6">
+                                            شهریور
+                                        </div>
+                                        <div class="item" data-value="7">
+                                            مهر
+                                        </div>
+                                        <div class="item" data-value="8">
+                                            آبان
+                                        </div>
+                                        <div class="item" data-value="9">
+                                            آذر
+                                        </div>
+                                        <div class="item" data-value="10">
+                                            دی
+                                        </div>
+                                        <div class="item" data-value="11">
+                                            بهمن
+                                        </div>
+                                        <div class="item" data-value="12">
+                                            اسفند
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="field">
-                                <input type="text" name="year" placeholder="سال" style="font-family: iranSans">
+                                <input type="text" name="begin_year" placeholder="سال" style="font-family: iranSans">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nine wide field" style="margin: auto">
+                        <label>تاریخ پایان</label>
+                        <div class="three fields">
+
+                            <div class="field">
+                                <input type="text" name="end_day" placeholder="روز" style="font-family: iranSans">
+                            </div>
+
+                            <div class="field">
+                                <div class="ui fluid search selection dropdown">
+                                    <input type="hidden" name="end_month">
+                                    <i class="small dropdown icon"></i>
+                                    <div class="default text">ماه</div>
+                                    <div class="menu">
+                                        <div class="item" data-value="1">
+                                            فروردین
+                                        </div>
+                                        <div class="item" data-value="2">
+                                            اردیبهشت
+                                        </div>
+                                        <div class="item" data-value="3">
+                                            خرداد
+                                        </div>
+                                        <div class="item" data-value="4">
+                                            تیر
+                                        </div>
+                                        <div class="item" data-value="5">
+                                            مرداد
+                                        </div>
+                                        <div class="item" data-value="6">
+                                            شهریور
+                                        </div>
+                                        <div class="item" data-value="7">
+                                            مهر
+                                        </div>
+                                        <div class="item" data-value="8">
+                                            آبان
+                                        </div>
+                                        <div class="item" data-value="9">
+                                            آذر
+                                        </div>
+                                        <div class="item" data-value="10">
+                                            دی
+                                        </div>
+                                        <div class="item" data-value="11">
+                                            بهمن
+                                        </div>
+                                        <div class="item" data-value="12">
+                                            اسفند
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <input type="text" name="end_year" placeholder="سال" style="font-family: iranSans">
                             </div>
                         </div>
                     </div>
@@ -71,7 +163,17 @@
                         </select>
                     </div>
 
-                    <button class="ui primary button" type="submit">جستجو</button>
+                    <div class="nine wide field" style="margin: auto">
+                        <label>روز هفته</label>
+                        <select name="week_days" multiple="" class="ui fluid dropdown">
+                            <option value="">روز</option>
+                            {% for tag in WeekDay %}
+                                <option name="week_days" value="WeekDay.{{ tag }}" id="id_chunks_{{ forloop.counter0 }}">{{ tag | convert_day }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <button class="ui primary button" type="submit" style="margin-top: 20px">جستجو</button>
                 </form>
             </div>
         </div>
@@ -89,72 +191,6 @@
 
         <div class="ui four stackable special cards">
 
-
-            <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
-                <div class="blurring dimmable circular image">
-                    <div class="ui dimmer">
-                        <div class="content">
-                            <div class="center">
-                                <div class="ui inverted button">Add Friend</div>
-                            </div>
-                        </div>
-                    </div>
-                    <img src="{% static "img/apple.png" %}" class="ui circular image">
-                </div>
-                <div class="content" style="margin-top: 10px">
-
-                    <a class="header" style="font-family: VezFont; align-content: center">شرکت اپل</a>
-                    <div class="meta">
-                        <span class="date">آخرین بازدید : 2 ساعت پیش</span>
-                    </div>
-                    <div class="discription" style="margin-top: 8px">
-                        <h4> سازنده ی مک بوک و آیفون !</h4>
-                        <br>
-                        <h5> توانایی‌های مورد نیاز : </h5>
-                        <p>
-                            برنامه نویس وب، طراح گرافیک
-                        </p>
-                    </div>
-                </div>
-                <div class="extra">
-                    امتیاز دهید :
-                    <div class="ui star rating" data-rating="4"></div>
-                </div>
-
-            </div>
-
-            <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
-                <div class="blurring dimmable circular image">
-                    <div class="ui dimmer">
-                        <div class="content">
-                            <div class="center">
-                                <div class="ui inverted button">Add Friend</div>
-                            </div>
-                        </div>
-                    </div>
-                    <img src="{% static "img/cafe.png" %}" class="ui circular image">
-                </div>
-                <div class="content" style="margin-top: 10px">
-
-                    <a class="header" style="font-family: VezFont; align-content: center">کافه شریف</a>
-                    <div class="meta">
-                        <span class="date">آخرین بازدید : 2 ساعت پیش</span>
-                    </div>
-                    <div class="discription" style="margin-top: 8px">
-                        <h4>ارائه ی انواع کیک و قهوه ، دارای سه شعبه در سراسر تهران</h4>
-                        <br>
-                        <h5> توانایی‌های مورد نیاز : </h5>
-                        <p>
-                            پیش خدمت، کیک پز
-                        </p>
-                    </div>
-                </div>
-                <div class="extra">
-                    امتیاز دهید :
-                    <div class="ui star rating" data-rating="4"></div>
-                </div>
-
-            </div>
 
             <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
                 <div class="blurring dimmable circular image">
