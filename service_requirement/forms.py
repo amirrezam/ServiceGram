@@ -88,3 +88,11 @@ class RequestHelpInstituteForm(forms.ModelForm):
         model = HelpNonCash
         fields = ('description',)
 
+
+class RateHelpNonCashBenefactorForm(forms.Form):
+    rate = forms.IntegerField()
+
+
+class RateHelpNonCashInstituteForm(forms.Form):
+    rate = forms.IntegerField()
+

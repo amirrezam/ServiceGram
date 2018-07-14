@@ -1,10 +1,10 @@
 from django.http import Http404
-from django.shortcuts import render
-from django.views.generic import CreateView, DetailView, RedirectView, ListView
+from django.shortcuts import get_object_or_404
+from django.views.generic import CreateView, DetailView, RedirectView, ListView, FormView
 
 from service_member.models import Skill, Member
 from service_requirement.forms import CreateCashRequirementForm, CreateNonCashRequirementForm, \
-    RequestHelpBenefactorForm, RequestHelpInstituteForm
+    RequestHelpBenefactorForm, RequestHelpInstituteForm, RateHelpNonCashBenefactorForm, RateHelpNonCashInstituteForm
 from service_requirement.models import CashRequirement, NonCashRequirement, HelpNonCash, ValidationStatus, Chunk, WeekDay
 import datetime
 import jalali
@@ -335,4 +335,58 @@ class RejectRequestFromInstituteView(RedirectView):
         if not request.user.activation_status == 'ActivationStatus.Act':
             raise Http404
         HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(status=ValidationStatus.Rej)
+        return super().get(request, *args, **kwargs)
+
+
+class RateHelpNonCashBenefactorView(FormView):
+    form_class = RateHelpNonCashBenefactorForm
+    template_name = 'SubmitRequest.html'
+    success_url = '/profile/'
+
+    def form_valid(self, form):
+        HelpNonCash.objects.filter(requirement_id__exact=self.kwargs['pk'],
+                                   benefactor__member__username__exact=self.request.user.username). \
+            update(institute_score=form.cleaned_data['rate'])
+        return super().form_valid(form)
+
+    def get(self, request, *args, **kwargs):
+        help_non_cash = get_object_or_404(HelpNonCash, requirement_id__exact=self.kwargs['pk'],
+                                          benefactor__member__username__exact=self.request.user.username)
+        if not request.user.is_authenticated:
+            raise Http404
+        if request.user.is_institute:
+            raise Http404
+        if request.user.username != help_non_cash.benefactor.member.username:
+            raise Http404
+        if help_non_cash.status != 'ValidationStatus.Act':
+            raise Http404
+        if not request.user.activation_status == 'ActivationStatus.Act':
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+
+class RateHelpNonCashInstituteView(FormView):
+    form_class = RateHelpNonCashInstituteForm
+    template_name = 'SubmitRequest.html'
+    success_url = '/profile/'
+
+    def form_valid(self, form):
+        HelpNonCash.objects.filter(requirement_id__exact=self.kwargs['pk'],
+                                   benefactor__member__username__exact=self.kwargs['username']). \
+            update(benefactor_score=form.cleaned_data['rate'])
+        return super().form_valid(form)
+
+    def get(self, request, *args, **kwargs):
+        help_non_cash = get_object_or_404(HelpNonCash, requirement_id__exact=self.kwargs['pk'],
+                                          benefactor__member__username__exact=self.kwargs['username'])
+        if not request.user.is_authenticated:
+            raise Http404
+        if request.user.is_benefactor:
+            raise Http404
+        if request.user.username != help_non_cash.requirement.owner.member.username:
+            raise Http404
+        if help_non_cash.status != 'ValidationStatus.Act':
+            raise Http404
+        if not request.user.activation_status == 'ActivationStatus.Act':
+            raise Http404
         return super().get(request, *args, **kwargs)
