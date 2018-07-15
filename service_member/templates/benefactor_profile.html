@@ -25,19 +25,21 @@
 
             <div class="ui items" style="padding: 50px">
                 <div class="item">
-                <a class="ui circular medium image" style="margin-left: 100px">
-                    <img src="/image/{{ member.avatar }}">
-                    <br>
-                    <center>
-                        <div class="ui center aligned massive star rating" data-rating="{{ member.benefactor|get_benefactor_mean_score }}" data-max-rating="5"></div>
-                        <p>آنلاین</p>
-                    </center>
-                                                <script>        $(function () {
-            $('.ui.rating').rating();
+                    <a class="ui circular medium image" style="margin-left: 100px">
+                        <img src="/image/{{ member.avatar }}">
+                        <br>
+                        <center>
+                            <div class="ui center aligned massive star rating"
+                                 data-rating="{{ member.benefactor|get_benefactor_mean_score }}"
+                                 data-max-rating="5"></div>
+                            <p>آنلاین</p>
+                        </center>
+                        <script>        $(function () {
+                            $('.ui.rating').rating();
 
-        });
-    </script>
-                </a>
+                        });
+                        </script>
+                    </a>
                 <div class="content">
                     <h1 style="font-family: VezFont">
                         {{ member.first_name }} {{ member.last_name }}
