@@ -32,6 +32,11 @@ class SignUpBenefactorView(CreateView):
 class HomeView(TemplateView):
     template_name = 'home.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['Count'] = Member.objects.count()
+        return context
+
 
 class ProfileView(DetailView):
     model = Member
@@ -39,6 +44,66 @@ class ProfileView(DetailView):
 
     def get_object(self, queryset=None):
         return Member.objects.get(username=self.kwargs['username'])
+
+
+class ProfileActivitiesView(DetailView):
+    model = Member
+    template_name = 'benefactor_profile_activities.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise Http404
+        if request.user.is_institute:
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+
+class ProfileOwnRequestsView(DetailView):
+    model = Member
+    template_name = 'benefactor_profile_own_requests.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise Http404
+        if request.user.is_institute:
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+
+class ProfileInstituteRequestsView(DetailView):
+    model = Member
+    template_name = 'benefactor_profile_institute_requests.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise Http404
+        if request.user.is_institute:
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+
+class ProfileArchiveView(DetailView):
+    model = Member
+    template_name = 'benefactor_profile_archive.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise Http404
+        if request.user.is_institute:
+            raise Http404
+        return super().get(request, *args, **kwargs)
 
 
 class ProfileRedirectView(RedirectView):
@@ -168,7 +233,7 @@ class EditProfileView(RedirectView):
 
 
 class VezTestView(TemplateView):
-    template_name = 'benefactor_profile_activities.html'
+    template_name = 'benefactor_profile_base.html'
 
 class VezTestView2(TemplateView):
     template_name = 'benefactor_profile_own_requests.html'

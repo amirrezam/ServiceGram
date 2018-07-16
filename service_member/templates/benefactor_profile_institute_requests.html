@@ -1,26 +1,14 @@
-{% extends "base.html" %}
+{% extends "benefactor_profile_base.html" %}
 
 {% load static %}
 
 {% load filter_skill %}
 
-{% block title %}{{ member.username }}'s profile{% endblock %}
+{% load convert_date %}
 
-{% block content %}
-<section>
+{% block is_active_institute_requests %}active{% endblock %}
 
-    <div class="ui container" style="width: 1300px;">
-
-        <div class="ui top attached massive tabular menu">
-
-            <a class="item">اطلاعات پروفایل</a>
-            <a class="item">فعالیت ها</a>
-            <a class="item">درخواست های شما</a>
-            <a class="item active">درخواست های موسسات</a>
-            <a class="item">آرشیو عملیات ها</a>
-
-        </div>
-
+{% block add_content %}
         <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245)">
 
             <div class="ui container" style="margin-top: 30px; margin-bottom: 100px">
@@ -35,205 +23,131 @@
 
                 <div class="ui cards">
 
-                    <div class="teal card" style="width: 500px; height: auto; padding: 20px; margin: 20px;">
+                    {% for help_non_cash in member.benefactor.non_cash_helps.all %}
+                        {% if help_non_cash.sender == 'SenderStatus.Ins' %}
+                            {% if help_non_cash.status == 'ValidationStatus.Pen' %}
+                                <div class="teal card" style="width: 500px; height: auto; padding: 20px; margin: 20px;">
 
-                        <div class="content">
+                                    <div class="content">
 
-                            <img class="left floated small ui image" src="{% static 'img/school.png' %}">
+                                        <img class="left floated small ui image" src="/image/{{ help_non_cash.requirement.owner.member.avatar }}">
 
-                            <div class="header" style="font-family: 'VezFont'">
+                                        <div class="header" style="font-family: 'VezFont'">
 
-                                <h3><a>
-                                    شرکت تشتک سازی ورامین
-                                </a></h3>
+                                            <h3><a href="/profile/{{ help_non_cash.requirement.owner.member.username }}">
+                                                {{ help_non_cash.requirement.owner.member.first_name }}
+                                            </a></h3>
 
-                            </div>
+                                        </div>
 
-                            <br>
+                                        <br>
 
-                            <div class="meta">
+                                        <div class="meta">
 
-                                <h4><a>
-                                    مورد درخواست : برنامه نویس C
-                                </a></h4>
+                                            <h4><a>
+                                                مورد درخواست :
+                                                {{ help_non_cash.requirement.title }}
+                                            </a></h4>
 
-                                <br>
+                                            <br>
 
-                                <h5>
-                                    از تاریخ 1397/4/22 تا تاریخ 1397/4/2
-                                </h5>
+                                            <h5>
+                                                از تاریخ
+                                                {{ help_non_cash.requirement.beginning_date|convert_date }}
+                                                تا تاریخ
+                                                {{ help_non_cash.requirement.ending_date|convert_date }}
+                                            </h5>
 
-                                <h5>
-                                    یکشنبه ها از ساعت 14:00 تا ساعت 16:00
-                                </h5>
+                                            <h5>
+                                                {{ help_non_cash.requirement.week_day|convert_week_day }}‌ها
+                                                 از ساعت
+                                                {{ help_non_cash.requirement.time.get_beginning_time_str }}
+                                                تا ساعت
+                                                {{ help_non_cash.requirement.time.get_ending_time_str }}
+                                            </h5>
 
-                            </div>
+                                        </div>
 
-                            <div class="description"><p style="font-size: 14px">
-                                ما در این شرکت تشتک می سازیم و نیاز به یک برنامه نویس مجرب C داریم.
-                            <p></div>
+                                        <div class="description"><p style="font-size: 14px">
+                                            {{ help_non_cash.description }}
+                                        <p></div>
 
-                        </div>
-                        <div class="extra content">
-                            <div class="ui two large buttons">
-                                <div class="ui basic green large button">پذیرش درخواست</div>
-                                <div class="ui basic red large button">رد درخواست</div>
-                            </div>
-                        </div>
-                    </div>
+                                    </div>
+                                    <div class="extra content">
+                                        <div class="ui two large buttons">
+                                            <button class="ui basic green large button" id="accept_button_{{ help_non_cash.pk }}">پذیرش درخواست</button>
+                                            <div class="ui basic red large button" id="reject_button_{{ help_non_cash.pk }}">رد درخواست</div>
+                                            <script>
+                                                $('#accept_button_{{ help_non_cash.pk }}').click(function() {
+                                                    $('#modal_accept_{{ help_non_cash.pk }}')
+                                                        .modal('show')
+                                                        ;
+                                                });
+                                            </script>
+                                            <script>
+                                                $('#reject_button_{{ help_non_cash.pk }}').click(function() {
+                                                    $('#modal_reject_{{ help_non_cash.pk }}')
+                                                        .modal('show')
+                                                        ;
+                                                });
+                                            </script>
+                                            <div class="ui basic modal" id="modal_accept_{{ help_non_cash.pk }}">
+                                                <div class="ui icon header">
+                                                    <i class="archive icon"></i>
+                                                    آیا مطمعن هستید؟
+                                                </div>
+                                                <div class="content" style="text-align: right">
+                                                    <p>
+                                                        در صورت تایید اینکار قابل بازگشت نیست.
+                                                    </p>
+                                                </div>
+                                                <div class="actions">
+                                                    <div class="ui red basic cancel inverted button">
+                                                        <i class="remove icon"></i>
+                                                        No
+                                                    </div>
+                                                    <a href="/requirements/requests/accept/institute/{{ help_non_cash.pk }}/">
+                                                        <div class="ui green ok inverted button">
+                                                        <i class="checkmark icon"></i>
+                                                            Yes
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="ui basic modal" id="modal_reject_{{ help_non_cash.pk }}">
+                                                <div class="ui icon header">
+                                                    <i class="archive icon"></i>
+                                                    آیا مطمعن هستید؟
+                                                </div>
+                                                <div class="content" style="text-align: right">
+                                                    <p>
+                                                        در صورت تایید اینکار قابل بازگشت نیست.
+                                                    </p>
+                                                </div>
+                                                <div class="actions">
+                                                    <div class="ui red basic cancel inverted button">
+                                                        <i class="remove icon"></i>
+                                                        No
+                                                    </div>
+                                                    <a href="/requirements/requests/reject/institute/{{ help_non_cash.pk }}/">
+                                                        <div class="ui green ok inverted button">
+                                                        <i class="checkmark icon"></i>
+                                                            Yes
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
 
-                    <div class="teal card" style="width: 500px; height: auto; padding: 20px; margin: 20px;">
-
-                        <div class="content">
-
-                            <img class="left floated small ui image" src="{% static 'img/avatar2.png' %}">
-
-                            <div class="header" style="font-family: 'VezFont'">
-
-                                <h3><a>
-                                    شرکت تشتک سازی ورامین
-                                </a></h3>
-
-                            </div>
-
-                            <br>
-
-                            <div class="meta">
-
-                                <h4><a>
-                                    مورد درخواست : برنامه نویس C
-                                </a></h4>
-
-                                <br>
-
-                                <h5>
-                                    از تاریخ 1397/4/22 تا تاریخ 1397/4/2
-                                </h5>
-
-                                <h5>
-                                    یکشنبه ها از ساعت 14:00 تا ساعت 16:00
-                                </h5>
-
-                            </div>
-
-                            <div class="description"><p style="font-size: 14px">
-                                ما در این شرکت تشتک می سازیم و نیاز به یک برنامه نویس مجرب C داریم.
-                            <p></div>
-
-                        </div>
-                        <div class="extra content">
-                            <div class="ui two large buttons">
-                                <div class="ui basic green large button">پذیرش درخواست</div>
-                                <div class="ui basic red large button">رد درخواست</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="teal card" style="width: 500px; height: auto; padding: 20px; margin: 20px;">
-
-                        <div class="content">
-
-                            <img class="left floated small ui image" src="{% static 'img/avatar2.png' %}">
-
-                            <div class="header" style="font-family: 'VezFont'">
-
-                                <h3><a>
-                                    شرکت تشتک سازی ورامین
-                                </a></h3>
-
-                            </div>
-
-                            <br>
-
-                            <div class="meta">
-
-                                <h4><a>
-                                    مورد درخواست : برنامه نویس C
-                                </a></h4>
-
-                                <br>
-
-                                <h5>
-                                    از تاریخ 1397/4/22 تا تاریخ 1397/4/2
-                                </h5>
-
-                                <h5>
-                                    یکشنبه ها از ساعت 14:00 تا ساعت 16:00
-                                </h5>
-
-                            </div>
-
-                            <div class="description"><p style="font-size: 14px">
-                                ما در این شرکت تشتک می سازیم و نیاز به یک برنامه نویس مجرب C داریم.
-                            <p></div>
-
-                        </div>
-                        <div class="extra content">
-                            <div class="ui two large buttons">
-                                <div class="ui basic green large button">پذیرش درخواست</div>
-                                <div class="ui basic red large button">رد درخواست</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="teal card" style="width: 500px; height: auto; padding: 20px; margin: 20px;">
-
-                        <div class="content">
-
-                            <img class="left floated small ui image" src="{% static 'img/avatar2.png' %}">
-
-                            <div class="header" style="font-family: 'VezFont'">
-
-                                <h3><a>
-                                    شرکت تشتک سازی ورامین
-                                </a></h3>
-
-                            </div>
-
-                            <br>
-
-                            <div class="meta">
-
-                                <h4><a>
-                                    مورد درخواست : برنامه نویس C
-                                </a></h4>
-
-                                <br>
-
-                                <h5>
-                                    از تاریخ 1397/4/22 تا تاریخ 1397/4/2
-                                </h5>
-
-                                <h5>
-                                    یکشنبه ها از ساعت 14:00 تا ساعت 16:00
-                                </h5>
-
-                            </div>
-
-                            <div class="description"><p style="font-size: 14px">
-                                ما در این شرکت تشتک می سازیم و نیاز به یک برنامه نویس مجرب C داریم.
-                            <p></div>
-
-                        </div>
-                        <div class="extra content">
-                            <div class="ui two large buttons">
-                                <div class="ui basic green large button">پذیرش درخواست</div>
-                                <div class="ui basic red large button">رد درخواست</div>
-                            </div>
-                        </div>
-                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
 
                 </div>
 
             </div>
 
             </div>
-
-        </div>
-
-
-
-    </div>
-
-</section>
 {% endblock %}

@@ -1,6 +1,8 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.views.generic import CreateView, DetailView, RedirectView, ListView, FormView
+from django.urls import reverse_lazy
+
 
 from service_member.models import Skill, Member
 from service_requirement.forms import CreateCashRequirementForm, CreateNonCashRequirementForm, \
@@ -212,11 +214,12 @@ class AcceptRequestFromBenefactorView(RedirectView):
                                    status='ValidationStatus.Pen'). \
             update(status=ValidationStatus.Can)
         HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(status=ValidationStatus.Act)
+        HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(date_accepted=datetime.datetime.now())
         return super().get(request, *args, **kwargs)
 
 
 class AcceptRequestFromInstituteView(RedirectView):
-    url = '/profile/'
+    url = reverse_lazy('profile_institute_requests')
 
     def get(self, request, *args, **kwargs):
         help_non_cash = HelpNonCash.objects.get(pk=self.kwargs['pk'])
@@ -252,6 +255,7 @@ class AcceptRequestFromInstituteView(RedirectView):
                                    status='ValidationStatus.Pen'). \
             update(status=ValidationStatus.Can)
         HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(status=ValidationStatus.Act)
+        HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(date_accepted=datetime.datetime.now())
         return super().get(request, *args, **kwargs)
 
 
@@ -316,6 +320,7 @@ class RejectRequestFromBenefactorView(RedirectView):
         if not request.user.activation_status == 'ActivationStatus.Act':
             raise Http404
         HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(status=ValidationStatus.Rej)
+        HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(date_accepted=datetime.datetime.now())
         return super().get(request, *args, **kwargs)
 
 
@@ -335,6 +340,7 @@ class RejectRequestFromInstituteView(RedirectView):
         if not request.user.activation_status == 'ActivationStatus.Act':
             raise Http404
         HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(status=ValidationStatus.Rej)
+        HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(date_accepted=datetime.datetime.now())
         return super().get(request, *args, **kwargs)
 
 

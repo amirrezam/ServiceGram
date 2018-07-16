@@ -77,6 +77,18 @@ class Chunk(models.Model):
     beginning_time = models.TimeField()
     ending_time = models.TimeField()
 
+    def get_beginning_time_str(self):
+        if self.beginning_time.minute >= 10:
+            return str(self.beginning_time.hour) + ':' + str(self.beginning_time.minute)
+        else:
+            return str(self.beginning_time.hour) + ':0' + str(self.beginning_time.minute)
+
+    def get_ending_time_str(self):
+        if self.ending_time.minute >= 10:
+            return str(self.ending_time.hour) + ':' + str(self.ending_time.minute)
+        else:
+            return str(self.ending_time.hour) + ':0' + str(self.ending_time.minute)
+
     def __str__(self):
         return str(self.beginning_time) + ' - ' + str(self.ending_time)
 
@@ -128,3 +140,4 @@ class HelpNonCash(models.Model):
         blank=True,
         on_delete=models.CASCADE
     )
+    date_accepted = models.DateTimeField(null=True, blank=True)

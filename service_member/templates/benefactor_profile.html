@@ -1,26 +1,12 @@
-{% extends "base.html" %}
+{% extends "benefactor_profile_base.html" %}
 
 {% load static %}
 
 {% load filter_skill %}
 
-{% block title %}{{ member.username }}'s profile{% endblock %}
+{% block is_active_info %}active{% endblock %}
 
-{% block content %}
-<section>
-
-    <div class="ui container" style="width: 1300px;">
-
-        <div class="ui top attached massive tabular menu">
-
-            <a class="item active">اطلاعات پروفایل</a>
-            <a class="item">فعالیت ها</a>
-            <a class="item">درخواست های شما</a>
-            <a class="item">درخواست های موسسات</a>
-            <a class="item">آرشیو عملیات ها</a>
-
-        </div>
-
+{% block add_content %}
         <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245)">
 
             <div class="ui items" style="padding: 50px">
@@ -92,54 +78,67 @@
 
                         <div class="content" style="text-align:right">
 
-                            <p style="width:100%">
+                            <form id="request" method="post" action="/requirements/request/institute/{{ member.username }}/">
+                            {% csrf_token %}
 
-                                <h4 style="text-align: right;">درخواست</h4>
+                                <p style="width:100%">
 
-                                <div class="ui input" style="width:100%;max-height:10vh">
-                                    <input type="text" placeholder="توضیحات" style="width:100%;height:90%;margin:auto;text-align:right;font-family:'VezFont';max-height:10vh">
-                                </div>
+                                    <h4 style="text-align: right;">درخواست</h4>
 
-                                <h4 class="ui dividing header">
-                                    توانایی‌ها</h4>
+                                    <div class="ui input" style="width:100%;max-height:10vh">
+                                        <input type="text" name="description" id="id_description" placeholder="توضیحات" style="width:100%;height:90%;margin:auto;text-align:right;font-family:'VezFont';max-height:10vh">
+                                    </div>
 
-                                <select name="skills" multiple="" class="ui fluid dropdown">
-                                <option value="">توانایی‌ها</option>
-                                {% for requirement in user.institute.non_cash_requirements.all %}
-                                    <option name="skills" value="{{ requirement.pk }}" id="id_skills_{{ forloop.counter0 }}">{{ requirement.description }}</option>
-                                {% endfor %}
-                                </select>
-                                <script>$(function() {
-                                  $('.ui.dropdown').dropdown();
-                                  $('.overlay.example .overlay')
-                                      .visibility({
-                                          type: 'fixed',
-                                          offset: 15 // give some space from top of screen
-                                      });
-                                });</script>
+                                    <h4 class="ui dividing header">
+                                        توانایی‌ها</h4>
 
-                            </p>
+                                    <select name="requirement" id="id_requirement" multiple="" class="ui fluid dropdown">
+                                    <option value="">توانایی‌ها</option>
+                                    {% for requirement in user.institute.non_cash_requirements.all %}
+                                        <option value="{{ requirement.pk }}">{{ requirement.title }}</option>
+                                    {% endfor %}
+                                    </select>
+                                    <script>$(function() {
+                                      $('.ui.dropdown').dropdown();
+                                      $('.overlay.example .overlay')
+                                          .visibility({
+                                              type: 'fixed',
+                                              offset: 15 // give some space from top of screen
+                                          });
+                                    });</script>
+
+                                </p>
+
+
+                            </form>
 
                         </div>
 
 
                         <div class="actions">
-                            <div class="ui teal button">ثبت</div>
-                            <div class="ui red button">لغو</div>
+                            <button class="ui teal button" id = "accept_button">ثبت</button>
+                            <button class="ui red button" id = "cancel_button">لغو</button>
+                            <script>
+                                $('#accept_button').click(function() {
+                                    $('#request')
+                                        .submit()
+                                        ;
+                                });
+                            </script>
+                            <script>
+                                $('#cancel_button').click(function() {
+                                    $('.ui.modal')
+                                        .modal('hide')
+                                        ;
+                                });
+                            </script>
                         </div>
 
                     </div>
-
                 </div>
             </div>
             </div>
 
         </div>
 
-
-        <br>
-        <br>
-
-    </div>
-</section>
 {% endblock %}

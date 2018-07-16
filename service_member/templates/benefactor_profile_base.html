@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load filter_skill %}
+
+{% block title %}{{ member.username }}'s profile{% endblock %}
+
+{% block content %}
+<section>
+
+    <div class="ui container" style="width: 1300px;">
+
+        <div class="ui top attached massive tabular menu">
+
+            <a class="item {% block is_active_info %}{% endblock %}" href="/profile/">اطلاعات پروفایل</a>
+            {% if user.is_authenticated %}
+                {% if user.username == member.username %}
+                    <a class="item {% block is_active_activities %}{% endblock %}" href="/profile/activities/">فعالیت ها</a>
+                    <a class="item {% block is_active_own_requests %}{% endblock %}" href="/profile/own_requests/">درخواست های شما</a>
+                    <a class="item {% block is_active_institute_requests %}{% endblock %}" href="/profile/institute_requests/">درخواست های موسسات</a>
+                    <a class="item {% block is_active_log %}{% endblock %}" href="/profile/archive/">آرشیو عملیات ها</a>
+                {% endif %}
+            {% endif %}
+
+        </div>
+
+        {% block add_content %}{% endblock %}
+
+
+        <br>
+        <br>
+
+    </div>
+</section>
+{% endblock %}

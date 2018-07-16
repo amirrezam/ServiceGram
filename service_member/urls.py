@@ -1,5 +1,7 @@
 from service_member.views import SignUpBenefactorView, SignUpInstituteView, HomeView, ProfileView, ProfileRedirectView, \
-    ShowInstitutesView, ShowBenefactorsView, EditProfileBenefactorView, EditProfileView, EditProfileInstituteView, VezTestView , VezTestView2, VezTestView3, VezTestView4
+    ShowInstitutesView, ShowBenefactorsView, EditProfileBenefactorView, EditProfileView, EditProfileInstituteView, \
+    VezTestView, VezTestView2, VezTestView3, VezTestView4, ProfileActivitiesView, ProfileOwnRequestsView, \
+    ProfileInstituteRequestsView, ProfileArchiveView
 from django.contrib.auth import views as auth_views
 from django.urls import re_path
 
@@ -11,6 +13,10 @@ urlpatterns = [
     re_path(r'edit/profile/institute/$', EditProfileInstituteView.as_view(), name='edit_profile_institute'),
     re_path(r'edit/profile/$', EditProfileView.as_view(), name='edit_profile'),
     re_path(r'logout/$', auth_views.logout, name='logout'),
+    re_path(r'profile/activities/$', ProfileActivitiesView.as_view(), name='profile_activities'),
+    re_path(r'profile/own_requests/$', ProfileOwnRequestsView.as_view(), name='profile_own_requests'),
+    re_path(r'profile/institute_requests/$', ProfileInstituteRequestsView.as_view(), name='profile_institute_requests'),
+    re_path(r'profile/archive/$', ProfileArchiveView.as_view(), name='profile_archive'),
     re_path(r'profile/(?P<username>[a-zA-Z0-9_]+)$', ProfileView.as_view(), name='profile'),
     re_path(r'profile/$', ProfileRedirectView.as_view(), name='profile_redirect'),
     re_path(r'institutes/$', ShowInstitutesView.as_view(), name='show_institutes'),

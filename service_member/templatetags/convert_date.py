@@ -1,11 +1,13 @@
 from django import template
 import jalali
+import datetime
 
 register = template.Library()
 
 
 def convert_day(value):
     return convert_week_day("WeekDay.{}".format(value))
+
 
 def convert_week_day(value):
     if value == 'WeekDay.Sat':
@@ -31,6 +33,19 @@ def convert_date(date):
     return res_arr[0] + "/" + res_arr[1] + "/" + res_arr[2]
 
 
+def get_datetime_relative_str(value):
+    if value is None:
+        return ""
+    elif value.date() != datetime.datetime.now().date():
+        return "در تاریخ " + convert_date(value.date())
+    elif value.time().hour != datetime.datetime.now().time().hour:
+        return str(datetime.datetime.now().time().hour - value.time().hour) + " ساعت پیش"
+    else:
+        return str(datetime.datetime.now().time().minute - value.time().minute) + " دقیقه پیش"
+
+
 register.filter('convert_week_day', convert_week_day)
 register.filter('convert_date', convert_date)
 register.filter('convert_day', convert_day)
+register.filter('get_datetime_relative_str', get_datetime_relative_str)
+

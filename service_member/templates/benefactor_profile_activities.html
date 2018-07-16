@@ -1,27 +1,13 @@
-{% extends "base.html" %}
+{% extends "benefactor_profile_base.html" %}
 
 {% load static %}
 
 {% load filter_skill %}
 
-{% block title %}{{ member.username }}'s profile{% endblock %}
+{% block is_active_activities %}active{% endblock %}
 
-{% block content %}
-<section>
-
-    <div class="ui container" style="width: 1300px;">
-
-        <div class="ui top attached massive tabular menu">
-
-            <a class="item">اطلاعات پروفایل</a>
-            <a class="item active">فعالیت ها</a>
-            <a class="item">درخواست های شما</a>
-            <a class="item">درخواست های موسسات</a>
-            <a class="item">آرشیو عملیات ها</a>
-
-        </div>
-
-        <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245)">
+{% block add_content %}
+    <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245)">
 
             <div class="ui container" style="margin-top: 30px; margin-bottom: 100px" >
 
@@ -148,6 +134,4 @@
 
 
     </div>
-
-</section>
 {% endblock %}

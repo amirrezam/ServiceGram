@@ -64,8 +64,9 @@ def get_institute_mean_score(value):
     cnt = 0
     for non_cash_requirement in value.non_cash_requirements.all():
         for help_non_cash in non_cash_requirement.helps.all():
-            sum += help_non_cash.institute_score
-            cnt += 1
+            if help_non_cash.institute_score != -1:
+                sum += help_non_cash.institute_score
+                cnt += 1
     if cnt == 0:
         return 2.5
     else:
@@ -76,8 +77,9 @@ def get_benefactor_mean_score(value):
     sum = 0
     cnt = 0
     for help_non_cash in value.non_cash_helps.all():
-        sum += help_non_cash.benefactor_score
-        cnt += 1
+        if help_non_cash.benefactor_score != -1:
+            sum += help_non_cash.benefactor_score
+            cnt += 1
     if cnt == 0:
         return 2.5
     else:
