@@ -49,6 +49,7 @@
             {% endif %}
             {% for institute in institute_list.all %}
                 <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
+
                     <div class="blurring dimmable circular image">
                         <div class="ui dimmer">
                             <div class="content">
@@ -59,6 +60,8 @@
                         </div>
                         <img src="/image/{{ institute.member.avatar }}" class="ui circular image">
                     </div>
+
+
                     <div class="content" style="margin-top: 10px">
 
                         <a class="header" style="font-family: VezFont; align-content: center" href="/profile/{{ institute.member.username }}">

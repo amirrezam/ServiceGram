@@ -246,4 +246,6 @@ class VezTestView3(TemplateView):
 class VezTestView4(TemplateView):
     template_name = 'benefactor_profile_archive.html'
 
+class VezTestView5(TemplateView):
+    template_name = 'benefactor_profile_rating.html'
 
