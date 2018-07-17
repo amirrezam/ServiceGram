@@ -4,6 +4,8 @@
 
 {% load filter_skill %}
 
+{% load convert_date %}
+
 {% block is_active_activities %}active{% endblock %}
 
 {% block add_content %}
@@ -19,114 +21,59 @@
                 </h3>
 
                 <br><br><br><br>
-
-                <script>
+                <script>$(function() {
                     $('.ui.accordion')
-                        .accordion()
+                        .accordion('close', 0)
                         ;
-                </script>
+                });</script>
 
-                <div class="ui blue segment">
+                {% for help_non_cash in member.benefactor.non_cash_helps.all %}
+                    {% if help_non_cash.status == 'ValidationStatus.Act' %}
+                        <div class="ui blue segment">
 
-                    <div class="ui centered inverted accordion">
+                            <div class="ui centered inverted accordion">
 
-                        <div class="title" style="font-size: 20px">
+                                <div class="title" style="font-size: 20px">
 
-                            <i class="dropdown teal icon"></i>
-                            <a>شرکت تشتک سازی ورامین</a>
+                                    <i class="dropdown teal icon"></i>
+                                    <a href="/profile/{{ help_non_cash.requirement.owner.member.username }}">{{ help_non_cash.requirement.owner.member.first_name }}</a>
 
-                            <br>
+                                    <br>
 
-                            <div style="font-size: 16px">
+                                    <div style="font-size: 16px">
 
-                                <a>برنامه نویس C</a>
+                                        <a>
+                                            {{ help_non_cash.requirement.title }}
+                                        </a>
 
+                                    </div>
+
+                                </div>
+
+                                <div class="content">
+
+                                    <h5>
+                                        از تاریخ
+                                        {{ help_non_cash.requirement.beginning_date|convert_date }}
+                                        تا تاریخ
+                                        {{ help_non_cash.requirement.ending_date|convert_date }}
+                                    </h5>
+
+                                    <h5>
+                                        {{ help_non_cash.requirement.week_day|convert_week_day }}‌ها
+                                         از ساعت
+                                        {{ help_non_cash.requirement.time.get_beginning_time_str }}
+                                        تا ساعت
+                                        {{ help_non_cash.requirement.time.get_ending_time_str }}
+                                    </h5>
+
+                                </div>
                             </div>
 
                         </div>
 
-                        <div class="content">
-
-                            <h5>
-                                از تاریخ 1397/4/22 تا تاریخ 1397/4/2
-                            </h5>
-
-                            <h5>
-                                یکشنبه ها از ساعت 14:00 تا ساعت 16:00
-                            </h5>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="ui blue segment">
-
-                    <div class="ui centered inverted accordion">
-
-                        <div class="title" style="font-size: 20px">
-
-                            <i class="dropdown teal icon"></i>
-                            <a>شرکت تشتک سازی ورامین</a>
-
-                            <br>
-
-                            <div style="font-size: 16px">
-
-                                <a>برنامه نویس C</a>
-
-                            </div>
-
-                        </div>
-
-                        <div class="content">
-
-                            <h5>
-                                از تاریخ 1397/4/22 تا تاریخ 1397/4/2
-                            </h5>
-
-                            <h5>
-                                یکشنبه ها از ساعت 14:00 تا ساعت 16:00
-                            </h5>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="ui blue segment">
-
-                    <div class="ui centered inverted accordion">
-
-                        <div class="title" style="font-size: 20px">
-
-                            <i class="dropdown teal icon"></i>
-                            <a>شرکت تشتک سازی ورامین</a>
-
-                            <br>
-
-                            <div style="font-size: 16px">
-
-                                <a>برنامه نویس C</a>
-
-                            </div>
-
-                        </div>
-
-                        <div class="content">
-
-                            <h5>
-                                از تاریخ 1397/4/22 تا تاریخ 1397/4/2
-                            </h5>
-
-                            <h5>
-                                یکشنبه ها از ساعت 14:00 تا ساعت 16:00
-                            </h5>
-
-                        </div>
-                    </div>
-
-                </div>
+                    {% endif %}
+                {% endfor %}
 
             </div>
 
