@@ -34,7 +34,9 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['Count'] = Member.objects.count()
+        context['Count_member'] = Member.objects.count()
+        context['Count_benefactor'] = Benefactor.objects.count()
+        context['Count_institute'] = Institute.objects.count()
         return context
 
 

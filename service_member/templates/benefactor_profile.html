@@ -94,8 +94,8 @@
                                             <h4 class="ui dividing header">
                                                 توانایی‌ها</h4>
 
-                                            <select name="requirement" id="id_requirement" multiple="" class="ui fluid dropdown">
-                                            <option value="">توانایی‌ها</option>
+                                            <select name="requirement" id="id_requirement" class="ui fluid dropdown">
+                                            <option value="">نیازمندی</option>
                                             {% for requirement in user.institute.non_cash_requirements.all %}
                                                 <option value="{{ requirement.pk }}">{{ requirement.title }}</option>
                                             {% endfor %}
