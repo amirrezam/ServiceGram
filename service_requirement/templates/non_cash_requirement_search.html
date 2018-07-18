@@ -10,171 +10,243 @@
 <section>
     <div id="body_container">
         <div class="ui container">
-            <div class="ui segment">
-                <form class="ui large form" method="GET" style="text-align: center">
-                    <h4 class="ui dividing header" style="font-family: iranSans; color: gray">جستجو</h4>
+            <div class="ui segment" style="background-color: rgba(243, 244, 245);">
 
-                    <div class="nine wide field" style="margin: auto">
-                        <label>توانایی</label>
-                         <select name="skills" multiple="" class="ui fluid dropdown">
-                            <option value="">توانایی‌ها</option>
-                            {% for skill in Skill %}
-                                <option name="skills" value="{{ forloop.counter }}" id="id_skills_{{ forloop.counter0 }}">{{ skill.name }}</option>
-                            {% endfor %}
-                         </select>
-                    </div>
 
-                    <script>$(function() {
-                      $('.ui.dropdown').dropdown();
-                      $('.overlay.example .overlay')
-                          .visibility({
-                              type: 'fixed',
-                              offset: 15 // give some space from top of screen
-                          });
-                    });</script>
+                <form class="ui large form" method="GET" style="text-align: center; margin-top: 30px;">
 
-                    <div class="nine wide field" style="margin: auto">
-                        <label>تاریخ شروع</label>
-                        <div class="three fields">
+                    <div class="ui stackable grid">
 
-                            <div class="field">
-                                <input type="text" name="begin_day" placeholder="روز" style="font-family: iranSans">
+                        <div class="one wide column"></div>
+
+                        <div class="four wide column">
+
+                            <div class="nineteen wide field" style="margin: auto;">
+
+                                <select name="skills" multiple="" class="ui fluid dropdown">
+                                    <option value="">توانایی‌ها</option>
+                                    {% for skill in Skill %}
+                                    <option name="skills" value="{{ forloop.counter }}"
+                                            id="id_skills_{{ forloop.counter0 }}">{{ skill.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
                             </div>
 
-                            <div class="field">
-                                <div class="ui fluid search selection dropdown">
-                                    <input type="hidden" name="begin_month">
-                                    <i class="small dropdown icon"></i>
-                                    <div class="default text">ماه</div>
-                                    <div class="menu">
-                                        <div class="item" data-value="1">
-                                            فروردین
+                            <script>$(function () {
+                                $('.ui.dropdown').dropdown();
+                                $('.overlay.example .overlay')
+                                    .visibility({
+                                        type: 'fixed',
+                                        offset: 15 // give some space from top of screen
+                                    });
+                            });</script>
+
+                        </div>
+
+                        <div class="one wide column"></div>
+
+                        <div class="four wide column">
+
+                            <div class="nineteen wide field" style="margin: auto">
+
+                                <select name="chunks" multiple="" class="ui fluid dropdown">
+                                    <option value=""> بازه‌های زمانی </option>
+                                    {% for chunk in Chunk %}
+                                    <option name="chunks" value="{{ forloop.counter }}"
+                                            id="id_chunks_{{ forloop.counter0 }}">{{ chunk }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <div class="one wide column"></div>
+
+                        <div class="four wide column">
+
+                            <div class="nineteen wide field" style="margin: auto">
+
+                                <select name="week_days" multiple="" class="ui fluid dropdown">
+                                    <option value="">روز هفته</option>
+                                    {% for tag in WeekDay %}
+                                    <option name="week_days" value="WeekDay.{{ tag }}"
+                                            id="id_chunks_{{ forloop.counter0 }}">{{ tag | convert_day }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="one wide column"></div>
+
+                    </div>
+
+
+                    <br><br>
+
+                    <div class="ui stackable grid">
+
+                        <div class="two wide column">
+
+                            <h5> تاریخ شروع </h5>
+
+                        </div>
+
+                        <div class="five wide column">
+
+                            <div class="nineteen wide field" style="margin: auto">
+
+                                <div class="three fields">
+
+                                    <div class="ten wide field">
+                                        <input type="text" name="begin_day" placeholder="روز"
+                                               style="font-family: iranSans">
+                                    </div>
+
+                                    <div class="ten wide field">
+                                        <div class="ui fluid search selection dropdown">
+                                            <input type="hidden" name="begin_month">
+                                            <i class="small dropdown icon"></i>
+                                            <div class="default text">ماه</div>
+                                            <div class="menu">
+                                                <div class="item" data-value="1">
+                                                    فروردین
+                                                </div>
+                                                <div class="item" data-value="2">
+                                                    اردیبهشت
+                                                </div>
+                                                <div class="item" data-value="3">
+                                                    خرداد
+                                                </div>
+                                                <div class="item" data-value="4">
+                                                    تیر
+                                                </div>
+                                                <div class="item" data-value="5">
+                                                    مرداد
+                                                </div>
+                                                <div class="item" data-value="6">
+                                                    شهریور
+                                                </div>
+                                                <div class="item" data-value="7">
+                                                    مهر
+                                                </div>
+                                                <div class="item" data-value="8">
+                                                    آبان
+                                                </div>
+                                                <div class="item" data-value="9">
+                                                    آذر
+                                                </div>
+                                                <div class="item" data-value="10">
+                                                    دی
+                                                </div>
+                                                <div class="item" data-value="11">
+                                                    بهمن
+                                                </div>
+                                                <div class="item" data-value="12">
+                                                    اسفند
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="item" data-value="2">
-                                            اردیبهشت
-                                        </div>
-                                        <div class="item" data-value="3">
-                                            خرداد
-                                        </div>
-                                        <div class="item" data-value="4">
-                                            تیر
-                                        </div>
-                                        <div class="item" data-value="5">
-                                            مرداد
-                                        </div>
-                                        <div class="item" data-value="6">
-                                            شهریور
-                                        </div>
-                                        <div class="item" data-value="7">
-                                            مهر
-                                        </div>
-                                        <div class="item" data-value="8">
-                                            آبان
-                                        </div>
-                                        <div class="item" data-value="9">
-                                            آذر
-                                        </div>
-                                        <div class="item" data-value="10">
-                                            دی
-                                        </div>
-                                        <div class="item" data-value="11">
-                                            بهمن
-                                        </div>
-                                        <div class="item" data-value="12">
-                                            اسفند
-                                        </div>
+                                    </div>
+
+                                    <div class="ten wide field">
+                                        <input type="text" name="begin_year" placeholder="سال"
+                                               style="font-family: iranSans">
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="field">
-                                <input type="text" name="begin_year" placeholder="سال" style="font-family: iranSans">
-                            </div>
                         </div>
-                    </div>
 
-                    <div class="nine wide field" style="margin: auto">
-                        <label>تاریخ پایان</label>
-                        <div class="three fields">
+                        <div class="one wide column"></div>
 
-                            <div class="field">
-                                <input type="text" name="end_day" placeholder="روز" style="font-family: iranSans">
-                            </div>
+                        <div class="two wide column">
 
-                            <div class="field">
-                                <div class="ui fluid search selection dropdown">
-                                    <input type="hidden" name="end_month">
-                                    <i class="small dropdown icon"></i>
-                                    <div class="default text">ماه</div>
-                                    <div class="menu">
-                                        <div class="item" data-value="1">
-                                            فروردین
+                            <h5> تاریخ پایان </h5>
+
+                        </div>
+
+                        <div class="five wide column">
+
+                            <div class="nineteen wide field" style="margin: auto">
+
+                                <div class="three fields">
+
+                                    <div class="nine wide field">
+                                        <input type="text" name="end_day" placeholder="روز"
+                                               style="font-family: iranSans">
+                                    </div>
+
+                                    <div class="nine wide field">
+                                        <div class="ui fluid search selection dropdown">
+                                            <input type="hidden" name="end_month">
+                                            <i class="small dropdown icon"></i>
+                                            <div class="default text">ماه</div>
+                                            <div class="menu">
+                                                <div class="item" data-value="1">
+                                                    فروردین
+                                                </div>
+                                                <div class="item" data-value="2">
+                                                    اردیبهشت
+                                                </div>
+                                                <div class="item" data-value="3">
+                                                    خرداد
+                                                </div>
+                                                <div class="item" data-value="4">
+                                                    تیر
+                                                </div>
+                                                <div class="item" data-value="5">
+                                                    مرداد
+                                                </div>
+                                                <div class="item" data-value="6">
+                                                    شهریور
+                                                </div>
+                                                <div class="item" data-value="7">
+                                                    مهر
+                                                </div>
+                                                <div class="item" data-value="8">
+                                                    آبان
+                                                </div>
+                                                <div class="item" data-value="9">
+                                                    آذر
+                                                </div>
+                                                <div class="item" data-value="10">
+                                                    دی
+                                                </div>
+                                                <div class="item" data-value="11">
+                                                    بهمن
+                                                </div>
+                                                <div class="item" data-value="12">
+                                                    اسفند
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="item" data-value="2">
-                                            اردیبهشت
-                                        </div>
-                                        <div class="item" data-value="3">
-                                            خرداد
-                                        </div>
-                                        <div class="item" data-value="4">
-                                            تیر
-                                        </div>
-                                        <div class="item" data-value="5">
-                                            مرداد
-                                        </div>
-                                        <div class="item" data-value="6">
-                                            شهریور
-                                        </div>
-                                        <div class="item" data-value="7">
-                                            مهر
-                                        </div>
-                                        <div class="item" data-value="8">
-                                            آبان
-                                        </div>
-                                        <div class="item" data-value="9">
-                                            آذر
-                                        </div>
-                                        <div class="item" data-value="10">
-                                            دی
-                                        </div>
-                                        <div class="item" data-value="11">
-                                            بهمن
-                                        </div>
-                                        <div class="item" data-value="12">
-                                            اسفند
-                                        </div>
+                                    </div>
+
+                                    <div class="nine wide field">
+                                        <input type="text" name="end_year" placeholder="سال"
+                                               style="font-family: iranSans">
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="field">
-                                <input type="text" name="end_year" placeholder="سال" style="font-family: iranSans">
-                            </div>
                         </div>
+
                     </div>
 
-                    <div class="nine wide field" style="margin: auto">
-                        <label>ساعت نیازمندی</label>
-                        <select name="chunks" multiple="" class="ui fluid dropdown">
-                            <option value="">زمان‌ها</option>
-                            {% for chunk in Chunk %}
-                                <option name="chunks" value="{{ forloop.counter }}" id="id_chunks_{{ forloop.counter0 }}">{{ chunk }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                    <br>
 
-                    <div class="nine wide field" style="margin: auto">
-                        <label>روز هفته</label>
-                        <select name="week_days" multiple="" class="ui fluid dropdown">
-                            <option value="">روز</option>
-                            {% for tag in WeekDay %}
-                                <option name="week_days" value="WeekDay.{{ tag }}" id="id_chunks_{{ forloop.counter0 }}">{{ tag | convert_day }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                    <button class="ui big teal button" type="submit" style="margin-top: 20px">
+                        <i class="ui big filter icon" style="margin-left: 20px; margin-right: 1px"></i>
+                        فیلتر
+                    </button>
 
-                    <button class="ui primary button" type="submit" style="margin-top: 20px">جستجو</button>
                 </form>
+
             </div>
         </div>
     </div>
@@ -184,52 +256,57 @@
 
     <div class="ui container w1000 transition visible">
 
-        <h2>نتایج جستجو</h2>
+        <div class="ui segment" style=" padding: 30px;">
 
-        <br>
-        <br>
+            <h2>نتایج جستجو</h2>
 
-        <div class="ui four stackable special cards">
+            <br>
+            <br>
+
+            <div class="ui four stackable special cards">
 
 
-            <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
-                <div class="blurring dimmable circular image">
-                    <div class="ui dimmer">
-                        <div class="content">
-                            <div class="center">
-                                <div class="ui inverted button">Add Friend</div>
+                <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
+                    <div class="blurring dimmable circular image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center">
+                                    <div class="ui inverted button">Add Friend</div>
+                                </div>
                             </div>
                         </div>
+                        <img src="{% static " img/school.png" %}" class="ui circular image">
                     </div>
-                    <img src="{% static "img/school.png" %}" class="ui circular image">
-                </div>
-                <div class="content" style="margin-top: 10px">
+                    <div class="content" style="margin-top: 10px">
 
-                    <a class="header" style="font-family: VezFont; align-content: center">دبیرستان علامه‌ فلانی</a>
-                    <div class="meta">
-                        <span class="date">آخرین بازدید : 2 ساعت پیش</span>
+                        <a class="header" style="font-family: VezFont; align-content: center">دبیرستان علامه‌ فلانی</a>
+                        <div class="meta">
+                            <span class="date">آخرین بازدید : 2 ساعت پیش</span>
+                        </div>
+                        <div class="discription" style="margin-top: 8px">
+                            <h4> مدرسه‌ی تیزهوشان متوسطه دوره روم</h4>
+                            <br>
+                            <h5> توانایی‌های مورد نیاز : </h5>
+                            <p>
+                                دبیر ریاضی، دبیر فیزیک
+                            </p>
+                        </div>
                     </div>
-                    <div class="discription" style="margin-top: 8px">
-                        <h4> مدرسه‌ی تیزهوشان متوسطه دوره روم</h4>
-                        <br>
-                        <h5> توانایی‌های مورد نیاز : </h5>
-                        <p>
-                            دبیر ریاضی، دبیر فیزیک
-                        </p>
+                    <div class="extra">
+                        امتیاز دهید :
+                        <div class="ui star rating" data-rating="4"></div>
                     </div>
+
                 </div>
-                <div class="extra">
-                    امتیاز دهید :
-                    <div class="ui star rating" data-rating="4"></div>
-                </div>
+
+                {% for non_cash_requirement in noncashrequirement_list.all %}
+                {% include "non_cash_requirement_card.html" %}
+                {% endfor %}
 
             </div>
 
-            {% for non_cash_requirement in noncashrequirement_list.all %}
-                {% include "non_cash_requirement_card.html" %}
-            {% endfor %}
-
         </div>
+
     </div>
 </section>
 {% endblock %}
