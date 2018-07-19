@@ -108,6 +108,32 @@ class ProfileArchiveView(DetailView):
         return super().get(request, *args, **kwargs)
 
 
+class ProfileCashRequirementView(DetailView):
+    model = Member
+    template_name = 'institute_profile_cash_requirement.html'
+
+    def get_object(self, queryset=None):
+        return Member.objects.get(username=self.kwargs['username'])
+
+    def get(self, request, *args, **kwargs):
+        if not Member.objects.get(username=self.kwargs['username']).is_institute:
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+
+class ProfileNonCashRequirementView(DetailView):
+    model = Member
+    template_name = 'institute_profile_noncash_requirement.html'
+
+    def get_object(self, queryset=None):
+        return Member.objects.get(username=self.kwargs['username'])
+
+    def get(self, request, *args, **kwargs):
+        if not Member.objects.get(username=self.kwargs['username']).is_institute:
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+
 class ProfileRedirectView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         if self.request.user.is_superuser:

@@ -1,36 +1,26 @@
-{% extends "base.html" %}
+{% extends "institute_profile_base.html" %}
 
 {% load static %}
 
 {% load filter_skill %}
 
-{% block title %}{{ member.username }}'s profile{% endblock %}
+{% block is_active_non_cash_requirement %}active{% endblock %}
 
-{% block content %}
-<section>
-    <div class="ui container" style="width: 1500px;">
+{% block add_content %}
+    <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245); width: 1500px;">
 
-        <div class="ui top attached massive tabular menu" style="width: 1500px;">
+        <div class="ui container" style="margin-top: 100px; width: 1300px; margin-bottom: 100px">
 
-            <a class="item">اطلاعات پروفایل</a>
-            <a class="item active">نیاز های نقدی</a>
-            <a class="item">نیاز های غیر نقدی</a>
-            <a class="item">امتیازدهی </a>
+            <h3>
+                پروژه های غیر نقدی به شرح زیر هستند
+            </h3>
 
-        </div>
-
-        <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245); width: 1500px;">
-
-            <div class="ui container" style="margin-top: 100px; width: 1300px; margin-bottom: 100px">
-
-                <h3>
-                    پروژه های غیر نقدی به شرح زیر هستند
-                </h3>
-
-                <br><br><br><br>
+            <br><br><br><br>
 
 
-                <div class="ui list">
+            <div class="ui list">
+
+                {% for non_cash_requirement in member.institute.non_cash_requirements.all %}
 
                     <div class="item">
                         <img class="ui avatar tiny image" src="{% static 'img/lumber.png' %}" class="ui circular centered small image" style="margin-left: 30px">
@@ -38,66 +28,37 @@
                         <div class="content">
                             <br>
                             <a><h4>
-                                نجاری
+                                {{ non_cash_requirement.title }}
                             </h4></a>
 
                             <br>
 
                             <div class="description"><h5>
-                                نجار می خوایم که برامون میز درست کنه!
+                                {{ non_cash_requirement.description }}
                             </h5></div>
                         </div>
                     </div>
 
-                    <div class="item">
-                        <img class="ui avatar tiny image" src="{% static 'img/lumber.png' %}" class="ui circular centered small image" style="margin-left: 30px">
-
-                        <div class="content">
-                            <br>
-                            <a><h4>
-                                نجاری
-                            </h4></a>
-
-                            <br>
-
-                            <div class="description"><h5>
-                                نجار می خوایم که برامون میز درست کنه!
-                            </h5></div>
-                        </div>
-                    </div>
-
-                    <div class="item">
-                        <img class="ui avatar tiny image" src="{% static 'img/lumber.png' %}" class="ui circular centered small image" style="margin-left: 30px">
-
-                        <div class="content">
-                            <br>
-                            <a><h4>
-                                نجاری
-                            </h4></a>
-
-                            <br>
-
-                            <div class="description"><h5>
-                                نجار می خوایم که برامون میز درست کنه!
-                            </h5></div>
-                        </div>
-                    </div>
-
-                </div>
-
-
-
-                <button class="ui huge green button">
-                    <i class="ui plus icon"></i>
-                    اضافه کردن نیاز غیر نقدی جدید
-                </button>
+                {% endfor %}
 
             </div>
 
+
+
+
+            {% if user.is_authenticated %}
+                {% if user.username == member.username %}
+                    <a href="{% url 'create_non_cash_requirement' %}">
+                        <button class="ui huge green button">
+                            <i class="ui plus icon"></i>
+                            اضافه کردن نیاز غیر نقدی جدید
+                        </button>
+                    </a>
+                {% endif %}
+            {% endif %}
 
         </div>
 
 
     </div>
-</section>
 {% endblock %}

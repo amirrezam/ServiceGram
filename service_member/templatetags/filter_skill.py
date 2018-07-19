@@ -86,6 +86,21 @@ def get_benefactor_mean_score(value):
         return sum / cnt
 
 
+def convert_int(value):
+    return int(value)
+
+
+def get_total_donation(cash_requirement):
+    s = 0
+    for help_cash in cash_requirement.helps.all():
+        s += help_cash.amount
+    return s
+
+
+def sort_by(value, arg):
+    return value.order_by(arg)
+
+
 register.filter('filter_accepted', filter_accepted)
 register.filter('filter_has_skill_accepted', filter_has_skill_accepted)
 register.filter('filter_by_name', filter_by_name)
@@ -96,3 +111,6 @@ register.filter('get_names', get_names)
 register.filter('get_conflicts_non_cash_requirement', get_conflicts_non_cash_requirement)
 register.filter('get_institute_mean_score', get_institute_mean_score)
 register.filter('get_benefactor_mean_score', get_benefactor_mean_score)
+register.filter('convert_int', convert_int)
+register.filter('get_total_donation', get_total_donation)
+register.filter('sort_by', sort_by)

@@ -1,33 +1,25 @@
-{% extends "base.html" %}
+{% extends "institute_profile_base.html" %}
 
 {% load static %}
 
 {% load filter_skill %}
 
-{% block title %}{{ member.username }}'s profile{% endblock %}
+{% load convert_date %}
 
-{% block content %}
-<section>
-    <div class="ui container" style="width: 1500px;">
+{% block is_active_cash_requirement %}active{% endblock %}
 
-        <div class="ui top attached massive tabular menu" style="width: 1500px;">
+{% block add_content %}
+    <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245); width: 1500px;">
 
-            <a class="item">اطلاعات پروفایل</a>
-            <a class="item active">نیاز های نقدی</a>
-            <a class="item">نیاز های غیر نقدی</a>
-            <a class="item">امتیازدهی </a>
+        <div class="ui container" style="margin-top: 100px; width: 1300px; margin-bottom: 100px">
 
-        </div>
+            <h3>
+                پروژه های نقدی به شرح زیر هستند
+            </h3>
 
-        <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245); width: 1500px;">
+            <br><br>
 
-            <div class="ui container" style="margin-top: 100px; width: 1300px; margin-bottom: 100px">
-
-                <h3>
-                    پروژه های نقدی به شرح زیر هستند
-                </h3>
-
-                <br><br>
+            {% for cash_requirement in member.institute.cash_requirements.all %}
 
                 <div class="ui teal segment" style="width: 1300px;">
 
@@ -37,157 +29,146 @@
                         <div class="ten wide column" >
 
                             <h4 style="margin-right: 40px; margin-top: 20px; line-height: 35px;">
-                                عنوان پروژه : تامین بودجه ی تحصیل ۱۰۰ دانش آموز مستعد بدسرپرست استان سیستان و بلوچستان
+                                عنوان پروژه :
+                                {{ cash_requirement.title }}
                             </h4>
 
                             <br>
 
                             <h5 style="margin-right: 40px">
-                                سقف بودجه‌ی مورد نیاز : ۲۰ میلیون تومان
+                                سقف بودجه‌ی مورد نیاز :
+                                {{ cash_requirement.fund }}
+                                تومان
                             </h5>
 
                             <h5 style="margin-right: 40px">
-                                بودجه‌ی تامین شده : ۱۱ میلیون تومان
+                                بودجه‌ی تامین شده :
+                                {{ cash_requirement|get_total_donation }}
+                                تومان
                             </h5>
 
                             <br><br>
 
-
-                            <button class="ui big teal button" onclick="ui.modal" id="request_button" style="margin-right: 50px">
-                                در تامین این پروژه ی خیرخواهانه سهیم شوید !
-                            </button>
-
-                            <script>
-                                $('#request_button').click(function() {
-                                    $('.ui.modal')
-                                        .modal('show')
-                                        ;
-                                });
-                            </script>
-
-                            <div class="ui small center aligned modal" style=" background-color: rgba(243, 244, 245); bottom: auto; top: auto; right: auto; left: auto; width: 600px; height: auto;">
-
-                                <div class="content" style="text-align:right">
-
-                                    <form id="request" method="post" >
-                                    {% csrf_token %}
-
-                                        <p style="width:100%">
-
-                                            <h4 style="text-align: right;">مبلغ کمک نقدی مورد نظر خود را وارد کنید</h4>
-
-                                            <br><br>
-
-                                            <div class="ui massive input" style="width:100%;max-height:10vh">
-                                                <input type="number" name="description" id="id_description" placeholder="مبلغ را به تومان وارد نمایید" style="width:100%;height:90%;margin:auto;text-align:right;font-family:'VezFont';max-height:10vh">
-                                            </div>
-
-                                        </p>
-
-
-                                    </form>
-
-                                </div>
-
-
-                                <div class="actions">
-
-                                    <button class="ui teal big button" id = "accept_button">تایید و انتقال به صفحه‌ی پرداخت</button>
-                                    <button class="ui red big button" id = "cancel_button">انصراف</button>
-                                    <script>
-                                        $('#cancel_button').click(function() {
-                                            $('.ui.modal')
-                                                .modal('hide')
-                                                ;
-                                        });
-                                    </script>
-                                    <script>
-                                        $('#accept_button').click(function() {
-                                            $('.ui.modal')
-                                                .modal('hide')
-                                                ;
-                                        });
-                                    </script>
-
-                                </div>
-
-                            </div>
-
-                            <br><br><br><br>
-
-                            <div class="ui teal segment" style="width: 650px; margin-right: 40px">
+                            {% if user.is_benefactor %}
+                                <button class="ui big teal button" id="donation_button_{{ cash_requirement.pk }}" style="margin-right: 50px">
+                                    در تامین این پروژه ی خیرخواهانه سهیم شوید !
+                                </button>
 
                                 <script>
-                                    $(function () {
-                                        $('.ui.accordion')
-                                            .accordion('close', 0)
-                                        ;
+                                    $('#donation_button_{{ cash_requirement.pk }}').click(function() {
+                                        $('#donation_modal_{{ cash_requirement.pk }}')
+                                            .modal('show')
+                                            ;
                                     });
                                 </script>
 
-                                <div class="ui centered accordion" >
+                                <div class="ui small center aligned modal" style=" background-color: rgba(243, 244, 245); bottom: auto; top: auto; right: auto; left: auto; width: 600px; height: auto;" id="donation_modal_{{ cash_requirement.pk }}">
 
-                                    <div class="title" style="font-size: 16px">
+                                    <div class="content" style="text-align:right">
 
-                                        <i class="dropdown teal icon"></i>
-                                        <a style="color: teal">
-                                            مشاهده‌ی جزییات ۵ تراکنش آخر
-                                        </a>
+                                        <form id="help_{{ cash_requirement.pk }}" method="post" action="/requirements/help/{{ cash_requirement.pk }}/">
+                                        {% csrf_token %}
+
+                                            <p style="width:100%">
+
+                                                <h4 style="text-align: right;">مبلغ کمک نقدی مورد نظر خود را وارد کنید</h4>
+
+                                                <br><br>
+
+                                                <div class="ui massive input" style="width:100%;max-height:10vh">
+                                                    <input type="number" name="amount" id="id_amount" placeholder="مبلغ را به تومان وارد نمایید" style="width:100%;height:90%;margin:auto;text-align:right;font-family:'VezFont';max-height:10vh">
+                                                </div>
+
+                                            </p>
+
+
+                                        </form>
 
                                     </div>
 
 
-                                    <div class="content">
+                                    <div class="actions">
 
-                                        <div class="ui black message">
-
-                                            <h6>
-                                                <a style="color: teal">آرین طاجمیر ریاهی</a>
-                                                دو روز پیش مبلغ ۳ میلیون تومان به حساب این پروژه کمک کرد.
-                                            </h6>
-
-                                        </div>
-
-                                        <div class="ui white message">
-
-                                            <h6>
-                                                <a style="color: teal">آرین طاجمیر ریاهی</a>
-                                                دو روز پیش مبلغ ۳ میلیون تومان به حساب این پروژه کمک کرد.
-                                            </h6>
-
-                                        </div>
-
-                                        <div class="ui black message">
-
-                                            <h6>
-                                                <a style="color: teal">آرین طاجمیر ریاهی</a>
-                                                دو روز پیش مبلغ ۳ میلیون تومان به حساب این پروژه کمک کرد.
-                                            </h6>
-
-                                        </div>
-
-                                        <div class="ui white message">
-
-                                            <h6>
-                                                <a style="color: teal">آرین طاجمیر ریاهی</a>
-                                                دو روز پیش مبلغ ۳ میلیون تومان به حساب این پروژه کمک کرد.
-                                            </h6>
-
-                                        </div>
-
-                                        <div class="ui black message">
-
-                                            <h6>
-                                                <a style="color: teal">آرین طاجمیر ریاهی</a>
-                                                دو روز پیش مبلغ ۳ میلیون تومان به حساب این پروژه کمک کرد.
-                                            </h6>
-
-                                        </div>
+                                        <button class="ui teal big button" id = "accept_button_donation_{{ cash_requirement.pk }}">تایید و انتقال به صفحه‌ی پرداخت</button>
+                                        <button class="ui red big button" id = "cancel_button_donation_{{ cash_requirement.pk }}">انصراف</button>
+                                        <script>
+                                            $('#cancel_button_donation_{{ cash_requirement.pk }}').click(function() {
+                                                $('#donation_modal_{{ cash_requirement.pk }}')
+                                                    .modal('hide')
+                                                    ;
+                                            });
+                                        </script>
+                                        <script>
+                                            $('#accept_button_donation_{{ cash_requirement.pk }}').click(function() {
+                                                $('#help_{{ cash_requirement.pk }}')
+                                                    .submit()
+                                                    ;
+                                            });
+                                        </script>
 
                                     </div>
 
                                 </div>
-                            </div>
+                            {% endif %}
+
+                            <br><br><br><br>
+
+                            {% if user.is_authenticated %}
+                                {% if user.username == member.username %}
+
+                                    <div class="ui teal segment" style="width: 650px; margin-right: 40px">
+
+                                        <script>
+                                            $(function () {
+                                                $('.ui.accordion')
+                                                    .accordion('close', 0)
+                                                ;
+                                            });
+                                        </script>
+
+                                        <div class="ui centered accordion" >
+
+                                            <div class="title" style="font-size: 16px">
+
+                                                <i class="dropdown teal icon"></i>
+                                                <a style="color: teal">
+                                                    مشاهده‌ی جزییات ۵ تراکنش آخر
+                                                </a>
+
+                                            </div>
+
+
+                                            <div class="content">
+
+                                                {% for help_cash in cash_requirement.helps.all|sort_by:'-date_donated' %}
+                                                    {% if forloop.counter0 < 5 %}
+                                                        <div class="ui
+{#                                                         {% cycle 'black' 'white' %}
+                                                         message">
+
+                                                            <h6>
+                                                                <a style="color: teal" href="/profile/{{ help_cash.benefactor.member.username }}">
+                                                                    {{ help_cash.benefactor.member.first_name }}
+                                                                    {{ help_cash.benefactor.member.last_name }}
+                                                                </a>
+                                                                {{ help_cash.date_donated|get_datetime_relative_str }}
+                                                                 مبلغ
+                                                                {{ help_cash.amount }}
+                                                                تومان به حساب این پروژه کمک کرد.
+                                                            </h6>
+
+                                                        </div>
+
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                {% endif %}
+                            {% endif %}
 
                         </div>
 
@@ -216,226 +197,20 @@
                                         میزان تامین پروژه : 74%
                                     </center>
                                 </div>
-
-                                <div class="label" style="color: #9f3a38;">Uploading Files</div>
+hi
+                                <div class="label" style="height: 100px">Uploading Files</div>
 
 
                             </div>
 
                             <script>
-                                $('#example2')
-                                    .progress({})
-                                ;
-                            </script>
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-                <br><br>
-
-                <div class="ui teal segment" style="width: 1300px;">
-
-
-                    <div class="ui middle aligned stackable grid">
-
-                        <div class="ten wide column" >
-
-                            <h4 style="margin-right: 40px; margin-top: 20px; line-height: 35px;">
-                                عنوان پروژه : تامین بودجه ی تحصیل ۱۰۰ دانش آموز مستعد بدسرپرست استان سیستان و بلوچستان
-                            </h4>
-
-                            <br>
-
-                            <h5 style="margin-right: 40px">
-                                سقف بودجه‌ی مورد نیاز : ۲۰ میلیون تومان
-                            </h5>
-
-                            <h5 style="margin-right: 40px">
-                                بودجه‌ی تامین شده : ۱۱ میلیون تومان
-                            </h5>
-
-                            <br><br>
-
-
-                            <button class="ui big teal button" onclick="ui.modal" id="request_button" style="margin-right: 50px">
-                                در تامین این پروژه ی خیرخواهانه سهیم شوید !
-                            </button>
-
-                            <script>
-                                $('#request_button').click(function() {
-                                    $('.ui.modal')
-                                        .modal('show')
-                                        ;
+                                $(function () {
+                                    $('#example2')
+                                        .progress({})
+                                    ;
                                 });
                             </script>
 
-                            <div class="ui small center aligned modal" style=" background-color: rgba(243, 244, 245); bottom: auto; top: auto; right: auto; left: auto; width: 600px; height: auto;">
-
-                                <div class="content" style="text-align:right">
-
-                                    <form id="request" method="post" >
-                                    {% csrf_token %}
-
-                                        <p style="width:100%">
-
-                                            <h4 style="text-align: right;">مبلغ کمک نقدی مورد نظر خود را وارد کنید</h4>
-
-                                            <br><br>
-
-                                            <div class="ui massive input" style="width:100%;max-height:10vh">
-                                                <input type="number" name="description" id="id_description" placeholder="مبلغ را به تومان وارد نمایید" style="width:100%;height:90%;margin:auto;text-align:right;font-family:'VezFont';max-height:10vh">
-                                            </div>
-
-                                        </p>
-
-
-                                    </form>
-
-                                </div>
-
-
-                                <div class="actions">
-
-                                    <button class="ui teal big button" id = "accept_button">تایید و انتقال به صفحه‌ی پرداخت</button>
-                                    <button class="ui red big button" id = "cancel_button">انصراف</button>
-                                    <script>
-                                        $('#cancel_button').click(function() {
-                                            $('.ui.modal')
-                                                .modal('hide')
-                                                ;
-                                        });
-                                    </script>
-                                    <script>
-                                        $('#accept_button').click(function() {
-                                            $('.ui.modal')
-                                                .modal('hide')
-                                                ;
-                                        });
-                                    </script>
-
-                                </div>
-
-                            </div>
-
-                            <br><br><br><br>
-
-                            <div class="ui teal segment" style="width: 650px; margin-right: 40px">
-
-                                <script>
-                                    $(function () {
-                                        $('.ui.accordion')
-                                            .accordion('close', 0)
-                                        ;
-                                    });
-                                </script>
-
-                                <div class="ui centered accordion" >
-
-                                    <div class="title" style="font-size: 16px">
-
-                                        <i class="dropdown teal icon"></i>
-                                        <a style="color: teal">
-                                            مشاهده‌ی جزییات ۵ تراکنش آخر
-                                        </a>
-
-                                    </div>
-
-
-                                    <div class="content">
-
-                                        <div class="ui black message">
-
-                                            <h6>
-                                                <a style="color: teal">آرین طاجمیر ریاهی</a>
-                                                دو روز پیش مبلغ ۳ میلیون تومان به حساب این پروژه کمک کرد.
-                                            </h6>
-
-                                        </div>
-
-                                        <div class="ui white message">
-
-                                            <h6>
-                                                <a style="color: teal">آرین طاجمیر ریاهی</a>
-                                                دو روز پیش مبلغ ۳ میلیون تومان به حساب این پروژه کمک کرد.
-                                            </h6>
-
-                                        </div>
-
-                                        <div class="ui black message">
-
-                                            <h6>
-                                                <a style="color: teal">آرین طاجمیر ریاهی</a>
-                                                دو روز پیش مبلغ ۳ میلیون تومان به حساب این پروژه کمک کرد.
-                                            </h6>
-
-                                        </div>
-
-                                        <div class="ui white message">
-
-                                            <h6>
-                                                <a style="color: teal">آرین طاجمیر ریاهی</a>
-                                                دو روز پیش مبلغ ۳ میلیون تومان به حساب این پروژه کمک کرد.
-                                            </h6>
-
-                                        </div>
-
-                                        <div class="ui black message">
-
-                                            <h6>
-                                                <a style="color: teal">آرین طاجمیر ریاهی</a>
-                                                دو روز پیش مبلغ ۳ میلیون تومان به حساب این پروژه کمک کرد.
-                                            </h6>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="six wide column">
-
-
-                            <br><br>
-
-                            <center>
-
-                                <img class="ui medium rounded image" src="{% static 'img/noncash.gif' %}"
-                                     style="margin-top: 3px; align-items: center"></img>
-
-                            </center>
-
-                            <br>
-
-                            <div class="ui active teal big progress" data-percent="74"
-                                 id="example2"
-                                 style="width: 350px; height: 40px; margin-right: 60px">
-
-                                <div class="bar" style="height: 200px; align-items: center">
-                                    <div class="progress" style="color: #0f0f10; "></div>
-                                    <center>
-                                        <br>
-                                        میزان تامین پروژه : 74%
-                                    </center>
-                                </div>
-
-                                <div class="label" style="color: #9f3a38;">Uploading Files</div>
-
-
-                            </div>
-
-                            <script>
-                                $('#example2')
-                                    .progress({})
-                                ;
-                            </script>
-
                         </div>
 
                     </div>
@@ -445,225 +220,21 @@
 
                 <br><br>
 
-                <div class="ui teal segment" style="width: 1300px;">
-
-
-                    <div class="ui middle aligned stackable grid">
-
-                        <div class="ten wide column" >
-
-                            <h4 style="margin-right: 40px; margin-top: 20px; line-height: 35px;">
-                                عنوان پروژه : تامین بودجه ی تحصیل ۱۰۰ دانش آموز مستعد بدسرپرست استان سیستان و بلوچستان
-                            </h4>
-
-                            <br>
-
-                            <h5 style="margin-right: 40px">
-                                سقف بودجه‌ی مورد نیاز : ۲۰ میلیون تومان
-                            </h5>
-
-                            <h5 style="margin-right: 40px">
-                                بودجه‌ی تامین شده : ۱۱ میلیون تومان
-                            </h5>
-
-                            <br><br>
-
-
-                            <button class="ui big teal button" onclick="ui.modal" id="request_button" style="margin-right: 50px">
-                                در تامین این پروژه ی خیرخواهانه سهیم شوید !
-                            </button>
-
-                            <script>
-                                $('#request_button').click(function() {
-                                    $('.ui.modal')
-                                        .modal('show')
-                                        ;
-                                });
-                            </script>
-
-                            <div class="ui small center aligned modal" style=" background-color: rgba(243, 244, 245); bottom: auto; top: auto; right: auto; left: auto; width: 600px; height: auto;">
-
-                                <div class="content" style="text-align:right">
-
-                                    <form id="request" method="post" >
-                                    {% csrf_token %}
-
-                                        <p style="width:100%">
-
-                                            <h4 style="text-align: right;">مبلغ کمک نقدی مورد نظر خود را وارد کنید</h4>
-
-                                            <br><br>
-
-                                            <div class="ui massive input" style="width:100%;max-height:10vh">
-                                                <input type="number" name="description" id="id_description" placeholder="مبلغ را به تومان وارد نمایید" style="width:100%;height:90%;margin:auto;text-align:right;font-family:'VezFont';max-height:10vh">
-                                            </div>
-
-                                        </p>
-
-
-                                    </form>
-
-                                </div>
-
-
-                                <div class="actions">
-
-                                    <button class="ui teal big button" id = "accept_button">تایید و انتقال به صفحه‌ی پرداخت</button>
-                                    <button class="ui red big button" id = "cancel_button">انصراف</button>
-                                    <script>
-                                        $('#cancel_button').click(function() {
-                                            $('.ui.modal')
-                                                .modal('hide')
-                                                ;
-                                        });
-                                    </script>
-                                    <script>
-                                        $('#accept_button').click(function() {
-                                            $('.ui.modal')
-                                                .modal('hide')
-                                                ;
-                                        });
-                                    </script>
-
-                                </div>
-
-                            </div>
-
-                            <br><br><br><br>
-
-                            <div class="ui teal segment" style="width: 650px; margin-right: 40px">
-
-                                <script>
-                                    $(function () {
-                                        $('.ui.accordion')
-                                            .accordion('close', 0)
-                                        ;
-                                    });
-                                </script>
-
-                                <div class="ui centered accordion" >
-
-                                    <div class="title" style="font-size: 16px">
-
-                                        <i class="dropdown teal icon"></i>
-                                        <a style="color: teal">
-                                            مشاهده‌ی جزییات ۵ تراکنش آخر
-                                        </a>
-
-                                    </div>
-
-
-                                    <div class="content">
-
-                                        <div class="ui black message">
-
-                                            <h6>
-                                                <a style="color: teal">آرین طاجمیر ریاهی</a>
-                                                دو روز پیش مبلغ ۳ میلیون تومان به حساب این پروژه کمک کرد.
-                                            </h6>
-
-                                        </div>
-
-                                        <div class="ui white message">
-
-                                            <h6>
-                                                <a style="color: teal">آرین طاجمیر ریاهی</a>
-                                                دو روز پیش مبلغ ۳ میلیون تومان به حساب این پروژه کمک کرد.
-                                            </h6>
-
-                                        </div>
-
-                                        <div class="ui black message">
-
-                                            <h6>
-                                                <a style="color: teal">آرین طاجمیر ریاهی</a>
-                                                دو روز پیش مبلغ ۳ میلیون تومان به حساب این پروژه کمک کرد.
-                                            </h6>
-
-                                        </div>
-
-                                        <div class="ui white message">
-
-                                            <h6>
-                                                <a style="color: teal">آرین طاجمیر ریاهی</a>
-                                                دو روز پیش مبلغ ۳ میلیون تومان به حساب این پروژه کمک کرد.
-                                            </h6>
-
-                                        </div>
-
-                                        <div class="ui black message">
-
-                                            <h6>
-                                                <a style="color: teal">آرین طاجمیر ریاهی</a>
-                                                دو روز پیش مبلغ ۳ میلیون تومان به حساب این پروژه کمک کرد.
-                                            </h6>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="six wide column">
-
-
-                            <br><br>
-
-                            <center>
-
-                                <img class="ui medium rounded image" src="{% static 'img/noncash.gif' %}"
-                                     style="margin-top: 3px; align-items: center"></img>
-
-                            </center>
-
-                            <br>
-
-                            <div class="ui active teal big progress" data-percent="74"
-                                 id="example2"
-                                 style="width: 350px; height: 40px; margin-right: 60px">
-
-                                <div class="bar" style="height: 200px; align-items: center">
-                                    <div class="progress" style="color: #0f0f10; "></div>
-                                    <center>
-                                        <br>
-                                        میزان تامین پروژه : 74%
-                                    </center>
-                                </div>
-
-                                <div class="label" style="color: #9f3a38;">Uploading Files</div>
-
-
-                            </div>
-
-                            <script>
-                                $('#example2')
-                                    .progress({})
-                                ;
-                            </script>
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-                <br><br>
-
-                <button class="ui huge green button">
-                    <i class="ui plus icon"></i>
-                    اضافه کردن نیاز نقدی جدید
-                </button>
-
-            </div>
-
+            {% endfor %}
+
+            {% if user.is_authenticated %}
+                {% if user.username == member.username %}
+                    <a href="{% url "create_cash_requirement" %}">
+                        <button class="ui huge green button">
+                            <i class="ui plus icon"></i>
+                            اضافه کردن نیاز نقدی جدید
+                        </button>
+                    </a>
+                {% endif %}
+            {% endif %}
 
         </div>
 
 
     </div>
-</section>
 {% endblock %}

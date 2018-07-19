@@ -1,7 +1,8 @@
 from service_member.views import SignUpBenefactorView, SignUpInstituteView, HomeView, ProfileView, ProfileRedirectView, \
     ShowInstitutesView, ShowBenefactorsView, EditProfileBenefactorView, EditProfileView, EditProfileInstituteView, \
-    VezTestView, VezTestView2, VezTestView3, VezTestView4, VezTestView5, VezTestView6, VezTestView7, ProfileActivitiesView, ProfileOwnRequestsView, \
-    ProfileInstituteRequestsView, ProfileArchiveView
+    VezTestView, VezTestView2, VezTestView3, VezTestView4, VezTestView5, VezTestView6, VezTestView7, \
+    ProfileActivitiesView, ProfileOwnRequestsView, \
+    ProfileInstituteRequestsView, ProfileArchiveView, ProfileCashRequirementView, ProfileNonCashRequirementView
 from django.contrib.auth import views as auth_views
 from django.urls import re_path
 
@@ -17,6 +18,8 @@ urlpatterns = [
     re_path(r'profile/own_requests/$', ProfileOwnRequestsView.as_view(), name='profile_own_requests'),
     re_path(r'profile/institute_requests/$', ProfileInstituteRequestsView.as_view(), name='profile_institute_requests'),
     re_path(r'profile/archive/$', ProfileArchiveView.as_view(), name='profile_archive'),
+    re_path(r'profile/cash_requirement/(?P<username>[a-zA-Z0-9_]+)$', ProfileCashRequirementView.as_view(), name='profile_cash_requirement'),
+    re_path(r'profile/non_cash_requirement/(?P<username>[a-zA-Z0-9_]+)$', ProfileNonCashRequirementView.as_view(), name='profile_non_cash_requirement'),
     re_path(r'profile/(?P<username>[a-zA-Z0-9_]+)$', ProfileView.as_view(), name='profile'),
     re_path(r'profile/$', ProfileRedirectView.as_view(), name='profile_redirect'),
     re_path(r'institutes/$', ShowInstitutesView.as_view(), name='show_institutes'),
