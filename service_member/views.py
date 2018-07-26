@@ -134,6 +134,19 @@ class ProfileNonCashRequirementView(DetailView):
         return super().get(request, *args, **kwargs)
 
 
+class ProfileRatingView(DetailView):
+    model = Member
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_template_names(self):
+        if self.request.user.is_benefactor:
+            return 'benefactor_profile_rating.html'
+        else:
+            return 'institute_profile_rating.html'
+
+
 class ProfileRedirectView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         if self.request.user.is_superuser:

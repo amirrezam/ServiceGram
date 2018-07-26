@@ -385,7 +385,8 @@ class RateHelpNonCashInstituteView(FormView):
 
     def get(self, request, *args, **kwargs):
         help_non_cash = get_object_or_404(HelpNonCash, requirement_id__exact=self.kwargs['pk'],
-                                          benefactor__member__username__exact=self.kwargs['username'])
+                                          benefactor__member__username__exact=self.kwargs['username'],
+                                          status='ValidationStatus.Act')
         if not request.user.is_authenticated:
             raise Http404
         if request.user.is_benefactor:
