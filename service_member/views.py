@@ -241,6 +241,8 @@ class EditProfileInstituteView(FormView):
         self.request.user.first_name = form.cleaned_data['first_name']
         self.request.user.bio = form.cleaned_data['bio']
         self.request.user.email = form.cleaned_data['email']
+        self.request.user.institute.lat = form.cleaned_data['lat']
+        self.request.user.institute.long = form.cleaned_data['long']
         if 'city' in list(form.cleaned_data.keys()):
             self.request.user.institute.city = form.cleaned_data['city']
         if 'address' in list(form.cleaned_data.keys()):
@@ -274,7 +276,7 @@ class EditProfileView(RedirectView):
 
 
 class VezTestView(TemplateView):
-    template_name = 'benefactor_profile_base.html'
+    template_name = 'test.html'
 
 class VezTestView2(TemplateView):
     template_name = 'benefactor_profile_own_requests.html'

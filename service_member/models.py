@@ -32,6 +32,8 @@ class Institute(models.Model):
     member = models.OneToOneField(to='Member', related_name='institute', on_delete=models.CASCADE, null=True)
     city = models.CharField(max_length=15)
     address = models.CharField(max_length=100)
+    lat = models.DecimalField(null=True, max_digits=20, decimal_places=10)
+    long = models.DecimalField(null=True, max_digits=20, decimal_places=10)
 
     class Meta:
         verbose_name = 'Institute'
