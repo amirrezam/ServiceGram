@@ -1,4 +1,4 @@
-{% extends "benefactor_profile_base.html" %}
+{% extends "institute_profile_base.html" %}
 
 {% load static %}
 
@@ -17,7 +17,7 @@
                 <br><br>
 
                 <h4>
-                    در این قسمت می توانید به موسساتی که با آن ها همکاری داشته اید ، در رابطه با همکاری تان امتیاز دهید
+                    در این قسمت می توانید به نیکوکارانی که با آن ها همکاری داشته اید ، در رابطه با همکاری تان امتیاز دهید
                 </h4>
 
                 <br><br><br><br>
@@ -25,96 +25,99 @@
 
                 <div class="ui three stackable special cards">
 
-                    {% for help_non_cash in member.benefactor.non_cash_helps.all %}
-                        {% if help_non_cash.status == 'ValidationStatus.Act' %}
-                            {% if help_non_cash.institute_score == -1 %}
-                                <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
+                    {% for requirement in member.institute.non_cash_requirements.all %}
+                        {% for help_non_cash in requirement.helps.all %}
+                            {% if help_non_cash.status == 'ValidationStatus.Act' %}
+                                {% if help_non_cash.benefactor_score == -1 %}
+                                    <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
 
 
-                                    <div class="circular image">
-                                        <img src="/image/{{ help_non_cash.requirement.owner.member.avatar }}" class="ui circular image">
-                                    </div>
-
-                                    <div class="content" style="margin-top: 10px">
-
-                                        <a class="header" style="font-family: VezFont; align-content: center; margin: 8px;">
-                                            <h4>
-                                                موسسه :
-                                                {{ help_non_cash.requirement.owner.member.first_name }}
-                                            </h4>
-                                        </a>
-
-                                        <a class="header" style="font-family: VezFont; align-content: center; margin: 8px">
-                                            <h5>
-                                                مورد همکاری :
-                                                {{ help_non_cash.requirement.title }}
-                                            </h5>
-                                        </a>
-
-                                        <div class="meta" style="font-family: VezFont; align-content: center; margin: 8px">
-                                            <span class="date">آخرین بازدید : 2 ساعت پیش</span>
+                                        <div class="circular image">
+                                            <img src="/image/{{ help_non_cash.benefactor.member.avatar }}" class="ui circular image">
                                         </div>
 
-                                    </div>
+                                        <div class="content" style="margin-top: 10px">
+
+                                            <a class="header" style="font-family: VezFont; align-content: center; margin: 8px;">
+                                                <h4>
+                                                    نیکوکار :
+                                                    {{ help_non_cash.benefactor.member.first_name }}
+                                                    {{ help_non_cash.benefactor.member.last_name }}
+                                                </h4>
+                                            </a>
+
+                                            <a class="header" style="font-family: VezFont; align-content: center; margin: 8px">
+                                                <h5>
+                                                    مورد همکاری :
+                                                    {{ help_non_cash.requirement.title }}
+                                                </h5>
+                                            </a>
+
+                                            <div class="meta" style="font-family: VezFont; align-content: center; margin: 8px">
+                                                <span class="date">آخرین بازدید : 2 ساعت پیش</span>
+                                            </div>
+
+                                        </div>
 
 
-                                    <div class="extra">
-                                        امتیاز دهید :
-                                        <div id="rating_{{ help_non_cash.requirement.pk }}" class="ui left aligned massive star rating" data-rating="{{ help_non_cash.requirement.owner|get_institute_mean_score|convert_int }}" data-max-rating="5" style="margin-right: 30px"></div>
-                                    </div>
+                                        <div class="extra">
+                                            امتیاز دهید :
+                                            <div id="rating_{{ help_non_cash.requirement.pk }}" class="ui left aligned massive star rating" data-rating="{{ help_non_cash.benefactor|get_benefactor_mean_score|convert_int }}" data-max-rating="5" style="margin-right: 30px"></div>
+                                        </div>
 
-    {#                                <script>        $(function () {#}
-    {#                                    $('.ui.rating').rating();#}
-    {##}
-    {#                                });#}
-    {#                                </script>#}
-                                    <script>
-                                        $(function () {
-                                            $('#rating_{{ help_non_cash.requirement.pk }}').rating({
-                                                interactive:true,
-                                                onRate: function (value) {
-                                                    {#console.log(value)#}
-                                                    var form = document.createElement("form");
-                                                    form.setAttribute("method", "post");
-                                                    form.setAttribute("action", "/requirements/rate/benefactor/{{ help_non_cash.requirement.pk }}/");
-                                                    var hiddenField = document.createElement("input");
-                                                    hiddenField.setAttribute("type", "hidden");
-                                                    hiddenField.setAttribute("name", "rate");
-                                                    hiddenField.setAttribute("value", value);
-                                                    form.appendChild(hiddenField);
+        {#                                <script>        $(function () {#}
+        {#                                    $('.ui.rating').rating();#}
+        {##}
+        {#                                });#}
+        {#                                </script>#}
+                                        <script>
+                                            $(function () {
+                                                $('#rating_{{ help_non_cash.requirement.pk }}').rating({
+                                                    interactive:true,
+                                                    onRate: function (value) {
+                                                        {#console.log(value)#}
+                                                        var form = document.createElement("form");
+                                                        form.setAttribute("method", "post");
+                                                        form.setAttribute("action", "/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/");
+                                                        var hiddenField = document.createElement("input");
+                                                        hiddenField.setAttribute("type", "hidden");
+                                                        hiddenField.setAttribute("name", "rate");
+                                                        hiddenField.setAttribute("value", value);
+                                                        form.appendChild(hiddenField);
 
-                                                    var hiddenField = document.createElement("input");
-                                                    hiddenField.setAttribute("type", "hidden");
-                                                    hiddenField.setAttribute("name", 'csrfmiddlewaretoken');
-                                                    hiddenField.setAttribute("value", '{{ csrf_token }}');
-                                                    form.appendChild(hiddenField);
+                                                        var hiddenField = document.createElement("input");
+                                                        hiddenField.setAttribute("type", "hidden");
+                                                        hiddenField.setAttribute("name", 'csrfmiddlewaretoken');
+                                                        hiddenField.setAttribute("value", '{{ csrf_token }}');
+                                                        form.appendChild(hiddenField);
 
-                                                    document.body.appendChild(form);
-                                                    form.submit()
-                                                }
+                                                        document.body.appendChild(form);
+                                                        form.submit()
+                                                    }
+                                                });
                                             });
-                                        });
-                                    </script>
-                                    <script>
-                                        function rate_{{ help_non_cash.requirement.pk }}(value) {
-                                            console.log(1)
-                                             var form = document.createElement("form");
-                                            form.setAttribute("method", "post");
-                                            form.setAttribute("action", "/requirements/rate/benefactor/{{ help_non_cash.requirement.pk }}/");
-                                            var hiddenField = document.createElement("input");
-                                            hiddenField.setAttribute("type", "hidden");
-                                            hiddenField.setAttribute("name", "rate");
-                                            hiddenField.setAttribute("value", $('#rating_{{ help_non_cash.requirement.pk }}')
-                                                .rating('get rating'));
+                                        </script>
+                                        <script>
+                                            function rate_{{ help_non_cash.requirement.pk }}(value) {
+                                                console.log(1)
+                                                 var form = document.createElement("form");
+                                                form.setAttribute("method", "post");
+                                                form.setAttribute("action", "/requirements/rate/benefactor/{{ help_non_cash.requirement.pk }}/");
+                                                var hiddenField = document.createElement("input");
+                                                hiddenField.setAttribute("type", "hidden");
+                                                hiddenField.setAttribute("name", "rate");
+                                                hiddenField.setAttribute("value", $('#rating_{{ help_non_cash.requirement.pk }}')
+                                                    .rating('get rating'));
 
-                                            document.body.appendChild(form);
-                                            form.submit()
-                                        }
-                                    </script>
+                                                document.body.appendChild(form);
+                                                form.submit()
+                                            }
+                                        </script>
 
-                                </div>
+                                    </div>
+                                {% endif %}
                             {% endif %}
-                        {% endif %}
+                        {% endfor %}
                     {% endfor %}
 
 {#                    <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">#}

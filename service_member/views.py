@@ -108,6 +108,45 @@ class ProfileArchiveView(DetailView):
         return super().get(request, *args, **kwargs)
 
 
+class ProfileCashRequirementView(DetailView):
+    model = Member
+    template_name = 'institute_profile_cash_requirement.html'
+
+    def get_object(self, queryset=None):
+        return Member.objects.get(username=self.kwargs['username'])
+
+    def get(self, request, *args, **kwargs):
+        if not Member.objects.get(username=self.kwargs['username']).is_institute:
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+
+class ProfileNonCashRequirementView(DetailView):
+    model = Member
+    template_name = 'institute_profile_noncash_requirement.html'
+
+    def get_object(self, queryset=None):
+        return Member.objects.get(username=self.kwargs['username'])
+
+    def get(self, request, *args, **kwargs):
+        if not Member.objects.get(username=self.kwargs['username']).is_institute:
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+
+class ProfileRatingView(DetailView):
+    model = Member
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_template_names(self):
+        if self.request.user.is_benefactor:
+            return 'benefactor_profile_rating.html'
+        else:
+            return 'institute_profile_rating.html'
+
+
 class ProfileRedirectView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         if self.request.user.is_superuser:
@@ -202,6 +241,8 @@ class EditProfileInstituteView(FormView):
         self.request.user.first_name = form.cleaned_data['first_name']
         self.request.user.bio = form.cleaned_data['bio']
         self.request.user.email = form.cleaned_data['email']
+        self.request.user.institute.lat = form.cleaned_data['lat']
+        self.request.user.institute.long = form.cleaned_data['long']
         if 'city' in list(form.cleaned_data.keys()):
             self.request.user.institute.city = form.cleaned_data['city']
         if 'address' in list(form.cleaned_data.keys()):
@@ -235,7 +276,7 @@ class EditProfileView(RedirectView):
 
 
 class VezTestView(TemplateView):
-    template_name = 'benefactor_profile_base.html'
+    template_name = 'test.html'
 
 class VezTestView2(TemplateView):
     template_name = 'benefactor_profile_own_requests.html'

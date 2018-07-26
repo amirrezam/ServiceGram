@@ -16,12 +16,14 @@
                         <br>
                         <center>
                             <div class="ui center aligned massive star rating"
-                                 data-rating="{{ member.benefactor|get_benefactor_mean_score }}"
+                                 data-rating="{{ member.benefactor|get_benefactor_mean_score|convert_int }}"
                                  data-max-rating="5"></div>
                             <p>آنلاین</p>
                         </center>
                         <script>        $(function () {
-                            $('.ui.rating').rating();
+                            $('.ui.rating').rating({
+                                interactive:false
+                            });
 
                         });
                         </script>

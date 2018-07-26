@@ -1,15 +1,16 @@
+import datetime
 from django import forms
 from django.core.exceptions import ValidationError
 
 from service_requirement.models import CashRequirement, NonCashRequirement, Chunk, HelpNonCash, ValidationStatus, \
-    SenderStatus, WeekDay
+    SenderStatus, WeekDay, HelpCash
 from service_member.models import Skill, Member
 
 
 class CreateCashRequirementForm(forms.ModelForm):
     def save(self, commit=True):
         cash_requirement = super().save(commit=False)
-        cash_requirement.donated_fund = 0
+        # cash_requirement.donated_fund = 0
         return cash_requirement
 
     class Meta:
@@ -64,6 +65,27 @@ class RequestHelpBenefactorForm(forms.ModelForm):
     class Meta:
         model = HelpNonCash
         fields = ('description',)
+
+
+class HelpCashForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        self.requirement = kwargs.pop('requirement', None)
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        help_cash = super().save(commit=False)
+        help_cash.benefactor = self.user.benefactor
+        help_cash.requirement = self.requirement
+        help_cash.date_donated = datetime.datetime.now()
+        if commit:
+            help_cash.save()
+        return help_cash
+
+    class Meta:
+        model = HelpCash
+        fields = ('amount',)
 
 
 class RequestHelpInstituteForm(forms.ModelForm):

@@ -38,7 +38,7 @@ class Requirement(models.Model):
 
 class CashRequirement(Requirement):
     fund = models.IntegerField()
-    donated_fund = models.IntegerField(default=0)
+    # donated_fund = models.IntegerField(default=0)
     owner = models.ForeignKey(
         to='service_member.Institute',
         related_name='cash_requirements',
@@ -112,6 +112,7 @@ class HelpCash(models.Model):
         blank=True,
         on_delete=models.CASCADE
     )
+    date_donated = models.DateTimeField(null=True, blank=True)
 
 
 class HelpNonCash(models.Model):

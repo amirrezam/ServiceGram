@@ -2,7 +2,7 @@ from service_requirement.views import CreateCashRequirementView, CreateNonCashRe
     CashRequirementProfileView, NonCashRequirementProfileView, RequestHelpBenefactorView, ShowRequestsRequirementView, \
     AcceptRequestFromBenefactorView, ShowNonCashRequirementsView, RejectRequestFromBenefactorView, \
     RequestHelpInstituteView, RejectRequestFromInstituteView, AcceptRequestFromInstituteView, \
-    RateHelpNonCashBenefactorView, RateHelpNonCashInstituteView
+    RateHelpNonCashBenefactorView, RateHelpNonCashInstituteView, HelpCashView
 from django.contrib.auth import views as auth_views
 from django.urls import re_path
 
@@ -26,5 +26,6 @@ urlpatterns = [
     re_path(r'rate/benefactor/(?P<pk>[a-zA-Z0-9]+)/$', RateHelpNonCashBenefactorView.as_view(),
             name='rate_help_benefactor'),
     re_path(r'rate/institute/(?P<pk>[a-zA-Z0-9]+)/(?P<username>[a-zA-Z0-9]+)/$', RateHelpNonCashInstituteView.as_view(),
-            name='rate_help_institute')
+            name='rate_help_institute'),
+    re_path(r'help/(?P<pk>[a-zA-Z0-9]+)/$', HelpCashView.as_view(), name='help_cash')
 ]

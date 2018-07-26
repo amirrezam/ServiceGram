@@ -1,328 +1,134 @@
-{% extends "base.html" %}
+{% extends "institute_profile_base.html" %}
 
 {% load static %}
 
 {% load filter_skill %}
 
-{% block title %}{{ member.username }}'s profile{% endblock %}
+{% block is_active_info %}active{% endblock %}
 
-{% block content %}
-    <section>
-        <div class="ui container" style="width: 1500px;">
+{% block add_content %}
+    <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245); width: 1500px;">
 
-            <div class="ui top attached massive tabular menu" style="width: 1500px;">
+        <div class="ui stackable grid">
 
-                <a class="item active">اطلاعات پروفایل</a>
-                <a class="item">نیاز های نقدی</a>
-                <a class="item">نیاز های غیر نقدی</a>
-                <a class="item">امتیازدهی </a>
-
-            </div>
-
-            <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245); width: 1500px;">
-
-                <div class="ui stackable grid">
-
-                    <div class="nine wide column">
+            <div class="nine wide column">
 
 
-                        <div class="ui items" style="padding: 50px; margin-left: 10px; padding-left: 10px">
-                            <div class="item">
-                                <a class="ui medium circular image" style="margin-left: 50px; ">
-                                    <img src="/image/{{ member.avatar }}">
-                                    <center>
-                                        <div class="ui center aligned massive star rating"
-                                             data-rating="{{ member.institute|get_institute_mean_score }}"
-                                             data-max-rating="5"></div>
-                                        <p>آنلاین</p>
-                                        <script>        $(function () {
-                                            $('.ui.rating').rating();
+                <div class="ui items" style="padding: 50px; margin-left: 10px; padding-left: 10px">
+                    <div class="item">
+                        <a class="ui medium circular image" style="margin-left: 50px; ">
+                            <img src="/image/{{ member.avatar }}">
+                            <center>
+                                <div class="ui center aligned massive star rating"
+                                     data-rating="{{ member.institute|get_institute_mean_score|convert_int }}"
+                                     data-max-rating="5"></div>
+                                <p>آنلاین</p>
+                                <script>        $(function () {
+                                    $('.ui.rating').rating({
+                                        interactive:false
+                                    });
 
-                                        });
-                                        </script>
-                                    </center>
-                                </a>
-                                <div class="content">
-                                    <h1 style="font-family: VezFont">{{ member.first_name }}</h1>
+                                });
+                                </script>
+                            </center>
+                        </a>
+                        <div class="content">
+                            <h1 style="font-family: VezFont">{{ member.first_name }}</h1>
 
-                                    {% if member.bio %}
+                            {% if member.bio %}
 
-                                    <h3> درباره‌ی موسسه : </h3>
+                            <h3> درباره‌ی موسسه : </h3>
 
 
-                                    <h6>
-                                        {{ member.bio }}
-                                    </h6>
-                                    {% endif %}
+                            <h6>
+                                {{ member.bio }}
+                            </h6>
+                            {% endif %}
 
-                                    <br>
+                            <br>
 
-                                    <h4>شهر: </h4>
+                            <h4>شهر: </h4>
 
-                                    <h6>
-                                        {% if member.institute.city %}
-                                        {{ member.institute.city }}
-                                        {% else %}
-                                        شهر این شرکت ثبت نشده است.
-                                        {% endif %}
-                                    </h6>
+                            <h6>
+                                {% if member.institute.city %}
+                                {{ member.institute.city }}
+                                {% else %}
+                                شهر این شرکت ثبت نشده است.
+                                {% endif %}
+                            </h6>
 
-                                    <h4> آدرس: </h4>
+                            <h4> آدرس: </h4>
 
-                                    <h6>
-                                        {% if member.institute.address %}
-                                        {{ member.institute.address }}
-                                        {% else %}
-                                        شهر این شرکت ثبت نشده است.
-                                        {% endif %}
+                            <h6>
+                                {% if member.institute.address %}
+                                {{ member.institute.address }}
+                                {% else %}
+                                آدرس این شرکت ثبت نشده است.
+                                {% endif %}
 
-                                    </h6>
+                            </h6>
 
-                                    <br>
-                                </div>
-                            </div>
+                            <br>
                         </div>
-
                     </div>
-
-                    <div class="seven wide column">
-
-                        <script src="http://maps.google.com/maps/api/js?sensor=false"
-                    type="text/javascript"></script>
-                        <div class="mapholder" style="padding:0;  width:560px; height: 500px; margin-right: 10px">
-                <section id="contact" class="map">
-                    <div id="map" style="margin:auto; width:100%; height: 300px;"></div>
-
-                    <script type="text/javascript">
-                        var locations = [
-                            ['Bondi Beach', 35.7040104, 51.3566865, 1]
-
-                        ];
-
-                        var map = new google.maps.Map(document.getElementById('map'), {
-                            zoom: 15,
-                            center: new google.maps.LatLng(35.7040104, 51.3566865),
-                            mapTypeId: google.maps.MapTypeId.ROADMAP
-                        });
-
-                        var infowindow = new google.maps.InfoWindow();
-
-                        var marker, i;
-
-                        for (i = 0; i < locations.length; i++) {
-                            marker = new google.maps.Marker({
-                                position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                                map: map
-                            });
-
-                            google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                                return function () {
-                                    infowindow.setContent(locations[i][0]);
-                                    infowindow.open(map, marker);
-                                }
-                            })(marker, i));
-                        }
-
-                    </script>
-                </section>
-            </div>
-
-                    </div>
-
                 </div>
 
-                <h3 style="margin-right: 50px"> آلبوم تصاویر </h3>
-
-                <br><br><br><br>
-
-
             </div>
 
-            <br>
+        {% if member.institute.lat != None %}
 
+            <div class="seven wide column">
 
+                {% block include_map %}{% endblock %}
+                <script src="http://maps.google.com/maps/api/js?sensor=false"
+            type="text/javascript"></script>
+                <div class="mapholder" style="padding:0;  width:560px; height: 500px; margin-right: 10px">
+        <section id="contact" class="map">
+            <div id="map" style="margin:auto; width:100%; height: 300px;"></div>
 
+            <script type="text/javascript">
+                var locations = [
+                    ['محل شرکت', {{ member.institute.lat }}, {{ member.institute.long }}, 1]
 
-            <div class="ui four stackable special cards">
-                {% for non_cash_requirement in member.institute.non_cash_requirements.all %}
-                    {% include "non_cash_requirement_card.html" %}
-                {% endfor %}
+                ];
+
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 15,
+                    center: new google.maps.LatLng({{ member.institute.lat }}, {{ member.institute.long }}),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+
+                var infowindow = new google.maps.InfoWindow();
+
+                var marker, i;
+
+                for (i = 0; i < locations.length; i++) {
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                        map: map
+                    });
+
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent(locations[i][0]);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
+                }
+
+            </script>
+        </section>
+    </div>
+
             </div>
+        {% endif %}
 
-            <br>
-            <br>
-
-            {% if user.username == member.username %}
-                <div class="ui very relaxed middle aligned stackable grid">
-                    <div class="eight wide column">
-                        <h3>درخواست‌های نیکوکاران : </h3>
-                        <br>
-
-                        <div class="ui items">
-
-                            {% for non_cash_requirement in member.institute.non_cash_requirements.all %}
-                                {% for help_non_cash in non_cash_requirement.helps.all %}
-                                    {% if help_non_cash.sender == 'SenderStatus.Ben' %}
-                                        {% if help_non_cash.status == 'ValidationStatus.Pen' %}
-                                            <div class="item" style="margin-bottom: 10px">
-                                                <a class="ui small circular image" style="margin-left: 10px">
-                                                    <img src="/image/{{ help_non_cash.benefactor.member.avatar }}">
-                                                </a>
-                                                <div class="content">
-                                                    <a class="header" style="font-family: VezFont" href="/profile/{{ help_non_cash.benefactor.member.username }}">
-                                                        {{ help_non_cash.benefactor.member.first_name }} {{ help_non_cash.benefactor.member.last_name }}
-                                                    </a>
-                                                    <div class="description">
-                                                        <p>
-                                                            مورد درخواست :
-                                                            {{ non_cash_requirement.title }}
-                                                        </p>
-                                                        <p>
-                                                            توضیحات :
-                                                            {{ help_non_cash.description }}
-                                                        </p>
-                                                    </div>
-                                                    <button class="ui primary huge button" onclick="ui.basic.modal" id="accept_button_{{ help_non_cash.pk }}">
-                                                        قبول درخواست همکاری
-                                                    </button>
-                                                    <script>
-                                                        $('#accept_button_{{ help_non_cash.pk }}').click(function() {
-                                                            $('#modal_accept_{{ help_non_cash.pk }}')
-                                                                .modal('show')
-                                                                ;
-                                                        });
-                                                    </script>
-                                                    <div class="ui basic modal" id="modal_accept_{{ help_non_cash.pk }}" style="bottom: auto; top: auto; right: auto; left: auto;">
-                                                        <div class="ui icon header">
-                                                            <i class="archive icon"></i>
-                                                            آیا مطمعن هستید؟
-                                                        </div>
-                                                        <div class="content" style="text-align: right">
-                                                            <p>
-                                                                در صورت تایید اینکار قابل بازگشت نیست.
-                                                            </p>
-                                                        </div>
-                                                        <div class="actions">
-                                                            <div class="ui red basic cancel inverted button">
-                                                                <i class="remove icon"></i>
-                                                                No
-                                                            </div>
-                                                            <a href="/requirements/requests/accept/{{ help_non_cash.pk }}/">
-                                                                <div class="ui green ok inverted button">
-                                                                <i class="checkmark icon"></i>
-                                                                    Yes
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <button class="ui primary huge button" onclick="ui.basic.modal" id="reject_button_{{ help_non_cash.pk }}">
-                                                        رد درخواست همکاری
-                                                    </button>
-                                                    <script>
-                                                        $('#reject_button_{{ help_non_cash.pk }}').click(function() {
-                                                            $('#modal_reject_{{ help_non_cash.pk }}')
-                                                                .modal('show')
-                                                                ;
-                                                        });
-                                                    </script>
-                                                    <div class="ui basic modal" id="modal_reject_{{ help_non_cash.pk }}" style="bottom: auto; top: auto; right: auto; left: auto;">
-                                                        <div class="ui icon header">
-                                                            <i class="archive icon"></i>
-                                                            آیا مطمعن هستید؟
-                                                        </div>
-                                                        <div class="content" style="text-align: right">
-                                                            <p>
-                                                                در صورت تایید اینکار قابل بازگشت نیست.
-                                                            </p>
-                                                        </div>
-                                                        <div class="actions">
-                                                            <div class="ui red basic cancel inverted button">
-                                                                <i class="remove icon"></i>
-                                                                No
-                                                            </div>
-                                                            <a href="/requirements/requests/reject/{{ help_non_cash.pk }}/">
-                                                                <div class="ui green ok inverted button">
-                                                                <i class="checkmark icon"></i>
-                                                                    Yes
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}
-                            {% endfor %}
-                        </div>
-
-                    </div>
-
-                    <div class="eight wide column">
-                        <h3>درخواست‌های پذیرفته شده : </h3>
-                        <br>
-
-                        <div class="ui items">
-                            {% for non_cash_requirement in member.institute.non_cash_requirements.all %}
-                                {% for help_non_cash in non_cash_requirement.helps.all %}
-{#                                    {% if help_non_cash.sender == 'SenderStatus.Ben' %}#}
-                                        {% if help_non_cash.status == 'ValidationStatus.Act' %}
-                                            <div class="item" style="margin-bottom: 10px">
-                                                <a class="ui small circular image" style="margin-left: 10px">
-                                                    <img src="/image/{{ help_non_cash.benefactor.member.avatar }}">
-                                                </a>
-                                                <div class="content">
-                                                    <a class="header" style="font-family: VezFont" href="/profile/{{ help_non_cash.benefactor.member.username }}">
-                                                        {{ help_non_cash.benefactor.member.first_name }} {{ help_non_cash.benefactor.member.last_name }}
-                                                    </a>
-                                                    <div class="description">
-                                                        <p>
-                                                            مورد درخواست :
-                                                            {{ non_cash_requirement.description }}
-                                                        </p>
-                                                        <p>
-                                                            توضیحات :
-                                                            {{ help_non_cash.description }}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                    <form method="post" action="/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/">
-                                        {% csrf_token %}
-                                    <input type="text" name="rate" value="1" hidden>
-                                    <button class="circular ui icon button" type="submit">1</button>
-                                    </form>
-                                    <form method="post" action="/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/">
-                                        {% csrf_token %}
-                                    <input type="text" name="rate" value="2" hidden>
-                                    <button class="circular ui icon button" type="submit">2</button>
-                                    </form>
-                                    <form method="post" action="/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/">
-                                        {% csrf_token %}
-                                    <input type="text" name="rate" value="3" hidden>
-                                    <button class="circular ui icon button" type="submit">3</button>
-                                    </form>
-                                    <form method="post" action="/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/">
-                                        {% csrf_token %}
-                                    <input type="text" name="rate" value="4" hidden>
-                                    <button class="circular ui icon button" type="submit">4</button>
-                                    </form>
-                                    <form method="post" action="/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/">
-                                        {% csrf_token %}
-                                    <input type="text" name="rate" value="5" hidden>
-                                    <button class="circular ui icon button" type="submit">5</button>
-                                    </form>
-                                            </div>
-                                        {% endif %}
-{#                                    {% endif %}#}
-                                {% endfor %}
-                            {% endfor %}
-
-                        </div>
-
-
-                    </div>
-                {% endif %}
-            </div>
         </div>
-    </section>
+
+        <h3 style="margin-right: 50px"> آلبوم تصاویر </h3>
+
+        <br><br><br><br>
+
+
+    </div>
 {% endblock %}

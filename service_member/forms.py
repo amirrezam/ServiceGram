@@ -78,6 +78,8 @@ class EditProfileBenefactorForm(forms.ModelForm):
 class EditProfileInstituteForm(forms.ModelForm):
     city = forms.CharField()
     address = forms.Textarea()
+    lat = forms.DecimalField(required=False)
+    long = forms.DecimalField(required=False)
 
     class Meta:
         model = Member

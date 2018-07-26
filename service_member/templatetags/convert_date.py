@@ -40,8 +40,10 @@ def get_datetime_relative_str(value):
         return "در تاریخ " + convert_date(value.date())
     elif value.time().hour != datetime.datetime.now().time().hour:
         return str(datetime.datetime.now().time().hour - value.time().hour) + " ساعت پیش"
-    else:
+    elif value.time().minute != datetime.datetime.now().time().minute:
         return str(datetime.datetime.now().time().minute - value.time().minute) + " دقیقه پیش"
+    else:
+        return "جخ تازه"
 
 
 register.filter('convert_week_day', convert_week_day)

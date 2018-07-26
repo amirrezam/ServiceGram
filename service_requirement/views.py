@@ -6,7 +6,8 @@ from django.urls import reverse_lazy
 
 from service_member.models import Skill, Member
 from service_requirement.forms import CreateCashRequirementForm, CreateNonCashRequirementForm, \
-    RequestHelpBenefactorForm, RequestHelpInstituteForm, RateHelpNonCashBenefactorForm, RateHelpNonCashInstituteForm
+    RequestHelpBenefactorForm, RequestHelpInstituteForm, RateHelpNonCashBenefactorForm, RateHelpNonCashInstituteForm, \
+    HelpCashForm
 from service_requirement.models import CashRequirement, NonCashRequirement, HelpNonCash, ValidationStatus, Chunk, WeekDay
 import datetime
 import jalali
@@ -384,7 +385,8 @@ class RateHelpNonCashInstituteView(FormView):
 
     def get(self, request, *args, **kwargs):
         help_non_cash = get_object_or_404(HelpNonCash, requirement_id__exact=self.kwargs['pk'],
-                                          benefactor__member__username__exact=self.kwargs['username'])
+                                          benefactor__member__username__exact=self.kwargs['username'],
+                                          status='ValidationStatus.Act')
         if not request.user.is_authenticated:
             raise Http404
         if request.user.is_benefactor:
@@ -392,6 +394,31 @@ class RateHelpNonCashInstituteView(FormView):
         if request.user.username != help_non_cash.requirement.owner.member.username:
             raise Http404
         if help_non_cash.status != 'ValidationStatus.Act':
+            raise Http404
+        if not request.user.activation_status == 'ActivationStatus.Act':
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+
+class HelpCashView(FormView):
+    form_class = HelpCashForm
+    template_name = 'SubmitRequest.html'
+    success_url = '/profile/'
+
+    def form_valid(self, form):
+        form.save(commit=True)
+        return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        kwargs['requirement'] = CashRequirement.objects.get(pk=self.kwargs['pk'])
+        return kwargs
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise Http404
+        if not request.user.is_benefactor:
             raise Http404
         if not request.user.activation_status == 'ActivationStatus.Act':
             raise Http404
