@@ -179,14 +179,14 @@
 
                             <center>
 
-                                <img class="ui medium rounded image" src="{% static 'img/noncash.gif' %}"
+                                <img class="ui medium rounded image" src="/image/{{ cash_requirement.avatar }}"
                                      style="margin-top: 3px; align-items: center"></img>
 
                             </center>
 
                             <br>
 
-                            <div class="ui active teal big progress" data-percent="74"
+                            <div class="ui active teal big progress" data-percent="{{ cash_requirement|get_total_donation|divide:cash_requirement.fund }}"
                                  id="example2"
                                  style="width: 350px; height: 40px; margin-right: 60px">
 
@@ -194,7 +194,7 @@
                                     <div class="progress" style="color: #0f0f10; "></div>
                                     <center>
                                         <br>
-                                        میزان تامین پروژه : 74%
+                                        میزان تامین پروژه : {{ cash_requirement|get_total_donation|divide:cash_requirement.fund }}%
                                     </center>
                                 </div>
 hi

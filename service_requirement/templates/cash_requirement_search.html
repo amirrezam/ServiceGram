@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{%  block title %}Search Cash Requirements{% endblock %}
+
+{% block content %}
+<section>
+    <div id="body_container">
+        <div class="ui container">
+
+            <center>
+                <div class="ui center aligned segment" style="width: 400px">
+                    <form class="ui large form" method="GET">
+
+                        <div class="ui teal huge icon input">
+                            <input placeholder="نام نیاز" type="text"
+                                   style="font-family: VezFont" name="name">
+                            <i class="inverted circular search link icon"></i>
+                        </div>
+
+                        <button class="ui big teal button" type="submit">
+                            جستجو
+                        </button>
+
+                    </form>
+                </div>
+            </center>
+
+        </div>
+    </div>
+</section>
+
+<section>
+
+    <div class="ui container w1000 transition visible">
+
+
+        <div class="ui segment" style="padding: 30px">
+
+            <h2>نتایج جستجو</h2>
+
+            <br>
+            <br>
+
+            <div class="ui four stackable special cards">
+            {% if not cashrequirement_list.all %}
+                نتیجه ای یافت نشد.
+            {% endif %}
+            {% for cash_requirement in cashrequirement_list.all %}
+                <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
+
+                    <div class="blurring dimmable circular image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center">
+                                    <div class="ui inverted button">Add Friend</div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="/image/{{ cash_requirement.owner.member.avatar }}" class="ui circular image">
+                    </div>
+
+
+                    <div class="content" style="margin-top: 10px">
+
+                        <a class="header" style="font-family: VezFont; align-content: center" href="/profile/{{ cash_requirement.owner.member.username }}">
+                            {{ cash_requirement.title }}
+                        </a>
+                        <div class="meta">
+                            <span class="date">آخرین بازدید : 2 ساعت پیش</span>
+                        </div>
+                        <div class="discription" style="margin-top: 8px">
+                            {{ cash_requirement.description }}
+                            <br>
+{#                            <h5> توانایی‌های مورد نیاز : </h5>#}
+{#                            <p>#}
+{#                                دبیر ریاضی، دبیر فیزیک#}
+{#                            </p>#}
+                        </div>
+                    </div>
+                    <div class="extra">
+                        امتیاز دهید :
+                        <div class="ui star rating" data-rating="4"></div>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+
+        </div>
+
+    </div>
+
+</section>
+{% endblock %}

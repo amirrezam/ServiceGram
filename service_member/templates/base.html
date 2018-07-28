@@ -134,7 +134,9 @@
                     <a class="item" href="/institutes/">
                         <i class="building large icon"></i> مشاهده‌ی موسسات </a>
                     <a class="item" href={% url 'show_non_cash_requirements' %}>
-                        <i class="plus square large icon"></i> مشاهده ی نیاز ها </a>
+                        <i class="plus square large icon"></i> مشاهده ی نیاز های غیرنقدی </a>
+                    <a class="item" href={% url 'show_cash_requirements' %}>
+                        <i class="plus square large icon"></i> مشاهده ی نیاز های نقدی </a>
 
                     <div class="left menu">
                         {% if user.is_authenticated %}
