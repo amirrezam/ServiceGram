@@ -305,6 +305,18 @@ class ShowNonCashRequirementsView(ListView):
         return context
 
 
+class ShowCashRequirementsView(ListView):
+    template_name = 'SubmitRequest.html'
+    model = CashRequirement
+
+    def get_queryset(self):
+        ans = CashRequirement.objects
+        if 'name' in dict(self.request.GET).keys():
+            return ans.filter(title=self.request.GET.get('name'))
+        else:
+            return ans
+
+
 class RejectRequestFromBenefactorView(RedirectView):
     url = '/profile/'
 
