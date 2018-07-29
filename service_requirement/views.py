@@ -3,14 +3,15 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import CreateView, DetailView, RedirectView, ListView, FormView
 from django.urls import reverse_lazy
 
-
 from service_member.models import Skill, Member
 from service_requirement.forms import CreateCashRequirementForm, CreateNonCashRequirementForm, \
     RequestHelpBenefactorForm, RequestHelpInstituteForm, RateHelpNonCashBenefactorForm, RateHelpNonCashInstituteForm, \
     HelpCashForm
-from service_requirement.models import CashRequirement, NonCashRequirement, HelpNonCash, ValidationStatus, Chunk, WeekDay
+from service_requirement.models import CashRequirement, NonCashRequirement, HelpNonCash, ValidationStatus, Chunk, \
+    WeekDay
 import datetime
 import jalali
+
 
 # Create your views here.
 
@@ -128,28 +129,13 @@ class RequestHelpBenefactorView(CreateView):
         if help_non_cash.skill.name not in skills:
             raise Http404
 
-        if HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
-                                      benefactor__member__username__exact=help_non_cash.benefactor.member.username,
-                                      requirement__week_day=help_non_cash.requirement.week_day,
-                                      requirement__beginning_date__gte=help_non_cash.requirement.beginning_date,
-                                      requirement__beginning_date__lte=help_non_cash.requirement.ending_date,
-                                      status='ValidationStatus.Act').count() > 0:
-            raise Http404
-
-        if HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
+        if HelpNonCash.objects.filter(requirement__time__beginning_time__lte=help_non_cash.requirement.time.ending_time,
+                                      requirement__time__ending_time__gte=help_non_cash.requirement.time.beginning_time,
                                       benefactor__member__username__exact=help_non_cash.benefactor.member.username,
                                       requirement__week_day=help_non_cash.requirement.week_day,
                                       requirement__ending_date__gte=help_non_cash.requirement.beginning_date,
-                                      requirement__ending_date__lte=help_non_cash.requirement.ending_date,
-                                      status='ValidationStatus.Act').count() > 0:
-            raise Http404
-
-        if HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
-                                      benefactor__member__username__exact=help_non_cash.benefactor.member.username,
-                                      requirement__week_day=help_non_cash.requirement.week_day,
-                                      requirement__beginning_date__lte=help_non_cash.requirement.beginning_date,
-                                      requirement__ending_date__gte=help_non_cash.requirement.ending_date,
-                                      status='ValidationStatus.Act').count() > 0:
+                                      requirement__beginning_date__lte=help_non_cash.requirement.ending_date,
+                                      status='ValidationStatus.Pen').count() > 0:
             raise Http404
         return super().get(request, *args, **kwargs)
 
@@ -223,25 +209,12 @@ class AcceptRequestFromBenefactorView(RedirectView):
             raise Http404
         if not request.user.activation_status == 'ActivationStatus.Act':
             raise Http404
-        HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
-                                   benefactor__member__username__exact=help_non_cash.benefactor.member.username,
-                                   requirement__week_day=help_non_cash.requirement.week_day,
-                                   requirement__beginning_date__gte=help_non_cash.requirement.beginning_date,
-                                   requirement__beginning_date__lte=help_non_cash.requirement.ending_date,
-                                   status='ValidationStatus.Pen'). \
-            update(status=ValidationStatus.Can)
-        HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
+        HelpNonCash.objects.filter(requirement__time__beginning_time__lte=help_non_cash.requirement.time.ending_time,
+                                   requirement__time__ending_time__gte=help_non_cash.requirement.time.beginning_time,
                                    benefactor__member__username__exact=help_non_cash.benefactor.member.username,
                                    requirement__week_day=help_non_cash.requirement.week_day,
                                    requirement__ending_date__gte=help_non_cash.requirement.beginning_date,
-                                   requirement__ending_date__lte=help_non_cash.requirement.ending_date,
-                                   status='ValidationStatus.Pen'). \
-            update(status=ValidationStatus.Can)
-        HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
-                                   benefactor__member__username__exact=help_non_cash.benefactor.member.username,
-                                   requirement__week_day=help_non_cash.requirement.week_day,
-                                   requirement__beginning_date__lte=help_non_cash.requirement.beginning_date,
-                                   requirement__ending_date__gte=help_non_cash.requirement.ending_date,
+                                   requirement__beginning_date__lte=help_non_cash.requirement.ending_date,
                                    status='ValidationStatus.Pen'). \
             update(status=ValidationStatus.Can)
         HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(status=ValidationStatus.Act)
@@ -264,25 +237,12 @@ class AcceptRequestFromInstituteView(RedirectView):
             raise Http404
         if not request.user.activation_status == 'ActivationStatus.Act':
             raise Http404
-        HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
-                                   benefactor__member__username__exact=help_non_cash.benefactor.member.username,
-                                   requirement__week_day=help_non_cash.requirement.week_day,
-                                   requirement__beginning_date__gte=help_non_cash.requirement.beginning_date,
-                                   requirement__beginning_date__lte=help_non_cash.requirement.ending_date,
-                                   status='ValidationStatus.Pen'). \
-            update(status=ValidationStatus.Can)
-        HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
+        HelpNonCash.objects.filter(requirement__time__beginning_time__lte=help_non_cash.requirement.time.ending_time,
+                                   requirement__time__ending_time__gte=help_non_cash.requirement.time.beginning_time,
                                    benefactor__member__username__exact=help_non_cash.benefactor.member.username,
                                    requirement__week_day=help_non_cash.requirement.week_day,
                                    requirement__ending_date__gte=help_non_cash.requirement.beginning_date,
-                                   requirement__ending_date__lte=help_non_cash.requirement.ending_date,
-                                   status='ValidationStatus.Pen'). \
-            update(status=ValidationStatus.Can)
-        HelpNonCash.objects.filter(requirement__time__exact=help_non_cash.requirement.time,
-                                   benefactor__member__username__exact=help_non_cash.benefactor.member.username,
-                                   requirement__week_day=help_non_cash.requirement.week_day,
-                                   requirement__beginning_date__lte=help_non_cash.requirement.beginning_date,
-                                   requirement__ending_date__gte=help_non_cash.requirement.ending_date,
+                                   requirement__beginning_date__lte=help_non_cash.requirement.ending_date,
                                    status='ValidationStatus.Pen'). \
             update(status=ValidationStatus.Can)
         HelpNonCash.objects.filter(pk=self.kwargs['pk']).update(status=ValidationStatus.Act)
@@ -302,19 +262,20 @@ class ShowNonCashRequirementsView(ListView):
         if not (self.request.GET.get('begin_day') == '' or
                 self.request.GET.get('begin_year') == '' or
                 self.request.GET.get('begin_month') == ''):
-            (begin_year, begin_month, begin_day) = jalali.\
-                Persian((self.request.GET.get('begin_year'), self.request.GET.get('begin_month'), self.request.GET.get('begin_day'))).gregorian_tuple()
+            (begin_year, begin_month, begin_day) = jalali. \
+                Persian((self.request.GET.get('begin_year'), self.request.GET.get('begin_month'),
+                         self.request.GET.get('begin_day'))).gregorian_tuple()
             ans = ans.filter(beginning_date__gte=
                              datetime.date(begin_year, begin_month, begin_day))
 
         if not (self.request.GET.get('end_day') == '' or
                 self.request.GET.get('end_year') == '' or
                 self.request.GET.get('end_month') == ''):
-            (end_year, end_month, end_day) = jalali.\
-                Persian((self.request.GET.get('end_year'), self.request.GET.get('end_month'), self.request.GET.get('end_day'))).gregorian_tuple()
+            (end_year, end_month, end_day) = jalali. \
+                Persian((self.request.GET.get('end_year'), self.request.GET.get('end_month'),
+                         self.request.GET.get('end_day'))).gregorian_tuple()
             ans = ans.filter(beginning_date__gte=
                              datetime.date(end_year, end_month, end_day))
-
 
         if 'chunks' in dict(self.request.GET).keys():
             if not self.request.GET.get('chunks') == '':
