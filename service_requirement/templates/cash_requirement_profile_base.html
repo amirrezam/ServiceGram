@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load filter_skill %}
+
+{% block title %} Requirement's info{% endblock %}
+
+{% block content %}
+<section>
+
+    <div class="ui container" style="width: 1300px;">
+
+        <div class="ui top attached massive tabular menu">
+
+            <a class="item {% block is_active_info %}{% endblock %}" href="/requirements/info/cash/{{ cashrequirement.pk }}">اطلاعات پروفایل</a>
+            {% if user.is_authenticated %}
+                {% if user.username == cashrequirement.owner.member.username %}
+                    <a class="item {% block is_active_transactions %}{% endblock %}" href="/requirements/info/cash/transactions/{{ cashrequirement.pk }}">تراکنش ها</a>
+                {% endif %}
+            {% endif %}
+
+        </div>
+
+        {% block add_content %}{% endblock %}
+
+
+        <br>
+        <br>
+
+    </div>
+</section>
+{% endblock %}
