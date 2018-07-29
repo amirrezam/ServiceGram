@@ -102,7 +102,7 @@ def sort_by(value, arg):
 
 
 def divide(value, arg):
-    return int(value/arg)
+    return int(100 * value/arg)
 
 
 register.filter('filter_accepted', filter_accepted)

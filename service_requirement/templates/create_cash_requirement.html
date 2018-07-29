@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Create Cash Requirement{% endblock %}
+
+
+{%  block content %}
+
+<div style="text-align:right;width:900px;margin:auto;margin-top:50px">
+    <div class="ui teal segment" style="margin-bottom: 100px; background-color: rgba(220, 222, 228, 0.479); padding: 50px">
+        <form class="ui huge form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <br><br>
+
+            <div class="field">
+                <label>مبلغ به تومان</label>
+                <div class="field">
+                    <input type="number" name="fund" placeholder="۱" id="id_fund">
+                </div>
+            </div>
+
+
+            <br>
+
+            <div class="field">
+                <label>عنوان</label>
+                <input type="text" placeholder="عنوان این نیاز" name="title" style="text-align:left" id="id_title">
+            </div>
+
+            <br>
+
+
+            <br>
+
+            <div class="field">
+                <label>توضیحات</label>
+                <input type="text" placeholder="توضیحات این نیاز" name="description" style="text-align:left" id="id_description">
+            </div>
+
+            <br>
+
+
+            <br>
+
+            <div class="field">
+                <label>تصویر این نیاز</label>
+                {{ form.avatar }}
+            </div>
+
+
+            <br>
+            {% if "This field is required." in form.title.errors %}
+            <div class="ui negative message">
+                <p>
+                    پر کردن این بخش الزامی است.
+                </p>
+            </div>
+            {% elif form.username.errors %}
+            <div class="ui negative message">
+                <p>
+                    عنوان مجاز نیست.
+                </p>
+            </div>
+            {% endif %}
+            <button class="ui teal big button" type="submit" id="id_submit">ثبت</button>
+        </form>
+        {{ form.errors }}
+    </div>
+</div>
+
+{% endblock %}

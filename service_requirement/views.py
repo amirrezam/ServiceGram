@@ -17,7 +17,7 @@ import jalali
 
 class CreateCashRequirementView(CreateView):
     form_class = CreateCashRequirementForm
-    template_name = 'Create.html'
+    template_name = 'create_cash_requirement.html'
     success_url = '/profile/'
 
     def form_valid(self, form):
