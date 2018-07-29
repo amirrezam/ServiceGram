@@ -38,12 +38,20 @@ class CreateCashRequirementView(CreateView):
 
 class CreateNonCashRequirementView(CreateView):
     form_class = CreateNonCashRequirementForm
-    template_name = 'Create.html'
+    template_name = 'create_non_cash_requirement.html'
     success_url = '/profile/'
 
     def form_valid(self, form):
         obj = form.save(commit=False)
         obj.owner = self.request.user.institute
+        (begin_year, begin_month, begin_day) = jalali. \
+            Persian((self.request.POST.get('begin_year'), self.request.POST.get('begin_month'),
+                     self.request.POST.get('begin_day'))).gregorian_tuple()
+        (end_year, end_month, end_day) = jalali. \
+            Persian((self.request.POST.get('end_year'), self.request.POST.get('end_month'),
+                     self.request.POST.get('end_day'))).gregorian_tuple()
+        obj.beginning_date = datetime.date(year=begin_year, month=begin_month, day=begin_day)
+        obj.ending_date = datetime.date(year=end_year, month=end_month, day=end_day)
         obj.save()
         return super().form_valid(form)
 
@@ -55,6 +63,13 @@ class CreateNonCashRequirementView(CreateView):
         if not request.user.activation_status == 'ActivationStatus.Act':
             raise Http404
         return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['Skill'] = Skill.objects.all()
+        context['Chunk'] = Chunk.objects.all()
+        context['WeekDay'] = WeekDay.__members__
+        return context
 
 
 class CashRequirementProfileView(DetailView):
