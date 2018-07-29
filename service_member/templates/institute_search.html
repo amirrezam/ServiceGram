@@ -64,15 +64,19 @@
 
                     <div class="content" style="margin-top: 10px">
 
-                        <a class="header" style="font-family: VezFont; align-content: center" href="/profile/{{ institute.member.username }}">
+                        <a class="header" style="font-family: VezFont; align-content: center" href="/profile/{{ institute.member.username }}"><h4>
                             {{ institute.member.first_name }}
-                        </a>
-                        <div class="meta">
+                        </h4></a>
+
+                        <div class="meta" style="margin-top: 10px;">
                             <span class="date">آخرین بازدید : 2 ساعت پیش</span>
                         </div>
+
+                        <br>
+
                         <div class="discription" style="margin-top: 8px">
                             {% if institute.member.bio %}
-                                <h4 style="text-align: justify"> {{ institute.member.bio }}</h4>
+                                <h5 style="text-align: justify"> {{ institute.member.bio }}</h5>
                             {% endif %}
                             <br>
 {#                            <h5> توانایی‌های مورد نیاز : </h5>#}

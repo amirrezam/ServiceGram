@@ -37,6 +37,16 @@
 
                             <br>
 
+                            <h4 style="margin-right: 40px;">
+                                درباره‌ی پروژه :
+                            </h4>
+
+                            <h5 style="margin-right: 40px;">
+                                این پروژه برای کمک رسانی به افراد بدسرپرست ساخته شده است.
+                            </h5>
+
+                            <br>
+
                             <h5 style="margin-right: 40px">
                                 سقف بودجه‌ی مورد نیاز :
                                 {{ cash_requirement.fund }}
@@ -111,14 +121,22 @@
                                     </div>
 
                                 </div>
+
+
+                            {% else %}
+
+                                <button class="ui big teal disabled button" style="margin-right: 50px">
+                                    در تامین این پروژه ی خیرخواهانه سهیم شوید !
+                                </button>
+
                             {% endif %}
 
-                            <br><br><br><br>
+                            <br><br>
 
                             {% if user.is_authenticated %}
                                 {% if user.username == member.username %}
 
-                                    <div class="ui teal segment" style="width: 650px; margin-right: 40px">
+                                    <div class="ui teal segment" style="width: 650px; margin-right: 40px; margin-bottom: 20px;">
 
                                         <script>
                                             $(function () {
@@ -145,11 +163,11 @@
                                                 {% for help_cash in cash_requirement.helps.all|sort_by:'-date_donated' %}
                                                     {% if forloop.counter0 < 5 %}
                                                         <div class="ui
-{#                                                         {% cycle 'black' 'white' %}
+{#                                                         {% cycle 'teal' 'blue' %}
                                                          message">
 
                                                             <h6>
-                                                                <a style="color: teal" href="/profile/{{ help_cash.benefactor.member.username }}">
+                                                                <a style="color: purple" href="/profile/{{ help_cash.benefactor.member.username }}">
                                                                     {{ help_cash.benefactor.member.first_name }}
                                                                     {{ help_cash.benefactor.member.last_name }}
                                                                 </a>
