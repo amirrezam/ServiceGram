@@ -59,10 +59,25 @@ class CreateNonCashRequirementView(CreateView):
 
 class CashRequirementProfileView(DetailView):
     model = CashRequirement
-    template_name = 'CashRequirementProfile.html'
+    template_name = 'cash_requirement_profile.html'
 
     def get_object(self, queryset=None):
         return CashRequirement.objects.get(pk=self.kwargs['pk'])
+
+
+class CashRequirementProfileTransactionsView(DetailView):
+    model = CashRequirement
+    template_name = 'cash_requirement_profile_transactions.html'
+
+    def get_object(self, queryset=None):
+        return CashRequirement.objects.get(pk=self.kwargs['pk'])
+
+    def get(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            raise Http404
+        if self.request.user.username != CashRequirement.objects.get(pk=self.kwargs['pk']).owner.member.username:
+            raise Http404
+        return super().get(request, *args, **kwargs)
 
 
 class NonCashRequirementProfileView(DetailView):

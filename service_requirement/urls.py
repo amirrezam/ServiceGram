@@ -2,11 +2,13 @@ from service_requirement.views import CreateCashRequirementView, CreateNonCashRe
     CashRequirementProfileView, NonCashRequirementProfileView, RequestHelpBenefactorView, ShowRequestsRequirementView, \
     AcceptRequestFromBenefactorView, ShowNonCashRequirementsView, RejectRequestFromBenefactorView, \
     RequestHelpInstituteView, RejectRequestFromInstituteView, AcceptRequestFromInstituteView, \
-    RateHelpNonCashBenefactorView, RateHelpNonCashInstituteView, HelpCashView, ShowCashRequirementsView
+    RateHelpNonCashBenefactorView, RateHelpNonCashInstituteView, HelpCashView, ShowCashRequirementsView, \
+    CashRequirementProfileTransactionsView
 from django.contrib.auth import views as auth_views
 from django.urls import re_path
 
 urlpatterns = [
+    re_path(r'info/cash/transactions/(?P<pk>[a-zA-Z0-9]+)$', CashRequirementProfileTransactionsView.as_view(), name='cash_requirement_profile_transactions'),
     re_path(r'info/cash/(?P<pk>[a-zA-Z0-9]+)$', CashRequirementProfileView.as_view(), name='cash_requirement_profile'),
     re_path(r'info/non_cash/(?P<pk>[a-zA-Z0-9]+)$', NonCashRequirementProfileView.as_view(), name='non_cash_requirement_profile'),
     re_path(r'request/institute/(?P<username>[a-zA-Z0-9]+)/$', RequestHelpInstituteView.as_view(), name='request_help_institute'),

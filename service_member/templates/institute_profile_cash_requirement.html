@@ -28,10 +28,12 @@
 
                         <div class="ten wide column" >
 
-                            <h4 style="margin-right: 40px; margin-top: 20px; line-height: 35px;">
-                                عنوان پروژه :
-                                {{ cash_requirement.title }}
-                            </h4>
+                            <a href="{% url "cash_requirement_profile" pk=cash_requirement.pk %}">
+                                <h4 style="margin-right: 40px; margin-top: 20px; line-height: 35px;">
+                                    عنوان پروژه :
+                                    {{ cash_requirement.title }}
+                                </h4>
+                            </a>
 
                             <br>
 
