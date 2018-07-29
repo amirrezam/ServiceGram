@@ -28,10 +28,12 @@
 
                         <div class="ten wide column" >
 
-                            <h4 style="margin-right: 40px; margin-top: 20px; line-height: 35px;">
-                                عنوان پروژه :
-                                {{ cash_requirement.title }}
-                            </h4>
+                            <a href="{% url "cash_requirement_profile" pk=cash_requirement.pk %}">
+                                <h4 style="margin-right: 40px; margin-top: 20px; line-height: 35px;">
+                                    عنوان پروژه :
+                                    {{ cash_requirement.title }}
+                                </h4>
+                            </a>
 
                             <br>
 
@@ -179,22 +181,22 @@
 
                             <center>
 
-                                <img class="ui medium rounded image" src="{% static 'img/noncash.gif' %}"
+                                <img class="ui medium rounded image" src="/image/{{ cash_requirement.avatar }}"
                                      style="margin-top: 3px; align-items: center"></img>
 
                             </center>
 
                             <br>
 
-                            <div class="ui active teal big progress" data-percent="74"
-                                 id="example2"
+                            <div class="ui active teal big progress" data-percent="{{ cash_requirement|get_total_donation|divide:cash_requirement.fund }}"
+                                 id="example_{{ cash_requirement.pk }}"
                                  style="width: 350px; height: 40px; margin-right: 60px">
 
                                 <div class="bar" style="height: 200px; align-items: center">
                                     <div class="progress" style="color: #0f0f10; "></div>
                                     <center>
                                         <br>
-                                        میزان تامین پروژه : 74%
+                                        میزان تامین پروژه : {{ cash_requirement|get_total_donation|divide:cash_requirement.fund }}%
                                     </center>
                                 </div>
 hi
@@ -205,7 +207,7 @@ hi
 
                             <script>
                                 $(function () {
-                                    $('#example2')
+                                    $('#example_{{ cash_requirement.pk }}')
                                         .progress({})
                                     ;
                                 });

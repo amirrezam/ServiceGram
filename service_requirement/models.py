@@ -39,6 +39,7 @@ class Requirement(models.Model):
 class CashRequirement(Requirement):
     fund = models.IntegerField()
     # donated_fund = models.IntegerField(default=0)
+    avatar = models.ImageField(upload_to='image/', default='image/default-img.jpg')
     owner = models.ForeignKey(
         to='service_member.Institute',
         related_name='cash_requirements',

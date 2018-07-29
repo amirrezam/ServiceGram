@@ -1,0 +1,43 @@
+{% extends "cash_requirement_profile_base.html" %}
+
+{% load static %}
+
+{% load filter_skill %}
+
+{% load convert_date %}
+
+{% block is_active_transactions %}active{% endblock %}
+
+{% block add_content %}
+    <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245); width: 1500px;">
+
+        <div class="ui container" style="margin-top: 100px; width: 1300px; margin-bottom: 100px">
+
+            <h3>
+                تراکنش های این پروژه به صورت زیر هستند:
+            </h3>
+
+            <br><br>
+
+            {% for help_cash in cashrequirement.helps.all|sort_by:'-date_donated' %}
+                <div class="ui
+                {% cycle 'black' 'white' %}
+                 message">
+
+                    <h6>
+                        <a style="color: teal" href="/profile/{{ help_cash.benefactor.member.username }}">
+                            {{ help_cash.benefactor.member.first_name }}
+                            {{ help_cash.benefactor.member.last_name }}
+                        </a>
+                        {{ help_cash.date_donated|get_datetime_relative_str }}
+                         مبلغ
+                        {{ help_cash.amount }}
+                        تومان به حساب این پروژه کمک کرد.
+                    </h6>
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

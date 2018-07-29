@@ -101,6 +101,10 @@ def sort_by(value, arg):
     return value.order_by(arg)
 
 
+def divide(value, arg):
+    return int(100 * value/arg)
+
+
 register.filter('filter_accepted', filter_accepted)
 register.filter('filter_has_skill_accepted', filter_has_skill_accepted)
 register.filter('filter_by_name', filter_by_name)
@@ -114,3 +118,4 @@ register.filter('get_benefactor_mean_score', get_benefactor_mean_score)
 register.filter('convert_int', convert_int)
 register.filter('get_total_donation', get_total_donation)
 register.filter('sort_by', sort_by)
+register.filter('divide', divide)

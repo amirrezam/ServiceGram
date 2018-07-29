@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from service_requirement.models import CashRequirement, NonCashRequirement, Chunk, HelpNonCash, ValidationStatus, \
     SenderStatus, WeekDay, HelpCash
 from service_member.models import Skill, Member
+import jalali
 
 
 class CreateCashRequirementForm(forms.ModelForm):
@@ -15,7 +16,7 @@ class CreateCashRequirementForm(forms.ModelForm):
 
     class Meta:
         model = CashRequirement
-        fields = ('fund', 'description', 'title')
+        fields = ('fund', 'description', 'title', 'avatar')
 
 
 class CreateNonCashRequirementForm(forms.ModelForm):
@@ -45,11 +46,7 @@ class CreateNonCashRequirementForm(forms.ModelForm):
 
     class Meta:
         model = NonCashRequirement
-        fields = ('beginning_date', 'ending_date', 'description', 'title')
-        widgets = {
-            'beginning_date': forms.DateInput(attrs={'type': 'date'}),
-            'ending_date': forms.DateInput(attrs={'type': 'date'})
-        }
+        fields = ('description', 'title')
 
 
 class RequestHelpBenefactorForm(forms.ModelForm):
