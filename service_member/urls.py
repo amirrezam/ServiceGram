@@ -3,7 +3,7 @@ from service_member.views import SignUpBenefactorView, SignUpInstituteView, Home
     VezTestView, VezTestView2, VezTestView3, VezTestView4, VezTestView5, VezTestView6, VezTestView7, \
     ProfileActivitiesView, ProfileOwnRequestsView, \
     ProfileInstituteRequestsView, ProfileArchiveView, ProfileCashRequirementView, ProfileNonCashRequirementView, \
-    ProfileRatingView
+    ProfileRatingView, AddImageInstituteView
 from django.contrib.auth import views as auth_views
 from django.urls import re_path
 
@@ -26,6 +26,7 @@ urlpatterns = [
     re_path(r'profile/$', ProfileRedirectView.as_view(), name='profile_redirect'),
     re_path(r'institutes/$', ShowInstitutesView.as_view(), name='show_institutes'),
     re_path(r'benefactors/$', ShowBenefactorsView.as_view(), name='show_benefactors'),
+    re_path(r'profile/(?P<username>[a-zA-Z0-9_]+)/add_photo/$', AddImageInstituteView.as_view(), name='add_institute_photo'),
     re_path(r'test/$', VezTestView.as_view(), name='test'),
     re_path(r'test2/$', VezTestView2.as_view(), name='test2'),
     re_path(r'test3/$', VezTestView3.as_view(), name='test3'),
@@ -33,5 +34,5 @@ urlpatterns = [
     re_path(r'test5/$', VezTestView5.as_view(), name='test5'),
     re_path(r'test6/$', VezTestView6.as_view(), name='test6'),
     re_path(r'test7/$', VezTestView7.as_view(), name='test7'),
-    re_path(r'$', HomeView.as_view(), name='home')
+    re_path(r'$', HomeView.as_view(), name='home'),
 ]

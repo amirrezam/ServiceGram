@@ -2,13 +2,25 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db.models import QuerySet
 
-from service_member.models import Member, Institute, Benefactor, Skill, HasSkill, ActivationStatus
+from service_member.models import Member, Institute, Benefactor, Skill, HasSkill, ActivationStatus, Photo
 from service_requirement.models import ValidationStatus
+
+
+class AddImageInstituteForm(forms.ModelForm):
+    def save(self, commit=True):
+        print(self.cleaned_data.keys(), "inja keys")
+        photo = super().save(commit=False)
+        return photo
+
+    class Meta:
+        model = Photo
+        fields = ('image',)
 
 
 class SignUpInstituteForm(UserCreationForm):
     city = forms.CharField()
     address = forms.Textarea()
+    photo = forms.ImageField()
 
     def save(self, commit=True):
         member = super().save(commit=False)
@@ -22,6 +34,9 @@ class SignUpInstituteForm(UserCreationForm):
         if 'address' in list(self.cleaned_data.keys()):
             institute.address = self.cleaned_data['address']
         institute.save()
+        if 'photo' in list(self.cleaned_data.keys()):
+            photo = Photo.objects.create(image=self.cleaned_data['photo'], institute=institute)
+        photo.save()
         return member
 
     class Meta:
@@ -77,7 +92,7 @@ class EditProfileBenefactorForm(forms.ModelForm):
 
 class EditProfileInstituteForm(forms.ModelForm):
     city = forms.CharField()
-    address = forms.Textarea()
+    address = forms.CharField()
     lat = forms.DecimalField(required=False)
     long = forms.DecimalField(required=False)
 

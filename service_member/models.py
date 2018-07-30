@@ -11,6 +11,11 @@ class ActivationStatus(Enum):
     Act = 'Active'
 
 
+class Gender(Enum):
+    Man = 'Man'
+    Woman = 'Woman'
+
+
 class Member(AbstractUser):
     activation_status = models.CharField(
         max_length=8,
@@ -42,8 +47,18 @@ class Institute(models.Model):
         return self.member.username
 
 
+class Photo(models.Model):
+    image = models.ImageField(upload_to='image/')
+    institute = models.ForeignKey('Institute', on_delete=models.CASCADE, related_name="images")
+
+
 class Benefactor(models.Model):
     member = models.OneToOneField(to='Member', related_name='benefactor', on_delete=models.CASCADE, null=True)
+
+    gender = models.CharField(
+        max_length=5,
+        default=Gender.Man
+        ,   choices=[(tag, tag.value) for tag in Gender])
 
     class Meta:
         verbose_name = 'Benefactor'

@@ -8,7 +8,7 @@ from service_requirement.forms import CreateCashRequirementForm, CreateNonCashRe
     RequestHelpBenefactorForm, RequestHelpInstituteForm, RateHelpNonCashBenefactorForm, RateHelpNonCashInstituteForm, \
     HelpCashForm
 from service_requirement.models import CashRequirement, NonCashRequirement, HelpNonCash, ValidationStatus, Chunk, \
-    WeekDay
+    WeekDay, Gender
 import datetime
 import jalali
 
@@ -70,6 +70,7 @@ class CreateNonCashRequirementView(CreateView):
         context['Skill'] = Skill.objects.all()
         context['Chunk'] = Chunk.objects.all()
         context['WeekDay'] = WeekDay.__members__
+        context['Gender'] = Gender.__members__
         return context
 
 
@@ -346,6 +347,9 @@ class ShowNonCashRequirementsView(ListView):
         if 'week_days' in dict(self.request.GET).keys():
             if not self.request.GET.get('week_days') == '':
                 ans = ans.filter(week_day__in=dict(self.request.GET)['week_days'])
+        if 'gender' in dict(self.request.GET).keys():
+            if not self.request.GET.get('gender') == '':
+                ans = ans.filter(gender__in=dict(self.request.GET)['gender'])
         return ans
 
     def get_context_data(self, **kwargs):
@@ -353,6 +357,7 @@ class ShowNonCashRequirementsView(ListView):
         context['Skill'] = Skill.objects.all()
         context['Chunk'] = Chunk.objects.all()
         context['WeekDay'] = WeekDay.__members__
+        context['Gender'] = Gender.__members__
         return context
 
 

@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, TemplateView, DetailView, RedirectView, ListView, FormView
 from service_member.forms import SignUpInstituteForm, SignUpBenefactorForm, EditProfileBenefactorForm, \
-    EditProfileInstituteForm
+    EditProfileInstituteForm, AddImageInstituteForm
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
-from service_member.models import Benefactor, Institute, Member, Skill, HasSkill
+from service_member.models import Benefactor, Institute, Member, Skill, HasSkill, Photo, Gender
 from service_requirement.models import NonCashRequirement, ValidationStatus
 
 
@@ -26,6 +26,7 @@ class SignUpBenefactorView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['Skill'] = Skill.objects.all()
+        context['Gender'] = Gender.__members__
         return context
 
 
@@ -46,6 +47,19 @@ class ProfileView(DetailView):
 
     def get_object(self, queryset=None):
         return Member.objects.get(username=self.kwargs['username'])
+
+
+class AddImageInstituteView(FormView):
+    template_name = 'SubmitRequest.html'
+    form_class = AddImageInstituteForm
+    success_url = '/profile/'
+
+    def form_valid(self, form):
+        print("inja salam", self.request.user.institute)
+        photo = form.save(commit=False)
+        photo.institute = self.request.user.institute
+        photo.save()
+        return super().form_valid(form)
 
 
 class ProfileActivitiesView(DetailView):
@@ -174,6 +188,7 @@ class ShowBenefactorsView(ListView):
         benefactors = Benefactor.objects.filter(member__activation_status='ActivationStatus.Act')
         if 'name' in dict(self.request.GET).keys():
             return benefactors.filter(member__last_name__icontains=self.request.GET.get('name'))
+
         else:
             return benefactors
 

@@ -12,7 +12,7 @@
 
             <div class="ui top attached massive tabular menu" style="width: 1500px;">
 
-                <a class="item {% block is_active_info %}{% endblock %}" href="/profile/">اطلاعات پروفایل</a>
+                <a class="item {% block is_active_info %}{% endblock %}" href="{% url "profile" username=member.username %}">اطلاعات پروفایل</a>
                 <a class="item {% block is_active_cash_requirement %}{% endblock %}" href="{% url "profile_cash_requirement" username=member.username %}">نیاز های نقدی</a>
                 <a class="item {% block is_active_non_cash_requirement %}{% endblock %}" href="{% url "profile_non_cash_requirement" username=member.username %}">نیاز های غیر نقدی</a>
                 {% if user.is_authenticated %}

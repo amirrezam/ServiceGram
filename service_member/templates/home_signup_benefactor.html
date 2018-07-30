@@ -1,24 +1,39 @@
 {% extends "home_signup.html" %}
+{% load convert_date %}
 
 {% block addition %}
-    <h2 class="ui dividing header">
-        توانایی‌ها</h2>
 
-    <br>
 
-    <select name="skills" multiple="" class="ui fluid dropdown">
-    <option value="">توانایی‌ها</option>
-    {% for skill in Skill %}
-        <option name="skills" value="{{ forloop.counter }}" id="id_skills_{{ forloop.counter0 }}">{{ skill.name }}</option>
-    {% endfor %}
-    </select>
-    <script>$(function() {
-      $('.ui.dropdown').dropdown();
-      $('.overlay.example .overlay')
-          .visibility({
-              type: 'fixed',
-              offset: 15 // give some space from top of screen
-          });
+    <div class="field">
+        <label>توانایی‌ها</label>
+        <select name="skills" multiple="" class="ui fluid dropdown">
+            <option value="">توانایی‌ها</option>
+            {% for skill in Skill %}
+                <option name="skills" value="{{ forloop.counter }}"
+                        id="id_skills_{{ forloop.counter0 }}">{{ skill.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="field">
+        <label>جنسیت</label>
+        <select class="ui fluid dropdown" name="gender">
+            <option value="">جنسیت</option>
+            {% for tag in Gender %}
+                <option name="gender" value="Gender.{{ tag }}"
+                        id="id_genders_{{ forloop.counter0 }}">{{ tag | convert_gender }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <script>$(function () {
+        $('.ui.dropdown').dropdown();
+        $('.overlay.example .overlay')
+            .visibility({
+                type: 'fixed',
+                offset: 15 // give some space from top of screen
+            });
     });</script>
     {{ form.errors }}
 {% endblock %}
