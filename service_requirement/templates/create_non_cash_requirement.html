@@ -173,6 +173,18 @@
             </div>
 
             <div class="field">
+                <label>جنسیت</label>
+                <select class="ui fluid dropdown" name="gender">
+                    <option value="">جنسیت</option>
+                    {% for tag in Gender %}
+                        <option name="gender" value="Gender.{{ tag }}"
+                                id="id_gender_{{ forloop.counter0 }}">{{ tag | convert_gender }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="field">
                 <label>توضیحات</label>
                 <textarea type="text" placeholder="توضیحات" name="description" style="text-align: right"
                           id="id_description"></textarea>
