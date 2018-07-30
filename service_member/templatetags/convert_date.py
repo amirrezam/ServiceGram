@@ -26,6 +26,17 @@ def convert_week_day(value):
         return 'جمعه'
 
 
+def convert_gender(value):
+    if value == 'Man':
+        return 'مرد'
+    return 'زن'
+
+def convert_gender2(value):
+    if value == 'Gender.Man':
+        return 'مرد'
+    return 'زن'
+
+
 def convert_date(date):
     date_str = date.strftime('%Y-%m-%d')
     res = jalali.Gregorian(date_str).persian_string()
@@ -49,5 +60,7 @@ def get_datetime_relative_str(value):
 register.filter('convert_week_day', convert_week_day)
 register.filter('convert_date', convert_date)
 register.filter('convert_day', convert_day)
+register.filter('convert_gender', convert_gender)
+register.filter('convert_gender2', convert_gender2)
 register.filter('get_datetime_relative_str', get_datetime_relative_str)
 

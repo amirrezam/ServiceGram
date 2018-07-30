@@ -1,6 +1,6 @@
 from django.db import models
 from enum import Enum
-from service_member.models import Institute
+from service_member.models import Institute, Gender
 
 # Create your models here.
 
@@ -72,6 +72,10 @@ class NonCashRequirement(Requirement):
         max_length=17,
         choices=[(tag, tag.value) for tag in WeekDay]
     )
+    gender = models.CharField(
+        max_length=5,
+        default=Gender.Man
+        ,   choices=[(tag, tag.value) for tag in Gender])
 
 
 class Chunk(models.Model):

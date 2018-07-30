@@ -44,7 +44,7 @@
 
                         </div>
 
-                        <div class="one wide column"></div>
+{#                        <div class="one wide column"></div>#}
 
                         <div class="four wide column">
 
@@ -63,7 +63,7 @@
 
                         </div>
 
-                        <div class="one wide column"></div>
+{#                        <div class="one wide column"></div>#}
 
                         <div class="four wide column">
 
@@ -81,7 +81,19 @@
 
                         </div>
 
-                        <div class="one wide column"></div>
+                        <div class="two wide column">
+                            <div class="nineteen wide field" style="margin: auto">
+
+                                <select name="gender" multiple="" class="ui fluid dropdown">
+                                    <option value="">جنسیت</option>
+                                    {% for tag in Gender %}
+                                    <option name="gender" value="Gender.{{ tag }}"
+                                            id="id_gender_{{ forloop.counter0 }}">{{ tag | convert_gender }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
 
                     </div>
 

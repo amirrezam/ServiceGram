@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 
 from service_requirement.models import CashRequirement, NonCashRequirement, Chunk, HelpNonCash, ValidationStatus, \
     SenderStatus, WeekDay, HelpCash
-from service_member.models import Skill, Member
+from service_member.models import Skill, Member, Gender
 import jalali
 
 
@@ -33,15 +33,21 @@ class CreateNonCashRequirementForm(forms.ModelForm):
     week_day = forms.ChoiceField(
     )
 
+    gender = forms.ChoiceField(
+
+    )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['week_day'].choices = [(tag, tag.value) for tag in WeekDay]
+        self.fields['gender'].choices = [(tag, tag.value) for tag in Gender]
 
     def save(self, commit=True):
         non_cash_requirement = super().save(commit=False)
         non_cash_requirement.time = self.cleaned_data.get('time')
         non_cash_requirement.skill = self.cleaned_data.get('skill')
         non_cash_requirement.week_day = self.cleaned_data.get('week_day')
+        non_cash_requirement.gender = self.cleaned_data.get('gender')
         return non_cash_requirement
 
     class Meta:
