@@ -63,17 +63,20 @@
                         </div>
                         <div class="content" style="margin-top: 10px">
 
-                            <a class="header" style="font-family: VezFont; align-content: center" href="/profile/{{ benefactor.member.username }}">
+                            <a class="header" style="font-family: VezFont; align-content: center" href="/profile/{{ benefactor.member.username }}"><h4>
                                 {{ benefactor.member.first_name }} {{ benefactor.member.last_name }}
-                            </a>
-                            <div class="meta">
+                            </h4></a>
+                            <div class="meta" style="margin-top: 10px;">
                                 <span class="date">آخرین بازدید : 5 ساعت پیش</span>
                             </div>
+
+                            <br>
+
                             <div class="discription" style="margin-top: 8px">
                                 {% if benefactor.member.bio %}
-                                    <h4 style="overflow: hidden">
+                                    <h5 style="overflow: hidden">
                                         {{ benefactor.member.bio }}
-                                    </h4>
+                                    </h5>
                                 {% endif %}
                                 <br>
                                 {% if benefactor.skill|filter_accepted|length > 0 %}

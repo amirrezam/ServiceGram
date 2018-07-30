@@ -15,10 +15,13 @@
     </div>
     <div class="content" style="margin-top: 10px">
 
-        <a class="header" style="font-family: VezFont; align-content: center" href="/profile/{{ non_cash_requirement.owner.member.username   }}">{{ non_cash_requirement.owner.member.first_name }}</a>
-        <div class="meta">
+        <a class="header" style="font-family: VezFont; align-content: center" href="/profile/{{ non_cash_requirement.owner.member.username   }}"><h4>{{ non_cash_requirement.owner.member.first_name }}</h4></a>
+        <div class="meta" style="margin-top: 10px;">
             <span class="date">آخرین بازدید : 2 ساعت پیش</span>
         </div>
+
+        <br>
+
         <div class="description" style="margin-top: 8px">
             <h4>
                 {{ non_cash_requirement.title }}

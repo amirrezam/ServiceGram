@@ -64,14 +64,21 @@
 
                     <div class="content" style="margin-top: 10px">
 
-                        <a class="header" style="font-family: VezFont; align-content: center" href="/profile/{{ cash_requirement.owner.member.username }}">
+                        <a class="header" style="font-family: VezFont; align-content: center" href="/profile/{{ cash_requirement.owner.member.username }}"><h4>
                             {{ cash_requirement.title }}
-                        </a>
-                        <div class="meta">
+                        </h4></a>
+                        <div class="meta" style="margin-top: 10px;">
                             <span class="date">آخرین بازدید : 2 ساعت پیش</span>
                         </div>
+
+                        <br>
+
                         <div class="discription" style="margin-top: 8px">
+
+                            <h5>
                             {{ cash_requirement.description }}
+                            </h5>
+
                             <br>
 {#                            <h5> توانایی‌های مورد نیاز : </h5>#}
 {#                            <p>#}
@@ -79,10 +86,7 @@
 {#                            </p>#}
                         </div>
                     </div>
-                    <div class="extra">
-                        امتیاز دهید :
-                        <div class="ui star rating" data-rating="4"></div>
-                    </div>
+
 
                 </div>
             {% endfor %}
