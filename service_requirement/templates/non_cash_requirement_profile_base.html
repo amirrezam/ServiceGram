@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load filter_skill %}
+
+{% block title %} Requirement's info{% endblock %}
+
+{% block content %}
+<section>
+
+    <div class="ui container" style="width: 1300px;">
+
+        <div class="ui top attached massive tabular menu">
+
+            <a class="item {% block is_active_info %}{% endblock %}" href="/requirements/info/non_cash/{{ noncashrequirement.pk }}">اطلاعات پروفایل</a>
+            {% if user.is_authenticated %}
+                {% if user.username == noncashrequirement.owner.member.username %}
+                    <a class="item {% block is_active_activities %}{% endblock %}" href="{% url "non_cash_requirement_profile_activities" pk=noncashrequirement.pk %}">فعالیت ها</a>
+                    <a class="item {% block is_active_own_requests %}{% endblock %}" href="{% url "non_cash_requirement_profile_own_requests" pk=noncashrequirement.pk %}">درخواست های شما</a>
+                    <a class="item {% block is_active_institute_requests %}{% endblock %}" href="{% url "non_cash_requirement_profile_benefactor_requests" pk=noncashrequirement.pk %}">درخواست های نیکوکاران</a>
+                    <a class="item {% block is_active_log %}{% endblock %}" href="{% url "non_cash_requirement_profile_archive" pk=noncashrequirement.pk %}">آرشیو عملیات ها</a>
+                {% endif %}
+            {% endif %}
+
+        </div>
+
+        {% block add_content %}{% endblock %}
+
+
+        <br>
+        <br>
+
+    </div>
+</section>
+{% endblock %}

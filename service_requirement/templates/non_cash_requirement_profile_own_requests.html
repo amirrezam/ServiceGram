@@ -1,0 +1,76 @@
+{% extends "non_cash_requirement_profile_base.html" %}
+
+{% load static %}
+
+{% load filter_skill %}
+
+{% load convert_date %}
+
+{% block is_active_own_requests %}active{% endblock %}
+
+{% block add_content %}
+        <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245)">
+
+            <div class="ui container" style="margin-top: 30px; margin-bottom: 100px">
+
+                <br><br>
+
+                <h4>
+                    در این قسمت درخواست های همکاری تایید نشده ی شما قابل مشاهده است :
+                </h4>
+
+                <br><br><br><br>
+
+                <div class="ui cards">
+                    {% for help_non_cash in noncashrequirement.helps.all %}
+                        {% if help_non_cash.sender == 'SenderStatus.Ins' %}
+                            {% if help_non_cash.status == 'ValidationStatus.Pen' %}
+
+                                <div class="yellow card" style="width: 500px; height: auto; padding: 20px; margin: 20px;">
+
+                                    <div class="content">
+
+                                        <img class="left floated small ui image" src="/image/{{ help_non_cash.benefactor.member.avatar }}">
+
+                                        <div class="header" style="font-family: 'VezFont'">
+
+                                            <h3><a href="/profile/{{ help_non_cash.benefactor.member.username }}">
+                                                {{ help_non_cash.benefactor.member.first_name }}
+                                                {{ help_non_cash.benefactor.member.last_name }}
+                                            </a></h3>
+
+                                        </div>
+
+                                        <br>
+
+                                        <div class="meta">
+
+                                            <h4><a>
+                                                بیوگرافی :
+                                                {{ help_non_cash.benefactor.member.bio }}
+                                            </a></h4>
+
+                                            <br>
+
+
+                                        </div>
+
+                                        <div class="description"><p style="font-size: 14px">
+                                            {{ help_non_cash.description }}
+                                        <p></div>
+
+                                    </div>
+
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+{% endblock %}

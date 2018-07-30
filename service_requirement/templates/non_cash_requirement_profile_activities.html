@@ -1,0 +1,50 @@
+{% extends "non_cash_requirement_profile_base.html" %}
+
+{% load static %}
+
+{% load filter_skill %}
+
+{% load convert_date %}
+
+{% block is_active_activities %}active{% endblock %}
+
+{% block add_content %}
+    <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245)">
+
+            <div class="ui container" style="margin-top: 30px; margin-bottom: 100px" >
+
+
+                <br><br>
+
+                <h3>
+                    افراد فعال فعلی در این نیاز به شرح زیر است :
+                </h3>
+
+                <br><br><br><br>
+
+                <div class="ui massive horizontal list" style="margin-left: 100px;">
+
+                    {% for help_non_cash in noncashrequirement.helps.all %}
+                        {% if help_non_cash.status == 'ValidationStatus.Act' %}
+                            <div class="item" >
+
+                                    <img class="ui avatar tiny image" src="/image/{{ help_non_cash.benefactor.member.avatar }}">
+                                    <div class="content">
+                                        <div class="header"><h3 style="font-family: VezFont;"><a href="/profile/{{ help_non_cash.benefactor.member.username }}">
+                                            {{ help_non_cash.benefactor.member.first_name }}
+                                            {{ help_non_cash.benefactor.member.last_name }}
+                                        </a></h3></div>
+                                    </div>
+
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+            </div>
+
+
+
+
+    </div>
+{% endblock %}

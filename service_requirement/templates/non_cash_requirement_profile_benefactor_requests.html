@@ -1,0 +1,142 @@
+{% extends "non_cash_requirement_profile_base.html" %}
+
+{% load static %}
+
+{% load filter_skill %}
+
+{% load convert_date %}
+
+{% block is_active_institute_requests %}active{% endblock %}
+
+{% block add_content %}
+        <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245)">
+
+            <div class="ui container" style="margin-top: 30px; margin-bottom: 100px">
+
+                <br><br>
+
+                <h4>
+                    در این قسمت درخواست های همکاری نیکوکاران قابل مشاهده است :
+                </h4>
+
+                <br><br><br><br>
+
+                <div class="ui cards">
+
+                    {% for help_non_cash in noncashrequirement.helps.all %}
+                        {% if help_non_cash.sender == 'SenderStatus.Ben' %}
+                            {% if help_non_cash.status == 'ValidationStatus.Pen' %}
+                                <div class="teal card" style="width: 500px; height: auto; padding: 20px; margin: 20px;">
+
+                                    <div class="content">
+
+                                        <img class="left floated small ui image" src="/image/{{ help_non_cash.benefactor.member.avatar }}">
+
+                                        <div class="header" style="font-family: 'VezFont'">
+
+                                            <h3><a href="/profile/{{ help_non_cash.benefactor.member.username }}">
+                                                {{ help_non_cash.benefactor.member.first_name }}
+                                                {{ help_non_cash.benefactor.member.last_name }}
+                                            </a></h3>
+
+                                        </div>
+
+                                        <br>
+
+                                        <div class="meta">
+
+                                            <h4 style="line-height: 25px">
+                                                بیوگرافی :
+                                                {{ help_non_cash.benefactor.member.bio }}
+                                            </h4>
+
+                                            <br>
+
+                                        </div>
+
+                                        <div class="description"><p style="font-size: 14px">
+                                            {{ help_non_cash.description }}
+                                        <p></div>
+
+                                    </div>
+                                    <div class="extra content">
+                                        <div class="ui two large buttons">
+                                            <button class="ui basic green large button" id="accept_button_{{ help_non_cash.pk }}">پذیرش درخواست</button>
+                                            <div class="ui basic red large button" id="reject_button_{{ help_non_cash.pk }}">رد درخواست</div>
+                                            <script>
+                                                $('#accept_button_{{ help_non_cash.pk }}').click(function() {
+                                                    $('#modal_accept_{{ help_non_cash.pk }}')
+                                                        .modal('show')
+                                                        ;
+                                                });
+                                            </script>
+                                            <script>
+                                                $('#reject_button_{{ help_non_cash.pk }}').click(function() {
+                                                    $('#modal_reject_{{ help_non_cash.pk }}')
+                                                        .modal('show')
+                                                        ;
+                                                });
+                                            </script>
+                                            <div class="ui basic modal" id="modal_accept_{{ help_non_cash.pk }}" style="bottom: auto; top: auto; right: auto; left: auto;">
+                                                <div class="ui icon header">
+                                                    <i class="archive icon"></i>
+
+
+                                                    <h3 style="font-family: VezFont">آیا از انتخاب خود اطمینان دارید ؟</h3>
+                                                </div>
+                                                <div class="content" style="text-align: center">
+                                                    <h5>
+                                                        در صورت تایید این عملیات قابل بازگشت نیست.
+                                                    </h5>
+                                                </div>
+                                                <div class="actions" style="text-align: center">
+                                                    <div class="ui red centered basic cancel inverted big button" style="text-align: center">
+                                                        <i class="remove icon" style="margin: 5px"></i>
+                                                        خیر
+                                                    </div>
+                                                    <a href="/requirements/requests/accept/{{ help_non_cash.pk }}/">
+                                                        <div class="ui green ok inverted big button">
+                                                        <i class="checkmark icon" style="margin: 5px"></i>
+                                                            بله
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="ui basic modal" id="modal_reject_{{ help_non_cash.pk }}" style="bottom: auto; top: auto; right: auto; left: auto;">
+                                                <div class="ui icon header">
+                                                    <i class="archive icon"></i>
+
+                                                    <h3 style="font-family: VezFont">آیا از انتخاب خود اطمینان دارید ؟</h3>
+                                                </div>
+                                                <div class="content" style="text-align: center">
+                                                    <h5>
+                                                        در صورت تایید اینکار قابل بازگشت نیست.
+                                                    </h5>
+                                                </div>
+                                                <div class="actions" style="text-align: center">
+                                                    <div class="ui red centered basic cancel inverted big button" style="text-align: center">
+                                                        <i class="remove icon" style="margin: 5px"></i>
+                                                        خیر
+                                                    </div>
+                                                    <a href="/requirements/requests/reject/{{ help_non_cash.pk }}/">
+                                                        <div class="ui green ok inverted big button">
+                                                        <i class="checkmark icon" style="margin: 5px"></i>
+                                                            بله
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+            </div>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "non_cash_requirement_profile_base.html" %}
+
+{% load static %}
+
+{% load filter_skill %}
+
+{% load convert_date %}
+
+{% block is_active_log %}active{% endblock %}
+
+{% block add_content %}
+    <div class="ui bottom attached segment" style="background-color: rgba(243, 244, 245)">
+
+        <div class="ui container" style="margin-top: 30px; margin-bottom: 100px">
+
+            <br><br>
+
+            <h4>
+                در این قسمت آرشیو درخواست های همکاری که منقضی شده اند یا توسط شما یا موسسات رد شده اند نمایش داده می شود
+            </h4>
+
+            <br><br><br><br>
+
+            {% for help_non_cash in noncashrequirement.helps.all %}
+                {% if help_non_cash.status != 'ValidationStatus.Pen' %}
+                    <div class="ui
+                     {% if help_non_cash.status == 'ValidationStatus.Act' %}
+                        success
+                     {% elif help_non_cash.status == 'ValidationStatus.Rej' %}
+                        error
+                     {% elif help_non_cash.status == 'ValidationStatus.Can' %}
+                        warning
+                     {% endif %}
+                     message">
+
+                        <div class="ui very relaxed middle aligned stackable grid">
+
+                            <div class="eight wide column">
+
+                                <h4>
+                                    درخواست
+                                    {% if help_non_cash.sender == 'SenderStatus.Ins' %}
+                                        موسسه
+                                    {% elif help_non_cash.sender == 'SenderStatus.Ben' %}
+                                        نیکوکار
+                                    {% endif %}
+                                    :
+                                </h4>
+
+
+                                <p>
+                                    این درخواست
+                                    {{ help_non_cash.date_accepted|get_datetime_relative_str }}
+                                    توسط
+                                    {% if help_non_cash.status == 'ValidationStatus.Can' %}
+                                        سیستم
+                                    {% elif help_non_cash.sender == 'SenderStatus.Ins' %}
+                                        شما
+                                    {% elif help_non_cash.sender == 'SenderStatus.Ben' %}
+                                        موسسه
+                                    {% endif %}
+
+                                    {% if help_non_cash.status == 'ValidationStatus.Can' %}
+                                        منقضی
+                                    {% elif help_non_cash.status == 'ValidationStatus.Act' %}
+                                        تایید
+                                    {% elif help_non_cash.status == 'ValidationStatus.Rej' %}
+                                        رد
+                                    {% endif %}
+
+                                     شد.
+                                </p>
+
+                            </div>
+
+                            <div class="two wide column">
+                                <img class="left floated small ui image" src="/image/{{ help_non_cash.benefactor.member.avatar }}">
+                            </div>
+
+                            <div class="six wide column">
+
+                                <h5><a href="/profile/{{ help_non_cash.benefactor.member.username }}">
+                                    {{ help_non_cash.benefactor.member.first_name }}
+                                    {{ help_non_cash.benefactor.member.last_name }}
+                                </a></h5>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+        </div>
+
+    </div>
+{% endblock %}

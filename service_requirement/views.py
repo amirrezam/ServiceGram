@@ -98,10 +98,70 @@ class CashRequirementProfileTransactionsView(DetailView):
 
 class NonCashRequirementProfileView(DetailView):
     model = NonCashRequirement
-    template_name = 'NonCashRequirementProfile.html'
+    template_name = 'non_cash_requirement_profile.html'
 
     def get_object(self, queryset=None):
         return NonCashRequirement.objects.get(pk=self.kwargs['pk'])
+
+
+class NonCashRequirementProfileActivitiesView(DetailView):
+    model = NonCashRequirement
+    template_name = 'non_cash_requirement_profile_activities.html'
+
+    def get_object(self, queryset=None):
+        return NonCashRequirement.objects.get(pk=self.kwargs['pk'])
+
+    def get(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            raise Http404
+        if self.request.user.username != NonCashRequirement.objects.get(pk=self.kwargs['pk']).owner.member.username:
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+
+class NonCashRequirementProfileOwnRequestsView(DetailView):
+    model = NonCashRequirement
+    template_name = 'non_cash_requirement_profile_own_requests.html'
+
+    def get_object(self, queryset=None):
+        return NonCashRequirement.objects.get(pk=self.kwargs['pk'])
+
+    def get(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            raise Http404
+        if self.request.user.username != NonCashRequirement.objects.get(pk=self.kwargs['pk']).owner.member.username:
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+
+class NonCashRequirementProfileBenefactorRequestsView(DetailView):
+    model = NonCashRequirement
+    template_name = 'non_cash_requirement_profile_benefactor_requests.html'
+
+    def get_object(self, queryset=None):
+        return NonCashRequirement.objects.get(pk=self.kwargs['pk'])
+
+    def get(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            raise Http404
+        if self.request.user.username != NonCashRequirement.objects.get(pk=self.kwargs['pk']).owner.member.username:
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+
+class NonCashRequirementProfileArchiveView(DetailView):
+    model = NonCashRequirement
+    template_name = 'non_cash_requirement_profile_archive.html'
+
+    def get_object(self, queryset=None):
+        return NonCashRequirement.objects.get(pk=self.kwargs['pk'])
+
+    def get(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            raise Http404
+        if self.request.user.username != NonCashRequirement.objects.get(pk=self.kwargs['pk']).owner.member.username:
+            raise Http404
+        return super().get(request, *args, **kwargs)
 
 
 class RequestHelpBenefactorView(CreateView):

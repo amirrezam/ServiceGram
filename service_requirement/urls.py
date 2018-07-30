@@ -3,13 +3,22 @@ from service_requirement.views import CreateCashRequirementView, CreateNonCashRe
     AcceptRequestFromBenefactorView, ShowNonCashRequirementsView, RejectRequestFromBenefactorView, \
     RequestHelpInstituteView, RejectRequestFromInstituteView, AcceptRequestFromInstituteView, \
     RateHelpNonCashBenefactorView, RateHelpNonCashInstituteView, HelpCashView, ShowCashRequirementsView, \
-    CashRequirementProfileTransactionsView
+    CashRequirementProfileTransactionsView, NonCashRequirementProfileActivitiesView, \
+    NonCashRequirementProfileOwnRequestsView, NonCashRequirementProfileBenefactorRequestsView, \
+    NonCashRequirementProfileArchiveView
 from django.contrib.auth import views as auth_views
 from django.urls import re_path
 
 urlpatterns = [
     re_path(r'info/cash/transactions/(?P<pk>[a-zA-Z0-9]+)$', CashRequirementProfileTransactionsView.as_view(), name='cash_requirement_profile_transactions'),
     re_path(r'info/cash/(?P<pk>[a-zA-Z0-9]+)$', CashRequirementProfileView.as_view(), name='cash_requirement_profile'),
+    re_path(r'info/non_cash/activities/(?P<pk>[a-zA-Z0-9]+)$', NonCashRequirementProfileActivitiesView.as_view(), name='non_cash_requirement_profile_activities'),
+    re_path(r'info/non_cash/own_requests/(?P<pk>[a-zA-Z0-9]+)$', NonCashRequirementProfileOwnRequestsView.as_view(),
+            name='non_cash_requirement_profile_own_requests'),
+    re_path(r'info/non_cash/benefactor_requests/(?P<pk>[a-zA-Z0-9]+)$', NonCashRequirementProfileBenefactorRequestsView.as_view(),
+            name='non_cash_requirement_profile_benefactor_requests'),
+    re_path(r'info/non_cash/archive/(?P<pk>[a-zA-Z0-9]+)$', NonCashRequirementProfileArchiveView.as_view(),
+            name='non_cash_requirement_profile_archive'),
     re_path(r'info/non_cash/(?P<pk>[a-zA-Z0-9]+)$', NonCashRequirementProfileView.as_view(), name='non_cash_requirement_profile'),
     re_path(r'request/institute/(?P<username>[a-zA-Z0-9]+)/$', RequestHelpInstituteView.as_view(), name='request_help_institute'),
     re_path(r'request/(?P<pk>[a-zA-Z0-9]+)/$', RequestHelpBenefactorView.as_view(), name='request_help_benefactor'),
