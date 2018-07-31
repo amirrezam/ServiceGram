@@ -30,186 +30,186 @@
 
 
 
-            <div class="ui four stackable special cards">
-                {% for non_cash_requirement in member.institute.non_cash_requirements.all %}
-                    {% include "non_cash_requirement_card.html" %}
-                {% endfor %}
-            </div>
+            <!--<div class="ui four stackable special cards">-->
+                <!--{% for non_cash_requirement in member.institute.non_cash_requirements.all %}-->
+                    <!--{% include "non_cash_requirement_card.html" %}-->
+                <!--{% endfor %}-->
+            <!--</div>-->
 
-            <br>
-            <br>
+            <!--<br>-->
+            <!--<br>-->
 
-            {% if user.username == member.username %}
-                <div class="ui very relaxed middle aligned stackable grid">
-                    <div class="eight wide column">
-                        <h3>درخواست‌های نیکوکاران : </h3>
-                        <br>
+            <!--{% if user.username == member.username %}-->
+                <!--<div class="ui very relaxed middle aligned stackable grid">-->
+                    <!--<div class="eight wide column">-->
+                        <!--<h3>درخواست‌های نیکوکاران : </h3>-->
+                        <!--<br>-->
 
-                        <div class="ui items">
+                        <!--<div class="ui items">-->
 
-                            {% for non_cash_requirement in member.institute.non_cash_requirements.all %}
-                                {% for help_non_cash in non_cash_requirement.helps.all %}
-                                    {% if help_non_cash.sender == 'SenderStatus.Ben' %}
-                                        {% if help_non_cash.status == 'ValidationStatus.Pen' %}
-                                            <div class="item" style="margin-bottom: 10px">
-                                                <a class="ui small circular image" style="margin-left: 10px">
-                                                    <img src="/image/{{ help_non_cash.benefactor.member.avatar }}">
-                                                </a>
-                                                <div class="content">
-                                                    <a class="header" style="font-family: VezFont" href="/profile/{{ help_non_cash.benefactor.member.username }}">
-                                                        {{ help_non_cash.benefactor.member.first_name }} {{ help_non_cash.benefactor.member.last_name }}
-                                                    </a>
-                                                    <div class="description">
-                                                        <p>
-                                                            مورد درخواست :
-                                                            {{ non_cash_requirement.title }}
-                                                        </p>
-                                                        <p>
-                                                            توضیحات :
-                                                            {{ help_non_cash.description }}
-                                                        </p>
-                                                    </div>
-                                                    <button class="ui primary huge button" onclick="ui.basic.modal" id="accept_button_{{ help_non_cash.pk }}">
-                                                        قبول درخواست همکاری
-                                                    </button>
-                                                    <script>
-                                                        $('#accept_button_{{ help_non_cash.pk }}').click(function() {
-                                                            $('#modal_accept_{{ help_non_cash.pk }}')
-                                                                .modal('show')
-                                                                ;
-                                                        });
-                                                    </script>
-                                                    <div class="ui basic modal" id="modal_accept_{{ help_non_cash.pk }}" style="bottom: auto; top: auto; right: auto; left: auto;">
-                                                        <div class="ui icon header">
-                                                            <i class="archive icon"></i>
-                                                            آیا مطمعن هستید؟
-                                                        </div>
-                                                        <div class="content" style="text-align: right">
-                                                            <p>
-                                                                در صورت تایید اینکار قابل بازگشت نیست.
-                                                            </p>
-                                                        </div>
-                                                        <div class="actions">
-                                                            <div class="ui red basic cancel inverted button">
-                                                                <i class="remove icon"></i>
-                                                                No
-                                                            </div>
-                                                            <a href="/requirements/requests/accept/{{ help_non_cash.pk }}/">
-                                                                <div class="ui green ok inverted button">
-                                                                <i class="checkmark icon"></i>
-                                                                    Yes
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <button class="ui primary huge button" onclick="ui.basic.modal" id="reject_button_{{ help_non_cash.pk }}">
-                                                        رد درخواست همکاری
-                                                    </button>
-                                                    <script>
-                                                        $('#reject_button_{{ help_non_cash.pk }}').click(function() {
-                                                            $('#modal_reject_{{ help_non_cash.pk }}')
-                                                                .modal('show')
-                                                                ;
-                                                        });
-                                                    </script>
-                                                    <div class="ui basic modal" id="modal_reject_{{ help_non_cash.pk }}" style="bottom: auto; top: auto; right: auto; left: auto;">
-                                                        <div class="ui icon header">
-                                                            <i class="archive icon"></i>
-                                                            آیا مطمعن هستید؟
-                                                        </div>
-                                                        <div class="content" style="text-align: right">
-                                                            <p>
-                                                                در صورت تایید اینکار قابل بازگشت نیست.
-                                                            </p>
-                                                        </div>
-                                                        <div class="actions">
-                                                            <div class="ui red basic cancel inverted button">
-                                                                <i class="remove icon"></i>
-                                                                No
-                                                            </div>
-                                                            <a href="/requirements/requests/reject/{{ help_non_cash.pk }}/">
-                                                                <div class="ui green ok inverted button">
-                                                                <i class="checkmark icon"></i>
-                                                                    Yes
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}
-                            {% endfor %}
-                        </div>
+                            <!--{% for non_cash_requirement in member.institute.non_cash_requirements.all %}-->
+                                <!--{% for help_non_cash in non_cash_requirement.helps.all %}-->
+                                    <!--{% if help_non_cash.sender == 'SenderStatus.Ben' %}-->
+                                        <!--{% if help_non_cash.status == 'ValidationStatus.Pen' %}-->
+                                            <!--<div class="item" style="margin-bottom: 10px">-->
+                                                <!--<a class="ui small circular image" style="margin-left: 10px">-->
+                                                    <!--<img src="/image/{{ help_non_cash.benefactor.member.avatar }}">-->
+                                                <!--</a>-->
+                                                <!--<div class="content">-->
+                                                    <!--<a class="header" style="font-family: VezFont" href="/profile/{{ help_non_cash.benefactor.member.username }}">-->
+                                                        <!--{{ help_non_cash.benefactor.member.first_name }} {{ help_non_cash.benefactor.member.last_name }}-->
+                                                    <!--</a>-->
+                                                    <!--<div class="description">-->
+                                                        <!--<p>-->
+                                                            <!--مورد درخواست :-->
+                                                            <!--{{ non_cash_requirement.title }}-->
+                                                        <!--</p>-->
+                                                        <!--<p>-->
+                                                            <!--توضیحات :-->
+                                                            <!--{{ help_non_cash.description }}-->
+                                                        <!--</p>-->
+                                                    <!--</div>-->
+                                                    <!--<button class="ui primary huge button" onclick="ui.basic.modal" id="accept_button_{{ help_non_cash.pk }}">-->
+                                                        <!--قبول درخواست همکاری-->
+                                                    <!--</button>-->
+                                                    <!--<script>-->
+                                                        <!--$('#accept_button_{{ help_non_cash.pk }}').click(function() {-->
+                                                            <!--$('#modal_accept_{{ help_non_cash.pk }}')-->
+                                                                <!--.modal('show')-->
+                                                                <!--;-->
+                                                        <!--});-->
+                                                    <!--</script>-->
+                                                    <!--<div class="ui basic modal" id="modal_accept_{{ help_non_cash.pk }}" style="bottom: auto; top: auto; right: auto; left: auto;">-->
+                                                        <!--<div class="ui icon header">-->
+                                                            <!--<i class="archive icon"></i>-->
+                                                            <!--آیا مطمعن هستید؟-->
+                                                        <!--</div>-->
+                                                        <!--<div class="content" style="text-align: right">-->
+                                                            <!--<p>-->
+                                                                <!--در صورت تایید اینکار قابل بازگشت نیست.-->
+                                                            <!--</p>-->
+                                                        <!--</div>-->
+                                                        <!--<div class="actions">-->
+                                                            <!--<div class="ui red basic cancel inverted button">-->
+                                                                <!--<i class="remove icon"></i>-->
+                                                                <!--No-->
+                                                            <!--</div>-->
+                                                            <!--<a href="/requirements/requests/accept/{{ help_non_cash.pk }}/">-->
+                                                                <!--<div class="ui green ok inverted button">-->
+                                                                <!--<i class="checkmark icon"></i>-->
+                                                                    <!--Yes-->
+                                                                <!--</div>-->
+                                                            <!--</a>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                    <!--<button class="ui primary huge button" onclick="ui.basic.modal" id="reject_button_{{ help_non_cash.pk }}">-->
+                                                        <!--رد درخواست همکاری-->
+                                                    <!--</button>-->
+                                                    <!--<script>-->
+                                                        <!--$('#reject_button_{{ help_non_cash.pk }}').click(function() {-->
+                                                            <!--$('#modal_reject_{{ help_non_cash.pk }}')-->
+                                                                <!--.modal('show')-->
+                                                                <!--;-->
+                                                        <!--});-->
+                                                    <!--</script>-->
+                                                    <!--<div class="ui basic modal" id="modal_reject_{{ help_non_cash.pk }}" style="bottom: auto; top: auto; right: auto; left: auto;">-->
+                                                        <!--<div class="ui icon header">-->
+                                                            <!--<i class="archive icon"></i>-->
+                                                            <!--آیا مطمعن هستید؟-->
+                                                        <!--</div>-->
+                                                        <!--<div class="content" style="text-align: right">-->
+                                                            <!--<p>-->
+                                                                <!--در صورت تایید اینکار قابل بازگشت نیست.-->
+                                                            <!--</p>-->
+                                                        <!--</div>-->
+                                                        <!--<div class="actions">-->
+                                                            <!--<div class="ui red basic cancel inverted button">-->
+                                                                <!--<i class="remove icon"></i>-->
+                                                                <!--No-->
+                                                            <!--</div>-->
+                                                            <!--<a href="/requirements/requests/reject/{{ help_non_cash.pk }}/">-->
+                                                                <!--<div class="ui green ok inverted button">-->
+                                                                <!--<i class="checkmark icon"></i>-->
+                                                                    <!--Yes-->
+                                                                <!--</div>-->
+                                                            <!--</a>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--{% endif %}-->
+                                    <!--{% endif %}-->
+                                <!--{% endfor %}-->
+                            <!--{% endfor %}-->
+                        <!--</div>-->
 
-                    </div>
+                    <!--</div>-->
 
-                    <div class="eight wide column">
-                        <h3>درخواست‌های پذیرفته شده : </h3>
-                        <br>
+                    <!--<div class="eight wide column">-->
+                        <!--<h3>درخواست‌های پذیرفته شده : </h3>-->
+                        <!--<br>-->
 
-                        <div class="ui items">
-                            {% for non_cash_requirement in member.institute.non_cash_requirements.all %}
-                                {% for help_non_cash in non_cash_requirement.helps.all %}
-{#                                    {% if help_non_cash.sender == 'SenderStatus.Ben' %}#}
-                                        {% if help_non_cash.status == 'ValidationStatus.Act' %}
-                                            <div class="item" style="margin-bottom: 10px">
-                                                <a class="ui small circular image" style="margin-left: 10px">
-                                                    <img src="/image/{{ help_non_cash.benefactor.member.avatar }}">
-                                                </a>
-                                                <div class="content">
-                                                    <a class="header" style="font-family: VezFont" href="/profile/{{ help_non_cash.benefactor.member.username }}">
-                                                        {{ help_non_cash.benefactor.member.first_name }} {{ help_non_cash.benefactor.member.last_name }}
-                                                    </a>
-                                                    <div class="description">
-                                                        <p>
-                                                            مورد درخواست :
-                                                            {{ non_cash_requirement.description }}
-                                                        </p>
-                                                        <p>
-                                                            توضیحات :
-                                                            {{ help_non_cash.description }}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                    <form method="post" action="/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/">
-                                        {% csrf_token %}
-                                    <input type="text" name="rate" value="1" hidden>
-                                    <button class="circular ui icon button" type="submit">1</button>
-                                    </form>
-                                    <form method="post" action="/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/">
-                                        {% csrf_token %}
-                                    <input type="text" name="rate" value="2" hidden>
-                                    <button class="circular ui icon button" type="submit">2</button>
-                                    </form>
-                                    <form method="post" action="/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/">
-                                        {% csrf_token %}
-                                    <input type="text" name="rate" value="3" hidden>
-                                    <button class="circular ui icon button" type="submit">3</button>
-                                    </form>
-                                    <form method="post" action="/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/">
-                                        {% csrf_token %}
-                                    <input type="text" name="rate" value="4" hidden>
-                                    <button class="circular ui icon button" type="submit">4</button>
-                                    </form>
-                                    <form method="post" action="/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/">
-                                        {% csrf_token %}
-                                    <input type="text" name="rate" value="5" hidden>
-                                    <button class="circular ui icon button" type="submit">5</button>
-                                    </form>
-                                            </div>
-                                        {% endif %}
-{#                                    {% endif %}#}
-                                {% endfor %}
-                            {% endfor %}
+                        <!--<div class="ui items">-->
+                            <!--{% for non_cash_requirement in member.institute.non_cash_requirements.all %}-->
+                                <!--{% for help_non_cash in non_cash_requirement.helps.all %}-->
+<!--{#                                    {% if help_non_cash.sender == 'SenderStatus.Ben' %}#}-->
+                                        <!--{% if help_non_cash.status == 'ValidationStatus.Act' %}-->
+                                            <!--<div class="item" style="margin-bottom: 10px">-->
+                                                <!--<a class="ui small circular image" style="margin-left: 10px">-->
+                                                    <!--<img src="/image/{{ help_non_cash.benefactor.member.avatar }}">-->
+                                                <!--</a>-->
+                                                <!--<div class="content">-->
+                                                    <!--<a class="header" style="font-family: VezFont" href="/profile/{{ help_non_cash.benefactor.member.username }}">-->
+                                                        <!--{{ help_non_cash.benefactor.member.first_name }} {{ help_non_cash.benefactor.member.last_name }}-->
+                                                    <!--</a>-->
+                                                    <!--<div class="description">-->
+                                                        <!--<p>-->
+                                                            <!--مورد درخواست :-->
+                                                            <!--{{ non_cash_requirement.description }}-->
+                                                        <!--</p>-->
+                                                        <!--<p>-->
+                                                            <!--توضیحات :-->
+                                                            <!--{{ help_non_cash.description }}-->
+                                                        <!--</p>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                    <!--<form method="post" action="/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/">-->
+                                        <!--{% csrf_token %}-->
+                                    <!--<input type="text" name="rate" value="1" hidden>-->
+                                    <!--<button class="circular ui icon button" type="submit">1</button>-->
+                                    <!--</form>-->
+                                    <!--<form method="post" action="/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/">-->
+                                        <!--{% csrf_token %}-->
+                                    <!--<input type="text" name="rate" value="2" hidden>-->
+                                    <!--<button class="circular ui icon button" type="submit">2</button>-->
+                                    <!--</form>-->
+                                    <!--<form method="post" action="/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/">-->
+                                        <!--{% csrf_token %}-->
+                                    <!--<input type="text" name="rate" value="3" hidden>-->
+                                    <!--<button class="circular ui icon button" type="submit">3</button>-->
+                                    <!--</form>-->
+                                    <!--<form method="post" action="/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/">-->
+                                        <!--{% csrf_token %}-->
+                                    <!--<input type="text" name="rate" value="4" hidden>-->
+                                    <!--<button class="circular ui icon button" type="submit">4</button>-->
+                                    <!--</form>-->
+                                    <!--<form method="post" action="/requirements/rate/institute/{{ help_non_cash.requirement.pk }}/{{ help_non_cash.benefactor.member.username }}/">-->
+                                        <!--{% csrf_token %}-->
+                                    <!--<input type="text" name="rate" value="5" hidden>-->
+                                    <!--<button class="circular ui icon button" type="submit">5</button>-->
+                                    <!--</form>-->
+                                            <!--</div>-->
+                                        <!--{% endif %}-->
+<!--{#                                    {% endif %}#}-->
+                                <!--{% endfor %}-->
+                            <!--{% endfor %}-->
 
-                        </div>
+                        <!--</div>-->
 
 
-                    </div>
-                {% endif %}
-            </div>
+                    <!--</div>-->
+                <!--{% endif %}-->
+            <!--</div>-->
         </div>
     </section>
 {% endblock %}
