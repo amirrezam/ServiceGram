@@ -1,6 +1,7 @@
 from django.db import models
 from enum import Enum
 from service_member.models import Institute, Gender
+import datetime
 
 # Create your models here.
 
@@ -46,6 +47,12 @@ class CashRequirement(Requirement):
         on_delete=models.CASCADE
     )
 
+    def is_full(self):
+        s = 0
+        for help_cash in self.helps.all():
+            s += help_cash.amount
+        return s >= self.fund
+
 
 class NonCashRequirement(Requirement):
     beginning_date = models.DateField()
@@ -76,6 +83,9 @@ class NonCashRequirement(Requirement):
         max_length=5,
         default=Gender.Man
         ,   choices=[(tag, tag.value) for tag in Gender])
+
+    def is_passed(self):
+        return self.ending_date < datetime.datetime.now().date()
 
 
 class Chunk(models.Model):

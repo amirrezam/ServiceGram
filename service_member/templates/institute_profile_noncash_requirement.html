@@ -20,14 +20,14 @@
 
             <div class="ui list">
 
-                {% for non_cash_requirement in member.institute.non_cash_requirements.all %}
+                {% for non_cash_requirement in member.institute.non_cash_requirements|sort_by:"-pk"|get_all %}
 
                     <div class="item">
                         <img class="ui avatar tiny image" src="{% static 'img/man.jpg' %}" class="ui circular centered small image" style="margin-left: 30px">
 
                         <div class="content">
                             <br>
-                            <a><h4>
+                            <a href="{% url "non_cash_requirement_profile" pk=non_cash_requirement.pk %}"><h4>
                                 {{ non_cash_requirement.title }}
                             </h4></a>
 

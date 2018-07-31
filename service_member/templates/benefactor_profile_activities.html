@@ -29,6 +29,7 @@
 
                 {% for help_non_cash in member.benefactor.non_cash_helps.all %}
                     {% if help_non_cash.status == 'ValidationStatus.Act' %}
+                        {% if not help_non_cash.requirement.is_passed %}
                         <div class="ui blue segment">
 
                             <div class="ui centered inverted accordion">
@@ -42,7 +43,7 @@
 
                                     <div style="font-size: 16px">
 
-                                        <a>
+                                        <a href="{% url "non_cash_requirement_profile" pk=help_non_cash.requirement.pk %}">
                                             {{ help_non_cash.requirement.title }}
                                         </a>
 
@@ -71,6 +72,8 @@
                             </div>
 
                         </div>
+
+                        {% endif %}
 
                     {% endif %}
                 {% endfor %}

@@ -23,9 +23,12 @@
         <br>
 
         <div class="description" style="margin-top: 8px">
+            <a href="{% url "non_cash_requirement_profile" pk=non_cash_requirement.pk %}">
             <h4>
                 {{ non_cash_requirement.title }}
             </h4>
+            </a>
+
             <h5>
                 {{ non_cash_requirement.description }}
             </h5>
@@ -58,6 +61,8 @@
                     disabled
 {#                {% elif user.benefactor.non_cash_helps|filter_has_skill_accepted|filter_by_time:non_cash_requirement.time|filter_by_date:non_cash_requirement.date|length > 0%}#}
                 {% elif user.benefactor.non_cash_helps|get_conflicts_non_cash_requirement:non_cash_requirement %}
+                    disabled
+                {% elif non_cash_requirement.is_passed %}
                     disabled
                 {% endif %}
             >

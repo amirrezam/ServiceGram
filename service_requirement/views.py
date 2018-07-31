@@ -198,6 +198,8 @@ class RequestHelpBenefactorView(CreateView):
                                       requirement__beginning_date__lte=help_non_cash.requirement.ending_date,
                                       status='ValidationStatus.Pen').count() > 0:
             raise Http404
+        if help_non_cash.is_passed():
+            raise Http404
         return super().get(request, *args, **kwargs)
 
 

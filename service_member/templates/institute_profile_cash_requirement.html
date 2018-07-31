@@ -19,7 +19,7 @@
 
             <br><br>
 
-            {% for cash_requirement in member.institute.cash_requirements.all %}
+            {% for cash_requirement in member.institute.cash_requirements|sort_by:"-pk"|get_all %}
 
                 <div class="ui teal segment" style="width: 1300px;">
 
@@ -62,7 +62,11 @@
                             <br><br>
 
                             {% if user.is_benefactor %}
-                                <button class="ui big teal button" id="donation_button_{{ cash_requirement.pk }}" style="margin-right: 50px">
+                                <button class="ui big teal button" id="donation_button_{{ cash_requirement.pk }}" style="margin-right: 50px"
+                                    {% if cash_requirement.is_full %}
+                                        disabled
+                                    {% endif %}
+                                >
                                     در تامین این پروژه ی خیرخواهانه سهیم شوید !
                                 </button>
 

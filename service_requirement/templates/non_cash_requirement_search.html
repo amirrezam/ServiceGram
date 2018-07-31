@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
+{% load filter_skill %}
 
 {% load convert_date %}
+
 {% load static %}
 
 {%  block title %}Search non cash requirements{% endblock %}
@@ -277,42 +279,10 @@
 
             <div class="ui four stackable special cards">
 
-
-                <div class="card" style="background-color: rgba(220, 222, 228, 0.479); padding: 10px;">
-                    <div class="blurring dimmable circular image">
-                        <div class="ui dimmer">
-                            <div class="content">
-                                <div class="center">
-                                    <div class="ui inverted button">Add Friend</div>
-                                </div>
-                            </div>
-                        </div>
-                        <img src="{% static " img/school.png" %}" class="ui circular image">
-                    </div>
-                    <div class="content" style="margin-top: 10px">
-
-                        <a class="header" style="font-family: VezFont; align-content: center">دبیرستان علامه‌ فلانی</a>
-                        <div class="meta">
-                            <span class="date">آخرین بازدید : 2 ساعت پیش</span>
-                        </div>
-                        <div class="discription" style="margin-top: 8px">
-                            <h4> مدرسه‌ی تیزهوشان متوسطه دوره روم</h4>
-                            <br>
-                            <h5> توانایی‌های مورد نیاز : </h5>
-                            <p>
-                                دبیر ریاضی، دبیر فیزیک
-                            </p>
-                        </div>
-                    </div>
-                    <div class="extra">
-                        امتیاز دهید :
-                        <div class="ui star rating" data-rating="4"></div>
-                    </div>
-
-                </div>
-
-                {% for non_cash_requirement in noncashrequirement_list.all %}
+                {% for non_cash_requirement in noncashrequirement_list|sort_by:"-pk"|get_all %}
+                    {% if not non_cash_requirement.is_passed %}
                 {% include "non_cash_requirement_card.html" %}
+                    {% endif %}
                 {% endfor %}
 
             </div>

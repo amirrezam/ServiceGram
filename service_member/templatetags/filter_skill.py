@@ -102,7 +102,13 @@ def sort_by(value, arg):
 
 
 def divide(value, arg):
+    if value > arg:
+        return 100
     return int(100 * value/arg)
+
+
+def get_all(value):
+    return value.all()
 
 
 register.filter('filter_accepted', filter_accepted)
@@ -119,3 +125,4 @@ register.filter('convert_int', convert_int)
 register.filter('get_total_donation', get_total_donation)
 register.filter('sort_by', sort_by)
 register.filter('divide', divide)
+register.filter('get_all', get_all)
