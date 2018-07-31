@@ -212,13 +212,15 @@
 
                             <div class="ui active teal big progress" data-percent="{{ cash_requirement|get_total_donation|divide:cash_requirement.fund }}"
                                  id="example_{{ cash_requirement.pk }}"
-                                 style="width: 350px; height: 40px; margin-right: 60px">
+                                 style="width: 350px; height: 40px; margin-right: 60px; margin-bottom: 10px">
 
                                 <div class="bar" style="height: 200px; align-items: center">
                                     <div class="progress" style="color: #0f0f10; "></div>
                                     <center>
                                         <br>
-                                        میزان تامین پروژه : {{ cash_requirement|get_total_donation|divide:cash_requirement.fund }}%
+                                        {% if cash_requirement|get_total_donation|divide:cash_requirement.fund > 50 %}
+                                        میزان تامین پروژه : {{ cash_requirement|get_total_donation|divide:cash_requirement.fund }}
+                                        {% endif %}
                                     </center>
                                 </div>
 hi
@@ -226,6 +228,13 @@ hi
 
 
                             </div>
+<center>
+<h5>
+                                        {% if cash_requirement|get_total_donation|divide:cash_requirement.fund < 50 %}
+                                        میزان تامین پروژه : {{ cash_requirement|get_total_donation|divide:cash_requirement.fund }}
+                                        {% endif %}
+</h5>
+</center>
 
                             <script>
                                 $(function () {
