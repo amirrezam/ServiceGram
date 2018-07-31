@@ -76,6 +76,15 @@
                                 تلفن روابط عمومی :
                             </h4>
 
+                            <h6>
+                                {% if member.institute.telephone_number %}
+                                    {{ member.institute.telephone_number }}
+                                {% else %}
+                                    تلفن این شرکت ثبت نشده است.
+                                {% endif %}
+
+                            </h6>
+
                             <br>
 
 

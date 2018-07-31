@@ -39,6 +39,7 @@ class Institute(models.Model):
     address = models.CharField(max_length=100)
     lat = models.DecimalField(null=True, max_digits=20, decimal_places=10)
     long = models.DecimalField(null=True, max_digits=20, decimal_places=10)
+    telephone_number = models.CharField(null=True, max_length=17)
 
     class Meta:
         verbose_name = 'Institute'

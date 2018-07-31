@@ -21,6 +21,7 @@ class SignUpInstituteForm(UserCreationForm):
     city = forms.CharField()
     address = forms.Textarea()
     photo = forms.ImageField()
+    telephone_number = forms.CharField(required=False)
 
     def save(self, commit=True):
         member = super().save(commit=False)
@@ -33,6 +34,8 @@ class SignUpInstituteForm(UserCreationForm):
             institute.city = self.cleaned_data['city']
         if 'address' in list(self.cleaned_data.keys()):
             institute.address = self.cleaned_data['address']
+        if 'telephone_number' in list(self.cleaned_data.keys()):
+            institute.telephone_number = self.cleaned_data['telephone_number']
         institute.save()
         if 'photo' in list(self.cleaned_data.keys()):
             photo = Photo.objects.create(image=self.cleaned_data['photo'], institute=institute)
@@ -92,9 +95,10 @@ class EditProfileBenefactorForm(forms.ModelForm):
 
 class EditProfileInstituteForm(forms.ModelForm):
     city = forms.CharField()
-    address = forms.CharField()
+    address = forms.CharField(required=False)
     lat = forms.DecimalField(required=False)
     long = forms.DecimalField(required=False)
+    telephone_number = forms.CharField(required=False)
 
     class Meta:
         model = Member

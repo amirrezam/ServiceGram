@@ -18,6 +18,12 @@
     <textarea type="text" placeholder="معرفی مؤسسه" name="bio" style="text-align: right" id="id_bio">{{ user.bio }}</textarea>
 </div>
     <div class="field">
+        <label> شماره تماس</label>
+        <div class="field">
+            <input type="text" name="telephone_number" value="{{ user.institute.telephone_number }}" placeholder="شماره تماس" id="id_telephone_number">
+        </div>
+    </div>
+    <div class="field">
         <label> شهر</label>
         <div class="field">
             <input type="text" name="city" value="{{ user.institute.city }}" placeholder="شهر" id="id_city">

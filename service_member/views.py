@@ -258,6 +258,7 @@ class EditProfileInstituteView(FormView):
         self.request.user.email = form.cleaned_data['email']
         self.request.user.institute.lat = form.cleaned_data['lat']
         self.request.user.institute.long = form.cleaned_data['long']
+        self.request.user.institute.telephone_number = form.cleaned_data['telephone_number']
         if 'city' in list(form.cleaned_data.keys()):
             self.request.user.institute.city = form.cleaned_data['city']
         if 'address' in list(form.cleaned_data.keys()):
